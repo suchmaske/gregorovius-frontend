@@ -52,10 +52,10 @@ export default {
           required: true,
           label: 'Datum',
           align: 'left',
-          field: row => row.properties.date,
-          format: val => new Date(val).toLocaleDateString('de-DE', {
+          field: row => (row.properties.date ? new Date(row.properties.date) : null),
+          format: val => (val ? val.toLocaleDateString('de-DE', {
             day: 'numeric', month: 'long', year: 'numeric'
-          }),
+          }) : "o. D."),
           sortable: true
         },
         {
