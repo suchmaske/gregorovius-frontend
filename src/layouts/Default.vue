@@ -1,111 +1,66 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="glossy">
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          aria-label="Menu"
-          icon="menu"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
+  <q-layout>
+    <q-header  :class="(($route.path === '/') ? 'transparent' : 'bg-primary')">
+      <q-tabs inline-label indicator-color="grey-1" align="left">
+        <img class="gt-sm logo-signature cursor-pointer q-mx-md q-pa-md" src="../statics/img/gregorovius_signature.svg" @click="$router.push({ path: '/' })"/>
+        <q-route-tab to="/letters" label="BRIEFE" />
+        <q-route-tab to="/persons" label="PERSONEN" />
+        <q-route-tab to="/institutions" label="KÖRPERSCHAFTEN" />
+        <q-route-tab to="/places" label="ORTE" />
+        <q-route-tab to="/works" label="WERKE" />
+        <q-space />
+        <q-btn flat label="EDITIONSRICHTLINIEN" />
+        <q-btn flat label="PROJEKT" />
+      </q-tabs>
     </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      bordered
-      content-class="bg-grey-2"
-    >
-      <q-list>
-        <q-item-label header>Navigation</q-item-label>
-        <q-item to="/" exact>
-          <q-item-section avatar>
-            <q-icon name="home" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Home</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item to="/about" exact>
-          <q-item-section avatar>
-            <q-icon name="info" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>About</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item-label header>Essential Links</q-item-label>
-        <q-item clickable tag="a" target="_blank" href="https://quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="school" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Docs</q-item-label>
-            <q-item-label caption>quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/">
-          <q-item-section avatar>
-            <q-icon name="code" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Github</q-item-label>
-            <q-item-label caption>github.com/quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://chat.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="chat" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Discord Chat Channel</q-item-label>
-            <q-item-label caption>chat.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://forum.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="forum" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Forum</q-item-label>
-            <q-item-label caption>forum.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://twitter.com/quasarframework">
-          <q-item-section avatar>
-            <q-icon name="rss_feed" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Twitter</q-item-label>
-            <q-item-label caption>@quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
+    <q-page-container class="bg-grey-1 q-py-none">
       <router-view />
     </q-page-container>
+    <q-footer :class="(($route.path === '/') ? 'transparent' : 'bg-secondary')" class="text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <div class="row q-pa-md">
+            <div class="col-md-6 col-10 q-pa-md self-center">
+              <div class="row">
+                <img src="../statics/img/logo_dhi.png"/>
+              </div>
+            </div>
+            <div class="col-md-3 col-10 q-pa-md">
+              <div class="text-caption">gefördert durch</div>
+              <div class="row q-py-md">
+                <img src="../statics/img/logo_dfg.png"/>
+              </div>
+              <div class="row">
+                <img src="../statics/img/logo_henkel.png"/>
+              </div>
+            </div>
+            <div class="col-md-3 col-10 q-pa-md">
+              <div class="row">
+                <div class="text-caption">in Kooperation mit</div>
+                <img src="../statics/img/logo_bbaw.png"/>
+              </div>
+            </div>
+          </div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
 <script>
 export default {
-  name: 'LayoutDefault',
-
-  data() {
-    return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
-    };
-  },
-};
+  name: 'DefaultLayout',
+}
 </script>
+
+<style>
+.landing-page-bg {
+  color: none;
+}
+.logo-signature {
+  height: 80px;
+}
+.q-tab__indicator {
+  height: 5px !important;
+}
+</style>

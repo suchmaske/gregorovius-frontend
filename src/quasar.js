@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 import './styles/quasar.styl';
-import lang from 'quasar/lang/de.js';
+import lang from 'quasar/lang/de';
 import '@quasar/extras/material-icons/material-icons.css';
 import Quasar from 'quasar';
 
