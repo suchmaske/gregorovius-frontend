@@ -43,7 +43,7 @@ export default {
           required: true,
           label: 'Name',
           align: 'left',
-          field: row => row.properties.name,
+          field: row => row.properties.name.orgName,
           sortable: true
         }
       ],

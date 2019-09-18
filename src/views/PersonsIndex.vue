@@ -43,7 +43,7 @@ export default {
           required: true,
           label: 'Name',
           align: 'left',
-          field: row => row.properties.name.forename + ' ' + row.properties.name.surname,
+          field: row => this.formatName(row.properties.name),
           sortable: true
         }
       ],
@@ -65,6 +65,25 @@ export default {
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
+      }
+    },
+    formatName (name) {
+      if (name.surname && name.forename) {
+        return `${name.forename} ${name.surname}`
+      } else if (name.forename) {
+        return name.forename
+      } else if (name.surname) {
+        return name.surname
+      } else if (name.simpleName) {
+        return name.simpleName
+      } else if (name.roleName && name.simpleName) {
+        return `${name.simpleName}, ${name.roleName}`
+      } else if (name.roleName && name.forename) {
+        return `${name.forename}, ${name.roleName}`
+      } else if (name.orgName) {
+        return name.orgName
+      } else {
+        return "NN"
       }
     }
   }

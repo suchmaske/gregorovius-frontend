@@ -43,7 +43,8 @@ export default {
           required: true,
           label: 'Empfänger',
           align: 'left',
-          field: row => row.properties.recipient[0],
+          field: row => this.getNames(row.properties.recipient),
+          format: val => val.join(', '),
           sortable: true
         },
         {
@@ -67,56 +68,67 @@ export default {
         }
       ],
       data: [],
-      persList: []
+      persList: [],
+      orgList: [],
+      placeList: [],
     }
   },
 
   beforeMount () {
-    this.getPersons()
+    [
+      this.getItems('/persons', 'persList'),
+      this.getItems('/institutions', 'orgList'),
+      this.getItems('/places', 'placeList'),
+    ]
   },
 
   mounted () {
-    this.getItems()
+    this.getItems(this.$route.path, 'data')
   },
 
   methods: {
-    async getItems () {
+    async getItems (source, target) {
       try {
-        const response = await fetch('http://localhost:8000' + this.$route.path)
+        const response = await fetch('http://localhost:8000' + source)
         const data = await response.json()
-        this.data = data
+        this[target] = data
         this.loading = false
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
     },
-    async getPersons () {
-        try {
-          const persResponse = await fetch('http://localhost:8000/persons')
-          const persData = await persResponse.json()
-          this.persList = persData
-        } catch (error) {
-          // eslint-disable-next-line
-          console.error(error)
-        }
-    },
-
-    fullName (id) {
-      var person = this.persList.find(x => x.id === id)
-      if (person) {
-        return person.properties.name.forename + ' ' + person.properties.name.surname
+    getName (id) {
+      var items = [...this.persList, ...this.orgList]
+      var item = items.find(x => x.id === id)
+      if (item.properties.name) {
+        var name = item.properties.name
       } else {
-        return ''
+        var name = null
       }
+      if (name.surname && name.forename) {
+        return `${name.forename} ${name.surname}`
+      } else if (name.simpleName) {
+        return name.simpleName
+      } else if (name.roleName && name.simpleName) {
+        return `${name.simpleName}, ${name.roleName}`
+      } else if (name.roleName && name.forename) {
+        return `${name.forename}, ${name.roleName}`
+      } else if (name.orgName) {
+        return name.orgName
+      } else {
+        return "NN"
+      }
+    },
+    getNames (idList) {
+      if (idList) {
+        return idList.map(this.getName)
+      } else {
+        return ["NN"]
+      }
+
     }
   },
-
-  computed: {
-    fullName () {
-      return 'test'
-    }
-  }
 
 }
 </script>
