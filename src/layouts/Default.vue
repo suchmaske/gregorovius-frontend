@@ -22,24 +22,29 @@
         <q-toolbar-title>
           <div class="row q-pa-md">
             <div class="col-md-6 col-10 q-pa-md self-center">
-              <div class="row">
-                <img href="https://dfg.de" src="../statics/img/logo_dhi.png"/>
-              </div>
+              <a href="http://dhi-roma.it">
+                <img src="../statics/img/logo_dhi.png"/>
+              </a>
             </div>
             <div class="col-md-3 col-10 q-pa-md">
               <div class="text-caption">gefördert durch</div>
               <div class="row q-py-md">
-                <img src="../statics/img/logo_dfg.png"/>
+                <a href="https://www.dfg.de/">
+                  <img src="../statics/img/logo_dfg.png"/>
+                </a>
               </div>
               <div class="row">
-                <img src="../statics/img/logo_henkel.png"/>
+                <a href="https://www.gerda-henkel-stiftung.de/">
+                  <img src="../statics/img/logo_henkel.png"/>
+                </a>
               </div>
             </div>
             <div class="col-md-3 col-10 q-pa-md">
-              <div class="row">
-                <div class="text-caption">in Kooperation mit</div>
-                <img src="../statics/img/logo_bbaw.png"/>
-              </div>
+              <div class="text-caption">in Kooperation mit</div>
+                <a href="http://www.bbaw.de">
+                  <img src="../statics/img/logo_bbaw.png"/>
+                </a>
+            </div>
             </div>
           </div>
         </q-toolbar-title>
