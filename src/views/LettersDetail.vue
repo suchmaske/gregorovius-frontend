@@ -73,10 +73,10 @@ export default {
         return this.data.teiHeader.profileDesc.abstract.p[0]['#text']
       },
       titleMain () {
-        return this.data.teiHeader.fileDesc.titleStmt.title.split('.')[0]
+        return this.data.teiHeader.fileDesc.titleStmt.title.split(/\. [A-Z][a-z]/)[0]
       },
       titleSecondary () {
-        return this.data.teiHeader.fileDesc.titleStmt.title.split(/\.(.+)/)[1]
+        return this.data.teiHeader.fileDesc.titleStmt.title.split(/[a-z]\.(.+)/)[1]
       }
   }
 }
