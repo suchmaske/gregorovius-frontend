@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="q-md landing-page fullscreen" style="z-index: 0">
-    </div>
-    <div class="col-12 fixed-center landing-page-text q-gutter-xs">
+    <div class="col-12 landing-page-text q-gutter-xs q-pl-xl q-ml-xl q-py-xl">
       <div class="text-h4 text-left text-positive text-bold">Ferdinand Gregorovius</div>
       <div class="text-h4 text-left text-positive">Poesie und Wissenschaft</div>
       <div class="text-h4 text-left text-white text-bold">Gesammelte deutsche und italienische</div>
@@ -10,8 +8,13 @@
         <q-icon left size="3em" name="arrow_right"></q-icon>
         <div class="text-center text-h4 landing-button">Briefe</div>
       </q-btn>
-      <div class="text-h7 text-left text-white q-mt-md"><b>Projektleitung </b> Prof. Dr. Martin Baumeister und Dr. Angela Steinsiek</div>
+      <div class="row q-mt-lg">
+        <div class="text-h7 text-left text-white text-bold q-pr-xs">Projektleitung</div>
+        <div class="text-h7 text-left text-white">Prof. Dr. Martin Baumeister und Dr. Angela Steinsiek</div>
+      </div>
     </div>   
+    <div class="q-md landing-page fullscreen" style="z-index: -1">
+    </div>
   </div>
 </template>
 
@@ -42,14 +45,10 @@ export default {
 
 .landing-page-text {
   font-family: 'IBM Plex Sans', sans-serif;
-  top: 30% !important;
-  left: 37% !important;
-  width: auto !important;
 }
 
 .landing-button {
   font-weight: bold !important;
-
 }
 
 </style>

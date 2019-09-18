@@ -8,6 +8,8 @@
         :filter="filter"
         :pagination.sync="pagination"
         :loading="loading"
+        flat
+        bordered
       >
         <template v-slot:body-cell="props">
           <q-td :props="props" @click.native="$router.push({ path: `/letters/${props.row.id}` })" class="cursor-pointer">{{ props.value }}</q-td>
@@ -109,6 +111,12 @@ export default {
       }
     }
   },
+
+  computed: {
+    fullName () {
+      return 'test'
+    }
+  }
 
 }
 </script>

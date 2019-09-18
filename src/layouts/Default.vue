@@ -1,19 +1,20 @@
 <template>
   <q-layout>
-    <q-header  :class="(($route.path === '/') ? 'transparent' : 'bg-primary')">
+    <q-header :class="(($route.path === '/') ? 'transparent' : 'bg-primary')">
       <q-tabs inline-label indicator-color="grey-1" align="left">
         <img class="gt-sm logo-signature cursor-pointer q-mx-md q-pa-md" src="../statics/img/gregorovius_signature.svg" @click="$router.push({ path: '/' })"/>
+        <q-icon class="lt-sm q-mr-md cursor-pointer" name="home" style="font-size: 1.3em" @click="$router.push({ path: '/' })"></q-icon>
         <q-route-tab to="/letters" label="BRIEFE" />
         <q-route-tab to="/persons" label="PERSONEN" />
         <q-route-tab to="/institutions" label="KÖRPERSCHAFTEN" />
         <q-route-tab to="/places" label="ORTE" />
         <q-route-tab to="/works" label="WERKE" />
         <q-space />
-        <q-btn flat label="EDITIONSRICHTLINIEN" />
         <q-btn flat label="PROJEKT" />
+        <q-btn flat label="EDITIONSRICHTLINIEN" />
       </q-tabs>
     </q-header>
-    <q-page-container class="bg-grey-1 q-py-none">
+    <q-page-container :class="(($route.path === '/') ? 'bg-none' : 'bg-grey-1')">
       <router-view />
     </q-page-container>
     <q-footer :class="(($route.path === '/') ? 'transparent' : 'bg-secondary')" class="text-white">
@@ -22,7 +23,7 @@
           <div class="row q-pa-md">
             <div class="col-md-6 col-10 q-pa-md self-center">
               <div class="row">
-                <img src="../statics/img/logo_dhi.png"/>
+                <img href="https://dfg.de" src="../statics/img/logo_dhi.png"/>
               </div>
             </div>
             <div class="col-md-3 col-10 q-pa-md">
