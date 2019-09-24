@@ -13,8 +13,8 @@
         <div class="text-h7 text-left text-white">Prof. Dr. Martin Baumeister und Dr. Angela Steinsiek</div>
       </div>
     </div>   
-    <div class="q-md landing-page fullscreen" style="z-index: -1">
-    </div>
+    <q-img class="landing-page fullscreen" style="z-index: -1">
+    </q-img>
   </div>
 </template>
 

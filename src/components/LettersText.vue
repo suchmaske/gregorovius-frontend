@@ -3,14 +3,15 @@
 </template>
 
 <script>
-import lettersXSLT from '../assets/xslt/LettersText.xslt'
-import VRuntimeTemplate from "v-runtime-template"
+import VRuntimeTemplate from 'v-runtime-template'
+import { xslt } from '@/mixins/xslt'
 
 export default {
   name: 'LettersText',
   components: {
     VRuntimeTemplate
   },
+  mixins: [xslt],
   data () {
     return {
       data: null
@@ -26,14 +27,7 @@ export default {
       try {
         const response = await fetch('http://localhost:8000' + this.$route.path)
         const data = await response.text()
-        var parser = new DOMParser()
-        var xml = parser.parseFromString(data, "text/xml")
-        var xslt = parser.parseFromString(lettersXSLT, "text/xml")
-        const processor = new XSLTProcessor()
-        processor.importStylesheet(xslt)
-        var html = processor.transformToDocument(xml)
-        this.data = '<div class="edition-text" xmlns:v-bind="https://vuejs.org/v2/api/#v-bind" xmlns:v-on="https://vuejs.org/v2/api/#v-on">' 
-          + html.documentElement.innerHTML + '</div>'
+        this.data = await this.processXML(data, 'LettersText')
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)

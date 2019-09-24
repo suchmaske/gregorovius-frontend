@@ -9,7 +9,6 @@
         :pagination.sync="pagination"
         :loading="loading"
         flat
-        bordered
       >
         <template v-slot:body-cell="props">
           <q-td :props="props" @click.native="$router.push({ path: `/places/${props.row.id}` })" class="cursor-pointer">{{ props.value }}</q-td>
@@ -35,7 +34,8 @@ export default {
       filter: '',
       loading: true,
       pagination: {
-        rowsPerPage: 10
+        rowsPerPage: 10,
+        sortBy: 'toponym'
       },
       columns: [
         {
@@ -43,7 +43,7 @@ export default {
           required: true,
           label: 'Ortsname',
           align: 'left',
-          field: row => row.properties.toponym,
+          field: row => row.properties.name.toponym,
           sortable: true
         }
       ],

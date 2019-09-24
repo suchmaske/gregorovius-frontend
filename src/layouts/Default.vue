@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <q-header :class="(($route.path === '/') ? 'transparent' : 'bg-primary')">
-      <q-tabs inline-label indicator-color="grey-1" align="left">
+      <q-tabs inline-label indicator-color="positive" align="left">
         <img class="gt-sm logo-signature cursor-pointer q-mx-md q-pa-md" src="../statics/img/gregorovius_signature.svg" @click="$router.push({ path: '/' })"/>
         <q-icon class="lt-sm q-mr-md cursor-pointer" name="home" style="font-size: 1.3em" @click="$router.push({ path: '/' })"></q-icon>
         <q-route-tab to="/letters" label="BRIEFE" />
@@ -14,7 +14,7 @@
         <q-btn flat label="EDITIONSRICHTLINIEN" />
       </q-tabs>
     </q-header>
-    <q-page-container :class="(($route.path === '/') ? 'bg-none' : 'bg-grey-1')">
+    <q-page-container :class="(($route.path === '/') ? 'bg-none' : 'bg-grey-2')">
       <router-view />
     </q-page-container>
     <q-footer :class="(($route.path === '/') ? 'transparent' : 'bg-secondary')" class="text-white">
@@ -65,6 +65,7 @@ export default {
 }
 .logo-signature {
   height: 80px;
+  max-width: 320px;
 }
 .q-tab__indicator {
   height: 5px !important;

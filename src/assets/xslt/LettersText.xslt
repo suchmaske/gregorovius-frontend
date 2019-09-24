@@ -7,8 +7,6 @@
     version="3.0" 
     exclude-result-prefixes="tei">
 
-    <xsl:output method="xml" doctype-system="http://www.w3.org/TR/html4/strict.dtd" doctype-public="-//W3C//DTD HTML 4.01//EN"/>
-
     <xsl:template match="/">
         <xsl:apply-templates select="//tei:body"/>
     </xsl:template> 
