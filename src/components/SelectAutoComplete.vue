@@ -1,6 +1,5 @@
 <template>
   <div class="q-pa-md">
-    <div class="q-gutter-md row">
       <q-select
         filled
         bg-color="white"
@@ -8,21 +7,15 @@
         use-input
         hide-selected
         fill-input
-        input-debounce="0"
         :options="options"
         :label="label"
         @filter="filterFn"
         @input="setSelected"
-        map-options
         ref="selector"
         :value="this.model.value"
       >
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-grey">
-              Keine Ergebnisse
-            </q-item-section>
-          </q-item>
+        <template v-if="model.value !== ''" v-slot:append>
+          <q-icon name="cancel" @click.stop="model = {label: '', value: ''}; setSelected()" class="cursor-pointer" />
         </template>
       </q-select>
     </div>

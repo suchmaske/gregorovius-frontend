@@ -37,7 +37,6 @@ export default {
   data () {
     return {
         model: [],
-        options: this.$attrs.options,
     }
   },
   methods: {
@@ -47,7 +46,7 @@ export default {
     },
   },
   computed: {
-    optionsFull () {
+    options () {
       return this.$attrs.options
     },
   }
