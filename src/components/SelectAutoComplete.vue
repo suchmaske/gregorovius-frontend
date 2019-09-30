@@ -12,7 +12,7 @@
         :options="options"
         :label="label"
         @filter="filterFn"
-        @input="$emit('update-value', this.model.value)"
+        @input="setSelected"
         map-options
         ref="selector"
         :value="this.model.value"
@@ -30,9 +30,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'SelectAutoComplete',
-  props: ['label', 'value'],
+  props: ['label', 'entity'],
   data () {
     return {
         model: {
@@ -43,6 +45,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setSelectedAction']),
     filterFn (val, update, abort) {
       update(() => {
         const needle = val.toLowerCase()
@@ -54,13 +57,16 @@ export default {
         })
       })
     },
-    updateSelect () {
-      this.$props.value = this.model.value
+    setSelected () {
+      this.setSelectedAction({entity: this.$props.entity, value: this.value})
     },
   },
   computed: {
     optionsFull () {
       return this.$attrs.options
+    },
+    value () {
+      return this.model.value
     }
   }
 };

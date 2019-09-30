@@ -4,10 +4,10 @@
     <div class="col-12 col-md-3">
       <q-card flat class="transparent">
         <div class="row justify-center">
-          <select-auto-complete label="Empfänger" :options="uniqueRecipients" @update-value="(val) => {filter.recipient = val}"/>
-          <select-auto-complete label="Empfangsort" :options="uniquePlacesReceived"/>
-          <select-auto-complete label="Schreibort" :options="uniquePlacesSent"/>
-          <select-auto-complete label="Jahr"/>
+          <select-auto-complete label="Empfänger" entity="recipient" :options="uniqueRecipients"/>
+          <select-auto-complete label="Empfangsort" entity="placeReceived" :options="uniquePlacesReceived"/>
+          <select-auto-complete label="Schreibort" entity="placeSent" :options="uniquePlacesSent"/>
+          <select-auto-complete label="Jahr" entity="yearSpan"/>
         </div>
       </q-card>
     </div>
@@ -89,7 +89,7 @@ export default {
           required: true,
           label: 'Empfangsort',
           align: 'left',
-          field: row => this.getFullName(row.properties.place.sent, 'o. O.'),
+          field: row => this.getFullName(row.properties.place.received, 'o. O.'),
           sortable: true
         },
       ],
@@ -195,21 +195,25 @@ export default {
         rows = rows.filter((r) => this.hasValue(r, 'place.sent', terms.placeSent))
       }
       if (terms.placeReceived !== '') {
-        rows.filter((r) => this.hasValue(r, 'place.received', terms.placeReceived))
+        rows = rows.filter((r) => this.hasValue(r, 'place.received', terms.placeReceived))
       }
       return rows
-    }
+    },
+
   },
 
   computed: {
-    ...mapState(['letters']),
 
     fullNameIndex () {
-      return this.$store.state.fullNameIndex
+      return this.$store.getters.fullNameIndex
     },
 
     letters () {
-      return this.$store.state.letters
+      return this.$store.getters.letters
+    },
+
+    letters () {
+      return this.$store.getters.letters
     },
 
     uniqueRecipients () {
@@ -223,7 +227,29 @@ export default {
     uniquePlacesReceived () {
       return this.getOptions('letters', 'place.received')
     },
-  }
+  },
+
+  created () {
+    this.$store.watch(
+      (state, getters) => (getters.selectedRecipient),
+      (newValue, oldValue) => {
+        this.filter.recipient = newValue
+      },
+    ),
+    this.$store.watch(
+      (state, getters) => getters.selectedPlaceReceived,
+      (newValue, oldValue) => {
+        this.filter.placeReceived = newValue
+      }
+    ),
+    this.$store.watch(
+      (state, getters) => getters.selectedPlaceSent,
+      (newValue, oldValue) => {
+        this.filter.placeSent = newValue
+      }
+    )
+  },
+
 }
 </script>
 

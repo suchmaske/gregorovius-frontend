@@ -13,6 +13,10 @@ export default new Vuex.Store({
     places: [],
     works: [],
     fullNameIndex: [],
+    selectedRecipient: '',
+    selectedPlaceReceived: '',
+    selectedPlaceSent: '',
+    selectedYearSpan: [],
   },
   mutations: {
     SET_LOADING_STATUS(state) {
@@ -23,6 +27,24 @@ export default new Vuex.Store({
     },
     GET_FULLNAME_INDEX(state, fullNameIndex) {
       state.fullNameIndex = fullNameIndex;
+    },
+    SET_SELECTED(state, payload) {
+      switch (payload.entity) {
+        case 'recipient':
+          state.selectedRecipient = payload.value;
+          break;
+        case 'placeReceived':
+          state.selectedPlaceReceived = payload.value;
+          break;
+        case 'placeSent':
+          state.selectedPlaceSent = payload.value;
+          break;
+        case 'yearSpan':
+          state.selectedYearSpan = payload.value;
+          break;
+        default:
+          break;
+      }
     },
   },
   actions: {
@@ -38,13 +60,25 @@ export default new Vuex.Store({
       commit('GET_FULLNAME_INDEX', fullNameIndex);
       commit('SET_LOADING_STATUS');
     },
+    async setSelectedAction({ commit }, payload) {
+      commit('SET_SELECTED', payload);
+    },
   },
   getters: {
-    letters: state => {
+    letters: (state) => {
       return state.letters;
     },
-    fullNameIndex: state => {
+    fullNameIndex: (state) => {
       return state.fullNameIndex;
+    },
+    selectedRecipient: (state) => {
+      return state.selectedRecipient;
+    },
+    selectedPlaceReceived: (state) => {
+      return state.selectedPlaceReceived;
+    },
+    selectedPlaceSent: (state) => {
+      return state.selectedPlaceSent;
     },
   },
 });
