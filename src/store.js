@@ -16,7 +16,7 @@ export default new Vuex.Store({
     selectedRecipient: '',
     selectedPlaceReceived: '',
     selectedPlaceSent: '',
-    selectedYearSpan: [],
+    selectedYears: [],
   },
   mutations: {
     SET_LOADING_STATUS(state) {
@@ -39,8 +39,8 @@ export default new Vuex.Store({
         case 'placeSent':
           state.selectedPlaceSent = payload.value;
           break;
-        case 'yearSpan':
-          state.selectedYearSpan = payload.value;
+        case 'years':
+          state.selectedYears = payload.value;
           break;
         default:
           break;
@@ -79,6 +79,9 @@ export default new Vuex.Store({
     },
     selectedPlaceSent: (state) => {
       return state.selectedPlaceSent;
+    },
+    selectedYears: (state) => {
+      return state.selectedYears;
     },
   },
 });

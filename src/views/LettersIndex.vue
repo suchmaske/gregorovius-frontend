@@ -5,9 +5,9 @@
       <q-card flat class="transparent">
         <div class="row justify-center">
           <select-auto-complete label="Empfänger" entity="recipient" :options="uniqueRecipients"/>
-          <select-auto-complete label="Empfangsort" entity="placeReceived" :options="uniquePlacesReceived"/>
           <select-auto-complete label="Schreibort" entity="placeSent" :options="uniquePlacesSent"/>
-          <select-auto-complete label="Jahr" entity="yearSpan"/>
+          <select-auto-complete label="Empfangsort" entity="placeReceived" :options="uniquePlacesReceived"/>
+          <select-years label="Jahre" entity="years" :options="uniqueYears"/>
         </div>
       </q-card>
     </div>
@@ -36,12 +36,14 @@
 <script>
 
 import SelectAutoComplete from '../components/SelectAutoComplete.vue'
+import SelectYears from '../components/SelectYears.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'LettersIndex',
   components: {
-    SelectAutoComplete
+    SelectAutoComplete,
+    SelectYears
   },
   data () {
     return {
@@ -50,7 +52,7 @@ export default {
         recipient: '',
         placeSent: '',
         placeReceived: '',
-        yearInterval: [],
+        years: [],
       },
       loading: this.$store.state.isLoading,
       pagination: {
@@ -96,7 +98,7 @@ export default {
       data: [],
     }
   },
-  async mounted () {
+  async beforeMount () {
     await this.loadLetters()
     await this.loadFullNameIndex()
   },
@@ -197,6 +199,9 @@ export default {
       if (terms.placeReceived !== '') {
         rows = rows.filter((r) => this.hasValue(r, 'place.received', terms.placeReceived))
       }
+      if (terms.years.length > 0) {
+        rows = rows.filter((r) => !r.properties.date ? false : terms.years.includes(r.properties.date.slice(0, 4)))
+      }
       return rows
     },
 
@@ -227,9 +232,18 @@ export default {
     uniquePlacesReceived () {
       return this.getOptions('letters', 'place.received')
     },
+
+    uniqueYears () {
+      const years = this.letters.map((e) => {
+        try {
+          return e.properties.date.slice(0, 4)
+        } catch (TypeError) {}
+      })
+      return [...new Set(years)].filter(year => year !== undefined).sort()
+    },
   },
 
-  created () {
+  beforeCreate () {
     this.$store.watch(
       (state, getters) => (getters.selectedRecipient),
       (newValue, oldValue) => {
@@ -246,6 +260,12 @@ export default {
       (state, getters) => getters.selectedPlaceSent,
       (newValue, oldValue) => {
         this.filter.placeSent = newValue
+      }
+    ),
+    this.$store.watch(
+      (state, getters) => getters.selectedYears,
+      (newValue, oldValue) => {
+        this.filter.years = newValue
       }
     )
   },
