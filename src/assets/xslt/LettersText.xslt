@@ -83,10 +83,36 @@
         <br/>
     </xsl:template> 
 
-    <xsl:template match="tei:persName | tei:orgName | tei:placeName">
+    <xsl:template match="tei:persName">
         <xsl:choose>
             <xsl:when test="@key">
-                <a v-on:click="$router.push('persons/{@key}')">
+                <a class="g-entity-link" v-on:click="$router.push({{ name: 'Person', params: {{ id: '{@key}' }} }})">
+                    <xsl:apply-templates/>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="tei:orgName">
+        <xsl:choose>
+            <xsl:when test="@key">
+                <a class="g-entity-link" v-on:click="$router.push({{ name: 'Körperschaft', params: {{ id: '{@key}' }} }})">
+                    <xsl:apply-templates/>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="tei:placeName">
+        <xsl:choose>
+            <xsl:when test="@key">
+                <a class="g-entity-link" v-on:click="$router.push({{ name: 'Ort', params: {{ id: '{@key}' }} }})">
                     <xsl:apply-templates/>
                 </a>
             </xsl:when>
@@ -107,7 +133,7 @@
     <xsl:template match="tei:bibl">
         <xsl:choose>
             <xsl:when test="@sameAs">
-                <a style="color: blue" v-on:click="$router.push('/works/{@key}')">
+                <a class="g-entity-link" v-on:click="$router.push({{ name: 'Werk', params: {{ id: '{@key}' }} }})">
                     <xsl:apply-templates/>
                 </a>
             </xsl:when>

@@ -1,6 +1,7 @@
 <template>
   <q-page padding>
-    <div v-if="data.teiHeader" class="col-8 q-pa-xl q-gutter-y-lg">
+<div class="row justify-center">
+    <div v-if="data.teiHeader" class="col-8 q-py-xl q-gutter-y-lg">
 
       <q-card class="col-md-8 col-12 q-pa-xl" flat>
         <q-card-section>
@@ -21,6 +22,9 @@
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
+</div>
+
+<div class="row justify-center">
 
       <q-card class="col-md-8 col-12 q-pa-xl">
           <a :href="'http://localhost:8000' + this.$route.path">
@@ -28,6 +32,8 @@
           </a>
           <LettersText/>
       </q-card>
+
+</div>
 
     </div>
   </q-page>

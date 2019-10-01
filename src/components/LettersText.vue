@@ -58,4 +58,16 @@ span.pb {
   font-size: 0.8em;
 }
 
+span.add {
+  color: green;
+}
+
+del {
+  color: red;
+}
+
+.g-entity-link {
+  color: blue;
+  cursor: pointer;
+}
 </style>
