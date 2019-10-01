@@ -53,7 +53,7 @@ export default {
 span.pb {
   display: block;
   position: absolute;
-  left: -2.5em;
+  left: 1em;
   margin-top: -1.7em;
   font-size: 0.8em;
 }
@@ -67,7 +67,37 @@ del {
 }
 
 .g-entity-link {
-  color: blue;
+  box-shadow: inset 0 -0.7rem 0 0 hsla(144.9, 100%, 82.5%, 0.5);
+  transition: box-shadow 0.5s;
   cursor: pointer;
 }
+.g-entity-link.start-offset {
+  box-shadow: inset 0 -2.5rem 0 0 hsla(144.9, 100%, 82.5%, 1);
+}
+.g-entity-link.start-offset:hover {
+  box-shadow: inset 0 -0.5rem 0 0 hsla(144.9, 100%, 82.5%, 1);
+}
+
+.g-entity-link:hover {
+  box-shadow: inset 0 -2.5rem 0 0 hsla(144.9, 100%, 82.5%, 1);
+}
+
+
+.margin-right {
+  display: block;
+  position: absolute !important;
+  right: 0em;
+}
+
+span.list {
+  display: block;
+  margin-bottom: 1em;
+}
+
+span.list-item {
+  display: flex;
+  margin-bottom: .5em;
+  margin-left: 1.5rem;
+}
+
 </style>

@@ -164,6 +164,7 @@
 
     <!-- Popovers: Kommentare, Anstreichungen, Anemerkungen, Erledigungsvermerke -->
 
+    <!--
     <xsl:template match="tei:seg[@type='comment']">
         <span class="comment"
               data-tippy-content='&lt;b class="card-title"&gt;
@@ -175,7 +176,8 @@
             <xsl:apply-templates select="tei:orig"/>
         </span>
     </xsl:template>    
-
+    -->
+    <!--
     <xsl:template match="tei:note[@place and @hand]">
         <xsl:variable name="place">
             <xsl:choose>
@@ -251,6 +253,7 @@
         </span>
     </xsl:template>    
 
+    -->
     <xsl:template match="tei:add[@place and tei:metamark[@function]]">
         <xsl:variable name="place">
             <xsl:choose>
@@ -276,23 +279,35 @@
         </xsl:variable>
         <xsl:variable name="list">
             <xsl:choose>
-                <xsl:when test="matches(tei:metamark/@target, 'list')">, zur gesamten Liste</xsl:when>
+                <xsl:when test="contains(tei:metamark/@target, 'list')">, zur gesamten Liste</xsl:when>
                 <xsl:otherwise/>
             </xsl:choose>
         </xsl:variable>
-        <span class="btn add place-{@place} metamark-{tei:metamark/@function} margin-right-1"
-              data-tippy-content='&lt;b class="card-title"&gt;
-                                        {$metamark}
-                                    &lt;/b&gt;
-                                    &lt;div&gt;
-                                        &lt;small&gt;
-                                            am {$place} Rand, {$hand}{$list}
-                                        &lt;/small&gt;
-                                    &lt;/div&gt;
-                                    '>
-        </span>
-    </xsl:template>    
+        <xsl:variable name="icon-type">
+            <xsl:choose>
+                <xsl:when test="contains(tei:metamark/@function, 'done')">done</xsl:when>
+                <xsl:when test="contains(tei:metamark/@function, 'used')">format_line_spacing</xsl:when>
+                <xsl:otherwise/>
+            </xsl:choose>
+        </xsl:variable>
 
+        <q-btn 
+            color="primary" flat="" outline="" icon="{$icon-type}"
+            class="metamark-{tei:metamark/@function} margin-right"
+        >
+            <q-tooltip 
+                anchor="center left" self="center right" 
+                v-bind:offset="[10, 10]" content-style="font-size: 17px"
+                content-class="bg-primary text-white"
+            >
+                <xsl:value-of select="$metamark"/> 
+                am <xsl:value-of select="$place"/> Rand, 
+                <xsl:value-of select="$hand"/> 
+                <xsl:value-of select="$list"/>
+            </q-tooltip>
+        </q-btn>
+    </xsl:template>
+    
     <xsl:template match="tei:seg[@xml:id]">
         <span class="seg">
             <xsl:apply-templates/>
