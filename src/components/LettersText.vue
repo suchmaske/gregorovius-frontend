@@ -5,6 +5,7 @@
 <script>
 import VRuntimeTemplate from 'v-runtime-template'
 import { xslt } from '@/mixins/xslt'
+import { dataService } from '@/shared'
 
 export default {
   name: 'LettersText',
@@ -25,9 +26,9 @@ export default {
   methods: {
     async getItems () {
       try {
-        const response = await fetch('http://localhost:8000' + this.$route.path)
-        const data = await response.text()
-        this.data = await this.processXML(data, 'LettersText')
+        const response = await dataService.XSLTransform(this.$route.path, 'LettersText')
+        const data = await response
+        this.data = data
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)

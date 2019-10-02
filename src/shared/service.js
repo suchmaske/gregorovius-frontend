@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 import axios from 'axios';
-import { API } from './config';
+import { API, XSLTToken } from './config';
 
 const parseList = (response) => {
   if (response.status !== 200) throw Error(response.message);
@@ -16,7 +16,7 @@ const parseItem = (response, code) => {
   if (response.status !== code) throw Error(response.message);
   let item = response.data;
   if (typeof item !== 'object') {
-    item = undefined;
+    item = '';
   }
   return item;
 };
@@ -112,6 +112,29 @@ const getFullNameIndex = async function () {
     console.error(error);
     return [];
   }
+};
+
+
+const XSLTransform = async function (path, xsltName) {
+  try {
+    const stylesheetModule = await import(`@/assets/xslt/${xsltName}.xslt`);
+    const stylesheet = stylesheetModule.default;
+    const response = await axios.post(
+      `${API}${path}`,
+      stylesheet,
+      {
+        params: {
+          xslt: true,
+          token: XSLTToken,
+        },
+      },
+    );
+    return `<div class="edition-text" xmlns:v-bind="https://vuejs.org/v2/api/#v-bind" 
+        xmlns:v-on="https://vuejs.org/v2/api/#v-on">${response.data}</div>`;
+  } catch (error) {
+    console.error(error);
+    return '';
+  }
 }
 
 export const dataService = {
@@ -119,4 +142,5 @@ export const dataService = {
   getEntity,
   getLetters,
   getFullNameIndex,
+  XSLTransform
 };
