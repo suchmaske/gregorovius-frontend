@@ -79,11 +79,21 @@ export default {
         return this.data.teiHeader.profileDesc.abstract.p[0]['#text']
       },
       titleMain () {
-        return this.data.teiHeader.fileDesc.titleStmt.title.match(/.*[a-z)](?=\.)/)[0]
+        const title = this.data.teiHeader.fileDesc.titleStmt.title
+        return title.split(/\. (?=([A-Z][a-z]*)( [a-z]*)?( [A-Z][a-z]*)?,)/)[0]
       },
       titleSecondary () {
-        return this.data.teiHeader.fileDesc.titleStmt.title.split(/[a-z)]\./)[1]
-      }
+        const title = this.data.teiHeader.fileDesc.titleStmt.title
+        return title.split(/[a-z)]\./)[1]
+      },
+      msDesc () {
+        const msDesc = this.data.teiHeader.fileDesc.sourceDesc.msDesc
+        const repository = msDesc.msIdentifier.repository
+        const collection = msDesc.msIdentifier.collection
+        const idno = msDesc.msIdentifier.idno
+        const outputStr = [repository, collection, idno].filter(v => v != null)
+        return `H: ${outputStr.join(', ')}`
+      },
   }
 }
 </script>
