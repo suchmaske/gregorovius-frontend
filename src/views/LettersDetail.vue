@@ -16,6 +16,7 @@
         <q-separator />
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="tgl">
+            {{ msDesc }}
           </q-tab-panel>
           <q-tab-panel name="reg">
             {{ abstractGerman }}
