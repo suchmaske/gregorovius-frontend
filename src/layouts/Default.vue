@@ -6,7 +6,6 @@
         <q-icon class="lt-sm q-mr-md cursor-pointer" name="home" style="font-size: 1.3em" @click="$router.push({ path: '/' })"></q-icon>
         <q-route-tab to="/letters" label="BRIEFE" />
         <q-route-tab to="/persons" label="PERSONEN" />
-        <q-route-tab to="/institutions" label="KÖRPERSCHAFTEN" />
         <q-route-tab to="/places" label="ORTE" />
         <q-route-tab to="/works" label="WERKE" />
         <q-space />

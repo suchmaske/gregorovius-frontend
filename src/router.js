@@ -6,8 +6,6 @@ import LettersIndex from './views/LettersIndex.vue';
 import LettersDetail from './views/LettersDetail.vue';
 import PersonsIndex from './views/PersonsIndex.vue';
 import PersonsDetail from './views/PersonsDetail.vue';
-import InstitutionsIndex from './views/InstitutionsIndex.vue';
-import InstitutionsDetail from './views/InstitutionsDetail.vue';
 import PlacesIndex from './views/PlacesIndex.vue';
 import PlacesDetail from './views/PlacesDetail.vue';
 import WorksIndex from './views/WorksIndex.vue';
@@ -46,21 +44,6 @@ export default new Router({
           path: 'persons/:id',
           name: 'Person',
           component: PersonsDetail,
-        },
-        {
-          path: 'letters/:id',
-          name: 'Brief',
-          component: LettersDetail,
-        },
-        {
-          path: 'institutions',
-          name: 'Körperschaften',
-          component: InstitutionsIndex,
-        },
-        {
-          path: 'institutions/:id',
-          name: 'Körperschaft',
-          component: InstitutionsDetail,
         },
         {
           path: 'places',

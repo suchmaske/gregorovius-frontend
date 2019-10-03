@@ -34,7 +34,8 @@ export default {
       filter: '',
       loading: true,
       pagination: {
-        rowsPerPage: 10
+        rowsPerPage: 10,
+        sortBy: 'name'
       },
       columns: [
         {

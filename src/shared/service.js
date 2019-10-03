@@ -99,9 +99,8 @@ const getLetters = async function () {
 const getFullNameIndex = async function () {
   try {
     const persons = await getEntities('persons');
-    const institutions = await getEntities('institutions');
     const places = await getEntities('places');
-    const entities = [...persons, ...institutions, ...places];
+    const entities = [...persons, ...places];
     let fullNameIndex = {}
     entities.map(async function (entity) {
         const targetEntity = entities.find(item => item.id === entity.id)

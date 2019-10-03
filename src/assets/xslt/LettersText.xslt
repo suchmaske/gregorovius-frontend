@@ -85,23 +85,10 @@
         <br/>
     </xsl:template> 
 
-    <xsl:template match="tei:persName">
+    <xsl:template match="tei:persName | tei:orgName">
         <xsl:choose>
             <xsl:when test="@key">
                 <a class="g-entity-link" v-on:click="$router.push({{ name: 'Person', params: {{ id: '{@key}' }} }})">
-                    <xsl:apply-templates/>
-                </a>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:apply-templates/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
-    <xsl:template match="tei:orgName">
-        <xsl:choose>
-            <xsl:when test="@key">
-                <a class="g-entity-link" v-on:click="$router.push({{ name: 'Körperschaft', params: {{ id: '{@key}' }} }})">
                     <xsl:apply-templates/>
                 </a>
             </xsl:when>
