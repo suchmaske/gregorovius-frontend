@@ -122,7 +122,7 @@
     <xsl:template match="tei:bibl">
         <xsl:choose>
             <xsl:when test="@sameAs">
-                <a class="g-entity-link" v-on:click="$router.push({{ name: 'Werk', params: {{ id: '{@key}' }} }})">
+                <a class="g-entity-link" v-on:click="$router.push({{ name: 'Werk', params: {{ id: '{@sameAs}' }} }})">
                     <xsl:apply-templates/>
                 </a>
             </xsl:when>

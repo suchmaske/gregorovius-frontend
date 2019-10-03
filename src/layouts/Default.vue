@@ -10,6 +10,7 @@
         <q-route-tab to="/works" label="WERKE" />
         <q-space />
         <q-btn flat label="PROJEKT" />
+        <q-btn flat label="TEAM" />
         <q-btn flat label="EDITIONSRICHTLINIEN" />
       </q-tabs>
     </q-header>

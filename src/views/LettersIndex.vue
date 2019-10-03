@@ -57,6 +57,7 @@ export default {
       loading: this.$store.state.isLoading,
       pagination: {
         rowsPerPage: 10,
+        sortBy: 'date'
       },
       columns: [
         {
@@ -64,8 +65,8 @@ export default {
           required: true,
           label: 'Schreibdatum',
           align: 'left',
-          field: row => (row.properties.date ? new Date(row.properties.date) : null),
-          format: val => (val ? val.toLocaleDateString('de-DE', {
+          field: row => (row.properties.date ? new Date(row.properties.date) : new Date('2000')),
+          format: val => (val.getFullYear() != '2000' ? val.toLocaleDateString('de-DE', {
             day: 'numeric', month: 'long', year: 'numeric'
           }) : 'o. D.'),
           sortable: true
@@ -212,10 +213,6 @@ export default {
 
     fullNameIndex () {
       return this.$store.getters.fullNameIndex
-    },
-
-    letters () {
-      return this.$store.getters.letters
     },
 
     letters () {

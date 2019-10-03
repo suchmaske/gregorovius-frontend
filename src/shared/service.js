@@ -22,21 +22,25 @@ const parseItem = (response, code) => {
 };
 
 const getFullName = async function (name) {
-  let fullName = 'NN';
   if (name.toponym) {
-    fullName = name.toponym;
+    return name.toponym
   } else if (name.surname && name.forename) {
-    fullName = `${name.forename} ${name.surname}`;
+    return `${name.forename} ${name.surname}`
+  } else if (name.forename) {
+    return name.forename
+  } else if (name.surname) {
+    return name.surname
   } else if (name.simpleName) {
-    fullName = name.simpleName;
+    return name.simpleName
   } else if (name.roleName && name.simpleName) {
-    fullName = `${name.simpleName}, ${name.roleName}`;
+    return `${name.simpleName}, ${name.roleName}`
   } else if (name.roleName && name.forename) {
-    fullName = `${name.forename}, ${name.roleName}`;
+    return `${name.forename}, ${name.roleName}`
   } else if (name.orgName) {
-    fullName = name.orgName;
+    return name.orgName
+  } else {
+    return "NN"
   }
-  return fullName;
 };
 
 const getEntities = async function (entityName) {
@@ -129,7 +133,6 @@ const XSLTransform = async function (path, xsltName) {
       },
     );
     if (response.data === '') {
-      console.log('EMPTY')
       return ''
     } else {
       return `<div xmlns:v-bind="https://vuejs.org/v2/api/#v-bind" 

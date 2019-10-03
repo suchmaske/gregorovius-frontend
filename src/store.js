@@ -9,7 +9,6 @@ export default new Vuex.Store({
     isLoading: false,
     letters: [],
     persons: [],
-    institutions: [],
     places: [],
     works: [],
     fullNameIndex: [],
@@ -24,6 +23,12 @@ export default new Vuex.Store({
     },
     GET_LETTERS(state, letters) {
       state.letters = letters;
+    },
+    GET_PERSONS(state, persons) {
+      state.persons = persons;
+    },
+    GET_PLACES(state, places) {
+      state.persons = places;
     },
     GET_FULLNAME_INDEX(state, fullNameIndex) {
       state.fullNameIndex = fullNameIndex;

@@ -4,18 +4,13 @@
 
       <q-card class="col-md-8 col-12 q-pa-xl" flat bordered>
         <q-card-section>
-          <div class="text-h6"></div>
+          <div class="text-h6">{{ name }}</div>
           <div class="text-subtitle3 text-secondary"></div>
-          <a :href="'http://localhost:8000' + this.$route.path">
-            <q-icon name="code" class="text-primary float-right"  style="font-size: 2em;" />
-          </a>
         </q-card-section>
         <q-separator dark />
       </q-card>
 
-      <q-card class="col-md-8 col-12 q-pa-xl" flat bordered>
-          <LettersText/>
-      </q-card>
+      <MentionsTable :entityId="this.$route.params.id" :entityName="name"/>
 
     </div>
   </q-page>
@@ -23,12 +18,15 @@
 
 <script>
 
+import { mapActions, mapState } from 'vuex'
+import MentionsTable from '@/components/MentionsTable'
+
 export default {
   name: 'PersonsDetail',
+  components: { MentionsTable },
   data () {
     return {
-      data: [],
-      tab: 'hsf',
+      data: []
     }
   },
 
@@ -36,7 +34,12 @@ export default {
     this.getItems()
   },
 
+  async beforeMount () {
+    await this.loadFullNameIndexAction()
+  },
+
   methods: {
+    ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
     async getItems () {
       try {
         const response = await fetch(
@@ -50,9 +53,15 @@ export default {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
+    },
   },
   computed: {
+    fullNameIndex () {
+      return this.$store.getters.fullNameIndex
+    },
+    name () {
+      return this.fullNameIndex[this.$route.params.id]
+    },
   }
 }
 </script>

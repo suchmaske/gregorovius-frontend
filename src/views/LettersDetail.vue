@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import LettersText from '../components/LettersText.vue'
+import LettersText from '@/components/LettersText.vue'
 import VRuntimeTemplate from 'v-runtime-template'
 import { dataService } from '@/shared'
 

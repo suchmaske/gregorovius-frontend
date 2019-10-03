@@ -27,6 +27,8 @@
 
 <script>
 
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name: 'items-list',
   data () {
@@ -55,7 +57,12 @@ export default {
     this.getItems()
   },
 
+  async beforeMount () {
+    await this.loadFullNameIndexAction()
+  },
+
   methods: {
+    ...mapActions(['loadFullNameIndexAction']),
     async getItems () {
       try {
         const response = await fetch('http://localhost:8000' + this.$route.path)
@@ -67,6 +74,11 @@ export default {
         console.error(error)
       }
     }
+  },
+  computed: {
+    fullNameIndex () {
+      return this.$store.getters.fullNameIndex
+    },
   }
 
 }

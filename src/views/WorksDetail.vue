@@ -4,18 +4,13 @@
 
       <q-card class="col-md-8 col-12 q-pa-xl" flat bordered>
         <q-card-section>
-          <div class="text-h6"></div>
+          <v-runtime-template :template="title"/>
           <div class="text-subtitle3 text-secondary"></div>
-          <a :href="'http://localhost:8000' + this.$route.path">
-            <q-icon name="code" class="text-primary float-right"  style="font-size: 2em;" />
-          </a>
         </q-card-section>
         <q-separator dark />
       </q-card>
 
-      <q-card class="col-md-8 col-12 q-pa-xl" flat bordered>
-          <LettersText/>
-      </q-card>
+      <MentionsTable :entityId="this.$route.params.id" entityName="Werk"/>
 
     </div>
   </q-page>
@@ -23,17 +18,26 @@
 
 <script>
 
+import { dataService } from '@/shared'
+import VRuntimeTemplate from 'v-runtime-template'
+import MentionsTable from '@/components/MentionsTable'
+
 export default {
-  name: 'WorksDetail',
+  name: 'PersonsDetail',
+  components: { 
+    MentionsTable,
+    VRuntimeTemplate
+  },
   data () {
     return {
       data: [],
-      tab: 'hsf',
+      title: ''
     }
   },
 
   mounted () {
-    this.getItems()
+    this.getItems(),
+    this.getXSLT('WorkTitle', 'title')
   },
 
   methods: {
@@ -50,9 +54,15 @@ export default {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
+    },
+    async getXSLT (fileName, targetProp) {
+      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName)
+    },
   },
   computed: {
+    name () {
+      return this.data
+    },
   }
 }
 </script>
