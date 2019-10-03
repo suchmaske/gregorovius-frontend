@@ -129,8 +129,13 @@ const XSLTransform = async function (path, xsltName) {
         },
       },
     );
-    return `<div class="edition-text" xmlns:v-bind="https://vuejs.org/v2/api/#v-bind" 
-        xmlns:v-on="https://vuejs.org/v2/api/#v-on">${response.data}</div>`;
+    if (response.data === '') {
+      console.log('EMPTY')
+      return ''
+    } else {
+      return `<div xmlns:v-bind="https://vuejs.org/v2/api/#v-bind" 
+          xmlns:v-on="https://vuejs.org/v2/api/#v-on">${response.data}</div>`;
+    }
   } catch (error) {
     console.error(error);
     return '';

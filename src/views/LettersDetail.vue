@@ -11,15 +11,23 @@
         <q-separator dark />
         <q-tabs v-model="tab" class="text-primary">
           <q-tab label="Textgrundlage" name="tgl" />
-          <q-tab label="Regest" name="reg" />
+          <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
+          <q-tab v-if="physDesc != ''" label="Physische Beschreibung" name="phy" />
+          <q-tab v-if="supplement != ''" label="Beilagen" name="spl" />
         </q-tabs>
         <q-separator />
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="tgl">
-            {{ msDesc }}
+            <v-runtime-template :template="msDesc"/>
           </q-tab-panel>
           <q-tab-panel name="reg">
             {{ abstractGerman }}
+          </q-tab-panel>
+          <q-tab-panel name="phy">
+            <v-runtime-template :template="physDesc"/>
+          </q-tab-panel>
+          <q-tab-panel name="spl">
+            <v-runtime-template :template="supplement"/>
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -42,21 +50,30 @@
 
 <script>
 import LettersText from '../components/LettersText.vue'
+import VRuntimeTemplate from 'v-runtime-template'
+import { dataService } from '@/shared'
 
 export default {
   name: 'item',
   components: {
-    LettersText
+    LettersText,
+    VRuntimeTemplate
   },
   data () {
     return {
       data: [],
       tab: 'reg',
+      msDesc: '',
+      supplement: '',
+      physDesc: '',
     }
   },
 
   mounted () {
-    this.getItems()
+    this.getItems(),
+    this.getXSLT('LettersMsDesc', 'msDesc'),
+    this.getXSLT('LettersPhysDesc', 'physDesc'),
+    this.getXSLT('LettersSupplement', 'supplement')
   },
 
   methods: {
@@ -67,13 +84,15 @@ export default {
             headers: {'Accept': 'application/json'}
           }
         )
-        const data = await response.json()
-        this.data = data
+        this.data = await response.json()
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
+    },
+    async getXSLT (fileName, targetProp) {
+      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName)
+    },
   },
   computed: {
       abstractGerman () {
@@ -81,19 +100,12 @@ export default {
       },
       titleMain () {
         const title = this.data.teiHeader.fileDesc.titleStmt.title
-        return title.split(/\. (?=([A-Z][a-z]*)( [a-z]*)?( [A-Z][a-z]*)?,)/)[0]
+        return title.split(/\. (?=([A-Z][a-zäöüß]*|St\.)( [a-z]*)?( [A-Z][a-zäöüß]*)?,)/)[0]
       },
       titleSecondary () {
         const title = this.data.teiHeader.fileDesc.titleStmt.title
-        return title.split(/[a-z)]\./)[1]
-      },
-      msDesc () {
-        const msDesc = this.data.teiHeader.fileDesc.sourceDesc.msDesc
-        const repository = msDesc.msIdentifier.repository
-        const collection = msDesc.msIdentifier.collection
-        const idno = msDesc.msIdentifier.idno
-        const outputStr = [repository, collection, idno].filter(v => v != null)
-        return `H: ${outputStr.join(', ')}`
+        const secondPart = title.split(/in [A-Z][a-zäöüß)]*( [a-z]*)?( [A-Z][a-zäöüß]*)?\./)
+        return secondPart[secondPart.length - 1]
       },
   }
 }

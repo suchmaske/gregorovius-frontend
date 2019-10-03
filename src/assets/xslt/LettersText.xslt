@@ -8,7 +8,9 @@
     exclude-result-prefixes="tei">
 
     <xsl:template match="/">
-        <xsl:apply-templates select="//tei:body"/>
+        <div class="edition-text">
+            <xsl:apply-templates select="//tei:body"/>
+        </div>
     </xsl:template> 
 
 
