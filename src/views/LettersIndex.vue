@@ -25,7 +25,13 @@
         flat
       >
         <template v-slot:body-cell="props">
-          <q-td :props="props" @click.native="$router.push({ name: 'Brief', params: { id: props.row.id } })" class="cursor-pointer">{{ props.value }}</q-td>
+          <q-td 
+            :props="props" 
+            @click.native="$router.push({ name: 'Brief', params: { id: props.row.id } })" 
+            class="cursor-pointer"
+          >
+            {{ props.value }}
+          </q-td>
         </template>
       </q-table>
     </div>

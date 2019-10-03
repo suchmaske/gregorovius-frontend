@@ -14,6 +14,7 @@
           <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
           <q-tab v-if="physDesc != ''" label="Physische Beschreibung" name="phy" />
           <q-tab v-if="supplement != ''" label="Beilagen" name="spl" />
+          <q-tab v-if="context != ''" label="Korrespondenzkontext" name="ctx" />
         </q-tabs>
         <q-separator />
         <q-tab-panels v-model="tab" animated>
@@ -28,6 +29,9 @@
           </q-tab-panel>
           <q-tab-panel name="spl">
             <v-runtime-template :template="supplement"/>
+          </q-tab-panel>
+          <q-tab-panel name="ctx">
+            {{ context }}
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -106,6 +110,14 @@ export default {
         const title = this.data.teiHeader.fileDesc.titleStmt.title.replace('\n', '')
         const secondPart = title.split(/ .. [A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./)
         return secondPart[secondPart.length - 1]
+      },
+      context () {
+        try {
+          const context = this.data.teiHeader.profileDesc.correspDesc.correspContext.ref
+          return `A: ${context[0]["#text"]}, B: ${context[1]["#text"]}`
+        } catch (TypeError) {
+          return ''
+        }
       },
   }
 }
