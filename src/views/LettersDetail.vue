@@ -100,11 +100,11 @@ export default {
       },
       titleMain () {
         const title = this.data.teiHeader.fileDesc.titleStmt.title
-        return title.split(/\. (?=([A-Z][a-zäöüß]*|St\.)( [a-z]*)?( [A-Z][a-zäöüß]*)?,)/)[0]
+        return title.split(/\. (?=([A-Z][a-zà-ý]*|St\.)( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?,)/)[0]
       },
       titleSecondary () {
-        const title = this.data.teiHeader.fileDesc.titleStmt.title
-        const secondPart = title.split(/in [A-Z][a-zäöüß)]*( [a-z]*)?( [A-Z][a-zäöüß]*)?\./)
+        const title = this.data.teiHeader.fileDesc.titleStmt.title.replace('\n', '')
+        const secondPart = title.split(/ .. [A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./)
         return secondPart[secondPart.length - 1]
       },
   }
