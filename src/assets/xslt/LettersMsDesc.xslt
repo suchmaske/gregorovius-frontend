@@ -16,8 +16,11 @@
         <xsl:apply-templates select="//tei:teiHeader/tei:fileDesc/tei:sourceDesc"/>
     </xsl:template>
 
-    <!-- Hide physical description -->
-    <xsl:template match="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:physDesc"/>
+    <!-- Select physical description -->
+    <xsl:template match="//tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:physDesc">
+        <p><xsl:apply-templates select="tei:p[1]"/></p>
+    </xsl:template> 
+
 
     <!-- Render manuscript (Handschrift) -->
     <xsl:template match="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier">

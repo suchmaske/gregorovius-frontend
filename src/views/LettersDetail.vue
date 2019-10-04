@@ -12,7 +12,6 @@
         <q-tabs v-model="tab" class="text-primary">
           <q-tab label="Textgrundlage" name="tgl" />
           <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
-          <q-tab v-if="physDesc != ''" label="Physische Beschreibung" name="phy" />
           <q-tab v-if="supplement != ''" label="Beilagen" name="spl" />
           <q-tab v-if="context != ''" label="Korrespondenzkontext" name="ctx" />
         </q-tabs>
@@ -23,9 +22,6 @@
           </q-tab-panel>
           <q-tab-panel name="reg">
             {{ abstractGerman }}
-          </q-tab-panel>
-          <q-tab-panel name="phy">
-            <v-runtime-template :template="physDesc"/>
           </q-tab-panel>
           <q-tab-panel name="spl">
             <v-runtime-template :template="supplement"/>
@@ -76,7 +72,6 @@ export default {
   mounted () {
     this.getItems(),
     this.getXSLT('LettersMsDesc', 'msDesc'),
-    this.getXSLT('LettersPhysDesc', 'physDesc'),
     this.getXSLT('LettersSupplement', 'supplement')
   },
 
