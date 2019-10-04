@@ -23,45 +23,45 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
   name: 'SelectAutoComplete',
   props: ['label', 'entity'],
-  data () {
+  data() {
     return {
-        model: {
-          label: '',
-          value: ''
-        },
-        options: this.$attrs.options,
-    }
+      model: {
+        label: '',
+        value: '',
+      },
+      options: this.$attrs.options,
+    };
   },
   methods: {
     ...mapActions(['setSelectedAction']),
-    filterFn (val, update, abort) {
+    filterFn(val, update, abort) {
       update(() => {
-        const needle = val.toLowerCase()
-        const options = this.optionsFull.filter(o => o.label.toLowerCase().indexOf(needle) > -1 )
+        const needle = val.toLowerCase();
+        const options = this.optionsFull.filter(o => o.label.toLowerCase().indexOf(needle) > -1);
         this.options = options.sort((a, b) => {
-          const valA = a.label.toLowerCase()
-          const valB = b.label.toLowerCase()
-          return (valA < valB) ? -1 : (valA > valB) ? 1 : 0
-        })
-      })
+          const valA = a.label.toLowerCase();
+          const valB = b.label.toLowerCase();
+          return (valA < valB) ? -1 : (valA > valB) ? 1 : 0;
+        });
+      });
     },
-    setSelected () {
-      this.setSelectedAction({entity: this.$props.entity, value: this.value})
+    setSelected() {
+      this.setSelectedAction({ entity: this.$props.entity, value: this.value });
     },
   },
   computed: {
-    optionsFull () {
-      return this.$attrs.options
+    optionsFull() {
+      return this.$attrs.options;
     },
-    value () {
-      return this.model.value
-    }
-  }
+    value() {
+      return this.model.value;
+    },
+  },
 };
 </script>
 

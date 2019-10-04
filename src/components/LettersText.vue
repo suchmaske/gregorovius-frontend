@@ -3,40 +3,40 @@
 </template>
 
 <script>
-import VRuntimeTemplate from 'v-runtime-template'
-import { xslt } from '@/mixins/xslt'
-import { dataService } from '@/shared'
+import VRuntimeTemplate from 'v-runtime-template';
+import { xslt } from '@/mixins/xslt';
+import { dataService } from '@/shared';
 
 export default {
   name: 'LettersText',
   components: {
-    VRuntimeTemplate
+    VRuntimeTemplate,
   },
   mixins: [xslt],
-  data () {
+  data() {
     return {
-      data: null
-    }
+      data: null,
+    };
   },
 
-  mounted () {
-    this.getItems()
+  mounted() {
+    this.getItems();
   },
 
   methods: {
-    async getItems () {
+    async getItems() {
       try {
-        const response = await dataService.XSLTransform(this.$route.path, 'LettersText')
-        const data = await response
-        this.data = data
+        const response = await dataService.XSLTransform(this.$route.path, 'LettersText');
+        const data = await response;
+        this.data = data;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
-  }
+    },
+  },
 
-}
+};
 </script>
 
 <style>

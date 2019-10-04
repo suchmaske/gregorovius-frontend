@@ -70,23 +70,11 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    letters: (state) => {
-      return state.letters;
-    },
-    fullNameIndex: (state) => {
-      return state.fullNameIndex;
-    },
-    selectedRecipient: (state) => {
-      return state.selectedRecipient;
-    },
-    selectedPlaceReceived: (state) => {
-      return state.selectedPlaceReceived;
-    },
-    selectedPlaceSent: (state) => {
-      return state.selectedPlaceSent;
-    },
-    selectedYears: (state) => {
-      return state.selectedYears;
-    },
+    letters: state => state.letters,
+    fullNameIndex: state => state.fullNameIndex,
+    selectedRecipient: state => state.selectedRecipient,
+    selectedPlaceReceived: state => state.selectedPlaceReceived,
+    selectedPlaceSent: state => state.selectedPlaceSent,
+    selectedYears: state => state.selectedYears,
   },
 });

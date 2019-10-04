@@ -49,73 +49,73 @@
 </template>
 
 <script>
-import LettersText from '@/components/LettersText.vue'
-import VRuntimeTemplate from 'v-runtime-template'
-import { dataService } from '@/shared'
+import VRuntimeTemplate from 'v-runtime-template';
+import LettersText from '@/components/LettersText.vue';
+import { dataService } from '@/shared';
 
 export default {
   name: 'item',
   components: {
     LettersText,
-    VRuntimeTemplate
+    VRuntimeTemplate,
   },
-  data () {
+  data() {
     return {
       data: [],
       tab: 'reg',
       msDesc: '',
       supplement: '',
       physDesc: '',
-    }
+    };
   },
 
-  mounted () {
+  mounted() {
     this.getItems(),
     this.getXSLT('LettersMsDesc', 'msDesc'),
-    this.getXSLT('LettersSupplement', 'supplement')
+    this.getXSLT('LettersSupplement', 'supplement');
   },
 
   methods: {
-    async getItems () {
+    async getItems() {
       try {
         const response = await fetch(
-          'http://localhost:8000' + this.$route.path, {
-            headers: {'Accept': 'application/json'}
-          }
-        )
-        this.data = await response.json()
+          `http://localhost:8000${this.$route.path}`, {
+            headers: { Accept: 'application/json' },
+          },
+        );
+        this.data = await response.json();
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
     },
-    async getXSLT (fileName, targetProp) {
-      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName)
+    async getXSLT(fileName, targetProp) {
+      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName);
     },
   },
   computed: {
-      abstractGerman () {
-        return this.data.teiHeader.profileDesc.abstract.p[0]['#text']
-      },
-      titleMain () {
-        const title = this.data.teiHeader.fileDesc.titleStmt.title
-        return title.split(/\. (?=([A-Z][a-zà-ý]*|St\.)( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?,)/)[0]
-      },
-      titleSecondary () {
-        const title = this.data.teiHeader.fileDesc.titleStmt.title.replace('\n', '')
-        const secondPart = title.split(/ .. [A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./)
-        return secondPart[secondPart.length - 1]
-      },
-      context () {
-        try {
-          const context = this.data.teiHeader.profileDesc.correspDesc.correspContext.ref
-          return `A: ${context[0]["#text"]}, B: ${context[1]["#text"]}`
-        } catch (TypeError) {
-          return ''
-        }
-      },
-  }
-}
+    abstractGerman() {
+      return this.data.teiHeader.profileDesc.abstract.p[0]['#text'];
+    },
+    titleMain() {
+      const { title } = this.data.teiHeader.fileDesc.titleStmt;
+      return title.split(/\. (?=([A-Z][a-zà-ý]*|St\.)( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?,)/)[0];
+    },
+    titleSecondary() {
+      const title = this.data.teiHeader.fileDesc.titleStmt.title.replace('\n', '');
+      const secondPart = title.split(/ .. [A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./);
+      return secondPart[secondPart.length - 1];
+    },
+    context() {
+      try {
+        const context = this.data.teiHeader.profileDesc.correspDesc.correspContext.ref;
+        return `A: ${context[0]['#text']}, B: ${context[1]['#text']}`;
+      } catch (TypeError) {
+        return '';
+      }
+    },
+  },
+};
 </script>
 
 <style>

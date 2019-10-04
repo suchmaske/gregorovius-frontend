@@ -25,9 +25,9 @@
         flat
       >
         <template v-slot:body-cell="props">
-          <q-td 
-            :props="props" 
-            @click.native="$router.push({ name: 'Brief', params: { id: props.row.id } })" 
+          <q-td
+            :props="props"
+            @click.native="$router.push({ name: 'Brief', params: { id: props.row.id } })"
             class="cursor-pointer"
           >
             {{ props.value }}
@@ -41,17 +41,17 @@
 
 <script>
 
-import SelectAutoComplete from '../components/SelectAutoComplete.vue'
-import SelectYears from '../components/SelectYears.vue'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex';
+import SelectAutoComplete from '../components/SelectAutoComplete.vue';
+import SelectYears from '../components/SelectYears.vue';
 
 export default {
   name: 'LettersIndex',
   components: {
     SelectAutoComplete,
-    SelectYears
+    SelectYears,
   },
-  data () {
+  data() {
     return {
       model: '',
       filter: {
@@ -63,7 +63,7 @@ export default {
       loading: this.$store.state.isLoading,
       pagination: {
         rowsPerPage: 20,
-        sortBy: 'date'
+        sortBy: 'date',
       },
       columns: [
         {
@@ -73,9 +73,9 @@ export default {
           align: 'left',
           field: row => (row.properties.date ? new Date(row.properties.date) : new Date('2000')),
           format: val => (val.getFullYear() != '2000' ? val.toLocaleDateString('de-DE', {
-            day: 'numeric', month: 'long', year: 'numeric'
+            day: 'numeric', month: 'long', year: 'numeric',
           }) : 'o. D.'),
-          sortable: true
+          sortable: true,
         },
         {
           name: 'recipient',
@@ -84,7 +84,7 @@ export default {
           align: 'left',
           field: row => this.getFullNameArray(row.properties.recipient),
           format: val => val.join(', '),
-          sortable: true
+          sortable: true,
         },
         {
           name: 'placeSent',
@@ -92,7 +92,7 @@ export default {
           label: 'Schreibort',
           align: 'left',
           field: row => this.getFullName(row.properties.place.sent, 'o. O.'),
-          sortable: true
+          sortable: true,
         },
         {
           name: 'placeRecv',
@@ -100,181 +100,173 @@ export default {
           label: 'Empfangsort',
           align: 'left',
           field: row => this.getFullName(row.properties.place.received, 'o. O.'),
-          sortable: true
+          sortable: true,
         },
       ],
       data: [],
-    }
+    };
   },
-  async beforeMount () {
-    await this.loadLetters()
-    await this.loadFullNameIndex()
+  async beforeMount() {
+    await this.loadLetters();
+    await this.loadFullNameIndex();
   },
   methods: {
     ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
 
-    async loadLetters () {
-      await this.loadLettersAction()
+    async loadLetters() {
+      await this.loadLettersAction();
     },
 
-    async loadFullNameIndex () {
-      await this.loadFullNameIndexAction()
+    async loadFullNameIndex() {
+      await this.loadFullNameIndexAction();
     },
 
-    getFullName (id, altName) {
-      const fullName = this.fullNameIndex[id]
-      return (fullName ? fullName : altName)
+    getFullName(id, altName) {
+      const fullName = this.fullNameIndex[id];
+      return (fullName || altName);
     },
 
-    getFullNameArray (nameIdArray) {
+    getFullNameArray(nameIdArray) {
       if (nameIdArray) {
-        return nameIdArray.map((r) => {return this.getFullName(r, 'NN')}) 
-      } else {
-        return []
+        return nameIdArray.map(r => this.getFullName(r, 'NN'));
       }
+      return [];
     },
 
-    getArrayOptions (entityName, propertyName) {
+    getArrayOptions(entityName, propertyName) {
       // Get a set of possible values from an array property
       const optionIds = [].concat.apply([], this[entityName].map((e) => {
         const stack = propertyName.split('.');
-        var output = e.properties
+        var output = e.properties;
         while (stack.length > 1) {
-          var output = output[stack.shift()]
-        } 
-        return output[stack.shift()]
-      }))
-      const uniqueIds = [...new Set(optionIds)].filter(id => id !== null)
-      const idNameMap = uniqueIds.map((id) => {
-        return {
-          label: this.getFullName(id, 'NN'),
-          value: id
+          var output = output[stack.shift()];
         }
-      })
-      return idNameMap
+        return output[stack.shift()];
+      }));
+      const uniqueIds = [...new Set(optionIds)].filter(id => id !== null);
+      const idNameMap = uniqueIds.map(id => ({
+        label: this.getFullName(id, 'NN'),
+        value: id,
+      }));
+      return idNameMap;
     },
 
-    getOptions (entityName, propertyName) {
+    getOptions(entityName, propertyName) {
       // Get a set of possible values from a string property
       const optionIds = this[entityName].map((e) => {
         const stack = propertyName.split('.');
-        var output = e.properties
+        var output = e.properties;
         while (stack.length > 1) {
-          var output = output[stack.shift()]
-        } 
-        return output[stack.shift()]
-      })
-      const uniqueIds = [...new Set(optionIds)].filter(id => id !== null)
-      const idNameMap = uniqueIds.map((id) => {
-        return {
-          label: this.getFullName(id, 'NN'),
-          value: id
+          var output = output[stack.shift()];
         }
-      })
-      return idNameMap
+        return output[stack.shift()];
+      });
+      const uniqueIds = [...new Set(optionIds)].filter(id => id !== null);
+      const idNameMap = uniqueIds.map(id => ({
+        label: this.getFullName(id, 'NN'),
+        value: id,
+      }));
+      return idNameMap;
     },
 
-    hasValue (item, property, value) {
+    hasValue(item, property, value) {
       // Check if a property (Array or String) contains or is equal to a value
       const stack = property.split('.');
-      var prop = item.properties
+      var prop = item.properties;
       while (stack.length > 1) {
-        var prop = prop[stack.shift()]
-      } 
-      prop = prop[stack.shift()]
+        var prop = prop[stack.shift()];
+      }
+      prop = prop[stack.shift()];
 
       if (prop instanceof Array) {
-        return prop.includes(value)
-      } else {
-        return prop === value
+        return prop.includes(value);
       }
+      return prop === value;
     },
 
-    filterItems (objectArray, property, value) {
-      const filtered = objectArray.filter((item) => {
-        return this.hasValue(item, property, value)
-      })
-      return filtered
+    filterItems(objectArray, property, value) {
+      const filtered = objectArray.filter(item => this.hasValue(item, property, value));
+      return filtered;
     },
 
-    filterLetters (rows, terms, cols) {
+    filterLetters(rows, terms, cols) {
       if (terms.recipient !== '') {
-        rows = rows.filter((r) => this.hasValue(r, 'recipient', terms.recipient))
+        rows = rows.filter(r => this.hasValue(r, 'recipient', terms.recipient));
       }
       if (terms.placeSent !== '') {
-        rows = rows.filter((r) => this.hasValue(r, 'place.sent', terms.placeSent))
+        rows = rows.filter(r => this.hasValue(r, 'place.sent', terms.placeSent));
       }
       if (terms.placeReceived !== '') {
-        rows = rows.filter((r) => this.hasValue(r, 'place.received', terms.placeReceived))
+        rows = rows.filter(r => this.hasValue(r, 'place.received', terms.placeReceived));
       }
       if (terms.years.length > 0) {
-        rows = rows.filter((r) => !r.properties.date ? false : terms.years.includes(r.properties.date.slice(0, 4)))
+        rows = rows.filter(r => (!r.properties.date ? false : terms.years.includes(r.properties.date.slice(0, 4))));
       }
-      return rows
+      return rows;
     },
 
   },
 
   computed: {
 
-    fullNameIndex () {
-      return this.$store.getters.fullNameIndex
+    fullNameIndex() {
+      return this.$store.getters.fullNameIndex;
     },
 
-    letters () {
-      return this.$store.getters.letters
+    letters() {
+      return this.$store.getters.letters;
     },
 
-    uniqueRecipients () {
-      return this.getArrayOptions('letters', 'recipient')
+    uniqueRecipients() {
+      return this.getArrayOptions('letters', 'recipient');
     },
 
-    uniquePlacesSent () {
-      return this.getOptions('letters', 'place.sent')
+    uniquePlacesSent() {
+      return this.getOptions('letters', 'place.sent');
     },
 
-    uniquePlacesReceived () {
-      return this.getOptions('letters', 'place.received')
+    uniquePlacesReceived() {
+      return this.getOptions('letters', 'place.received');
     },
 
-    uniqueYears () {
+    uniqueYears() {
       const years = this.letters.map((e) => {
         try {
-          return e.properties.date.slice(0, 4)
+          return e.properties.date.slice(0, 4);
         } catch (TypeError) {}
-      })
-      return [...new Set(years)].filter(year => year !== undefined).sort()
+      });
+      return [...new Set(years)].filter(year => year !== undefined).sort();
     },
   },
 
-  beforeCreate () {
+  beforeCreate() {
     this.$store.watch(
       (state, getters) => (getters.selectedRecipient),
       (newValue, oldValue) => {
-        this.filter.recipient = newValue
+        this.filter.recipient = newValue;
       },
     ),
     this.$store.watch(
       (state, getters) => getters.selectedPlaceReceived,
       (newValue, oldValue) => {
-        this.filter.placeReceived = newValue
-      }
+        this.filter.placeReceived = newValue;
+      },
     ),
     this.$store.watch(
       (state, getters) => getters.selectedPlaceSent,
       (newValue, oldValue) => {
-        this.filter.placeSent = newValue
-      }
+        this.filter.placeSent = newValue;
+      },
     ),
     this.$store.watch(
       (state, getters) => getters.selectedYears,
       (newValue, oldValue) => {
-        this.filter.years = newValue
-      }
-    )
+        this.filter.years = newValue;
+      },
+    );
   },
 
-}
+};
 </script>
 
 <style>

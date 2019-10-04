@@ -27,27 +27,27 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
   name: 'SelectYears',
   props: ['label', 'entity'],
-  data () {
+  data() {
     return {
-        model: [],
-    }
+      model: [],
+    };
   },
   methods: {
     ...mapActions(['setSelectedAction']),
-    setSelected () {
-      this.setSelectedAction({entity: this.$props.entity, value: this.model})
+    setSelected() {
+      this.setSelectedAction({ entity: this.$props.entity, value: this.model });
     },
   },
   computed: {
-    options () {
-      return this.$attrs.options
+    options() {
+      return this.$attrs.options;
     },
-  }
+  },
 };
 </script>
 

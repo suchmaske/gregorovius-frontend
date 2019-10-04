@@ -29,13 +29,13 @@
 
 export default {
   name: 'items-list',
-  data () {
+  data() {
     return {
       filter: '',
       loading: true,
       pagination: {
         rowsPerPage: 10,
-        sortBy: 'name'
+        sortBy: 'name',
       },
       columns: [
         {
@@ -44,51 +44,50 @@ export default {
           label: 'Name',
           align: 'left',
           field: row => this.formatName(row.properties.name),
-          sortable: true
-        }
+          sortable: true,
+        },
       ],
-      data: []
-    }
+      data: [],
+    };
   },
 
-  mounted () {
-    this.getItems()
+  mounted() {
+    this.getItems();
   },
 
   methods: {
-    async getItems () {
+    async getItems() {
       try {
-        const response = await fetch('http://localhost:8000' + this.$route.path)
-        const data = await response.json()
-        this.data = data
-        this.loading = false
+        const response = await fetch(`http://localhost:8000${this.$route.path}`);
+        const data = await response.json();
+        this.data = data;
+        this.loading = false;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
     },
-    formatName (name) {
+    formatName(name) {
       if (name.surname && name.forename) {
-        return `${name.forename} ${name.surname}`
-      } else if (name.forename) {
-        return name.forename
-      } else if (name.surname) {
-        return name.surname
-      } else if (name.simpleName) {
-        return name.simpleName
-      } else if (name.roleName && name.simpleName) {
-        return `${name.simpleName}, ${name.roleName}`
-      } else if (name.roleName && name.forename) {
-        return `${name.forename}, ${name.roleName}`
-      } else if (name.orgName) {
-        return name.orgName
-      } else {
-        return "NN"
+        return `${name.forename} ${name.surname}`;
+      } if (name.forename) {
+        return name.forename;
+      } if (name.surname) {
+        return name.surname;
+      } if (name.simpleName) {
+        return name.simpleName;
+      } if (name.roleName && name.simpleName) {
+        return `${name.simpleName}, ${name.roleName}`;
+      } if (name.roleName && name.forename) {
+        return `${name.forename}, ${name.roleName}`;
+      } if (name.orgName) {
+        return name.orgName;
       }
-    }
-  }
+      return 'NN';
+    },
+  },
 
-}
+};
 </script>
 
 <style>

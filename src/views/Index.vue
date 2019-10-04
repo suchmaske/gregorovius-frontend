@@ -12,32 +12,32 @@
         <div class="text-h7 text-left text-white text-bold q-pr-xs">Projektleitung</div>
         <div class="text-h7 text-left text-white">Prof. Dr. Martin Baumeister und Dr. Angela Steinsiek</div>
       </div>
-    </div>   
+    </div>
     <q-img class="landing-page fullscreen" style="z-index: -1">
     </q-img>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'PageIndex',
   methods: {
     ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
   },
-  async mounted () {
+  async mounted() {
     await this.loadLettersAction();
     await this.loadFullNameIndexAction();
   },
-}
+};
 </script>
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,600,700&display=swap');
 
 @keyframes breath {
-  from { 
+  from {
     transform: scale(1);
   }
   to {

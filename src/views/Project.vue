@@ -19,7 +19,7 @@
                   Ferdinand Gregorovius hat mehr als zwanzig Jahre in Rom gelebt und hier sein Hauptwerk, die „Geschichte der Stadt Rom im Mittelalter“, geschrieben, das ihm 1876 die römische Ehrenbürgerwürde einbrachte. Neben seinem historiographischen und schriftstellerischen Œuvre hat er mehrere Tausend Briefe hinterlassen, in denen er als Zeitzeuge die italienische und die deutsche Wissenschafts-, Zeit- und Kulturgeschichte des 19. Jahrhunderts beleuchtet. Da die Verlags-Briefe an und von Cotta sowie die an Brockhaus nahezu vollständig erhalten sind, erlauben diese einen konkreten Blick auf die Arbeitsbedingungen und in die Werkstatt eines außerhalb der akademischen Historiographie schreibenden Privatgelehrten und sind damit wissenschaftsgeschichtlich von höchster Relevanz.
                 </p>
                 <p>
-                  Auf der Basis einer systematischen Recherche in deutschen und italienischen Archiven konnten insgesamt etwa 3000 Briefe <b>von</b> und <b>an</b> Gregorovius in etwa 50 Archiven und privaten Sammlungen nachgewiesen werden – die weitaus meisten davon unpubliziert. Die „Gesammelten deutschen und italienischen Briefe“ erschließen eine repräsentative Auswahl von 600 bis 700 Briefen von Ferdinand Gregorovius als kritische digitale Edition in der jeweiligen Originalsprache mit umfassenden Kommentaren. Die Metadaten <b>aller</b> Briefe wurden in einer Projektdatenbank erfasst. Die edierten Briefe werden, wo die bestandshaltenden Sammlungen dies erlauben, nach und nach auch als digitale Faksimiles der Originalhandschrift veröffentlicht. Die inhaltliche Erschließung der Briefe erfolgt zusätzlich durch Regesten in Deutsch, Italienisch und Englisch. Editionsarbeit und Kommentar stützen sich auf eine über viele Jahre entstandene Personalbibliographie und ein gleichzeitig angelegtes Quellenarchiv, in dem neben den gedruckten Briefen von und an Gregorovius auch erstmals das gesamte, oft anonym in Periodika publizierte Werk, die Übersetzungen und die vollständige Forschungsliteratur (inklusive zeitgenössischer Rezensionen) nachgewiesen und zusammengetragen wurde. 
+                  Auf der Basis einer systematischen Recherche in deutschen und italienischen Archiven konnten insgesamt etwa 3000 Briefe <b>von</b> und <b>an</b> Gregorovius in etwa 50 Archiven und privaten Sammlungen nachgewiesen werden – die weitaus meisten davon unpubliziert. Die „Gesammelten deutschen und italienischen Briefe“ erschließen eine repräsentative Auswahl von 600 bis 700 Briefen von Ferdinand Gregorovius als kritische digitale Edition in der jeweiligen Originalsprache mit umfassenden Kommentaren. Die Metadaten <b>aller</b> Briefe wurden in einer Projektdatenbank erfasst. Die edierten Briefe werden, wo die bestandshaltenden Sammlungen dies erlauben, nach und nach auch als digitale Faksimiles der Originalhandschrift veröffentlicht. Die inhaltliche Erschließung der Briefe erfolgt zusätzlich durch Regesten in Deutsch, Italienisch und Englisch. Editionsarbeit und Kommentar stützen sich auf eine über viele Jahre entstandene Personalbibliographie und ein gleichzeitig angelegtes Quellenarchiv, in dem neben den gedruckten Briefen von und an Gregorovius auch erstmals das gesamte, oft anonym in Periodika publizierte Werk, die Übersetzungen und die vollständige Forschungsliteratur (inklusive zeitgenössischer Rezensionen) nachgewiesen und zusammengetragen wurde.
                 </p>
                 <p>
                   Der aktuelle Stand der Arbeit an den Texten und Datensätzen wird in dieser Betaversion präsentiert, die in regelmäßigen Abständen aktualisiert wird.
@@ -46,13 +46,13 @@
 <script>
 export default {
   name: 'Project',
-  data () {
+  data() {
     return {
-      tab: "edi"
-    }
+      tab: 'edi',
+    };
   },
 
-}
+};
 </script>
 
 <style>

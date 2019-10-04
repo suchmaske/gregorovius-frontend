@@ -18,53 +18,53 @@
 
 <script>
 
-import { dataService } from '@/shared'
-import VRuntimeTemplate from 'v-runtime-template'
-import MentionsTable from '@/components/MentionsTable'
+import VRuntimeTemplate from 'v-runtime-template';
+import { dataService } from '@/shared';
+import MentionsTable from '@/components/MentionsTable';
 
 export default {
   name: 'PersonsDetail',
-  components: { 
+  components: {
     MentionsTable,
-    VRuntimeTemplate
+    VRuntimeTemplate,
   },
-  data () {
+  data() {
     return {
       data: [],
-      title: ''
-    }
+      title: '',
+    };
   },
 
-  mounted () {
+  mounted() {
     this.getItems(),
-    this.getXSLT('WorkTitle', 'title')
+    this.getXSLT('WorkTitle', 'title');
   },
 
   methods: {
-    async getItems () {
+    async getItems() {
       try {
         const response = await fetch(
-          'http://localhost:8000' + this.$route.path, {
-            headers: {'Accept': 'application/json'}
-          }
-        )
-        const data = await response.json()
-        this.data = data
+          `http://localhost:8000${this.$route.path}`, {
+            headers: { Accept: 'application/json' },
+          },
+        );
+        const data = await response.json();
+        this.data = data;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
     },
-    async getXSLT (fileName, targetProp) {
-      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName)
+    async getXSLT(fileName, targetProp) {
+      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName);
     },
   },
   computed: {
-    name () {
-      return this.data
+    name() {
+      return this.data;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

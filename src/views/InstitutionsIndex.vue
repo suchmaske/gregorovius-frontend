@@ -29,12 +29,12 @@
 
 export default {
   name: 'items-list',
-  data () {
+  data() {
     return {
       filter: '',
       loading: true,
       pagination: {
-        rowsPerPage: 10
+        rowsPerPage: 10,
       },
       columns: [
         {
@@ -43,32 +43,32 @@ export default {
           label: 'Name',
           align: 'left',
           field: row => row.properties.name.orgName,
-          sortable: true
-        }
+          sortable: true,
+        },
       ],
-      data: []
-    }
+      data: [],
+    };
   },
 
-  mounted () {
-    this.getItems()
+  mounted() {
+    this.getItems();
   },
 
   methods: {
-    async getItems () {
+    async getItems() {
       try {
-        const response = await fetch('http://localhost:8000' + this.$route.path)
-        const data = await response.json()
-        this.data = data
-        this.loading = false
+        const response = await fetch(`http://localhost:8000${this.$route.path}`);
+        const data = await response.json();
+        this.data = data;
+        this.loading = false;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
-  }
+    },
+  },
 
-}
+};
 </script>
 
 <style>

@@ -18,37 +18,37 @@
 
 <script>
 
-import { mapActions, mapState } from 'vuex'
-import MentionsTable from '@/components/MentionsTable'
+import { mapActions, mapState } from 'vuex';
+import MentionsTable from '@/components/MentionsTable';
 
 export default {
   name: 'PersonsDetail',
   components: { MentionsTable },
-  data () {
+  data() {
     return {
-      data: []
-    }
+      data: [],
+    };
   },
 
-  mounted () {
-    this.getItems()
+  mounted() {
+    this.getItems();
   },
 
-  async beforeMount () {
-    await this.loadFullNameIndexAction()
+  async beforeMount() {
+    await this.loadFullNameIndexAction();
   },
 
   methods: {
     ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
-    async getItems () {
+    async getItems() {
       try {
         const response = await fetch(
-          'http://localhost:8000' + this.$route.path, {
-            headers: {'Accept': 'application/json'}
-          }
-        )
-        const data = await response.json()
-        this.data = data
+          `http://localhost:8000${this.$route.path}`, {
+            headers: { Accept: 'application/json' },
+          },
+        );
+        const data = await response.json();
+        this.data = data;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
@@ -56,14 +56,14 @@ export default {
     },
   },
   computed: {
-    fullNameIndex () {
-      return this.$store.getters.fullNameIndex
+    fullNameIndex() {
+      return this.$store.getters.fullNameIndex;
     },
-    name () {
-      return this.fullNameIndex[this.$route.params.id]
+    name() {
+      return this.fullNameIndex[this.$route.params.id];
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

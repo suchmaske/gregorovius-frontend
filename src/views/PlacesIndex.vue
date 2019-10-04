@@ -27,17 +27,17 @@
 
 <script>
 
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'items-list',
-  data () {
+  data() {
     return {
       filter: '',
       loading: true,
       pagination: {
         rowsPerPage: 10,
-        sortBy: 'toponym'
+        sortBy: 'toponym',
       },
       columns: [
         {
@@ -46,42 +46,42 @@ export default {
           label: 'Ortsname',
           align: 'left',
           field: row => row.properties.name.toponym,
-          sortable: true
-        }
+          sortable: true,
+        },
       ],
-      data: []
-    }
+      data: [],
+    };
   },
 
-  mounted () {
-    this.getItems()
+  mounted() {
+    this.getItems();
   },
 
-  async beforeMount () {
-    await this.loadFullNameIndexAction()
+  async beforeMount() {
+    await this.loadFullNameIndexAction();
   },
 
   methods: {
     ...mapActions(['loadFullNameIndexAction']),
-    async getItems () {
+    async getItems() {
       try {
-        const response = await fetch('http://localhost:8000' + this.$route.path)
-        const data = await response.json()
-        this.data = data
-        this.loading = false
+        const response = await fetch(`http://localhost:8000${this.$route.path}`);
+        const data = await response.json();
+        this.data = data;
+        this.loading = false;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
+    },
   },
   computed: {
-    fullNameIndex () {
-      return this.$store.getters.fullNameIndex
+    fullNameIndex() {
+      return this.$store.getters.fullNameIndex;
     },
-  }
+  },
 
-}
+};
 </script>
 
 <style>

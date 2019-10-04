@@ -25,36 +25,36 @@
 
 export default {
   name: 'InstitutionsDetail',
-  data () {
+  data() {
     return {
       data: [],
       tab: 'hsf',
-    }
+    };
   },
 
-  mounted () {
-    this.getItems()
+  mounted() {
+    this.getItems();
   },
 
   methods: {
-    async getItems () {
+    async getItems() {
       try {
         const response = await fetch(
-          'http://localhost:8000' + this.$route.path, {
-            headers: {'Accept': 'application/json'}
-          }
-        )
-        const data = await response.json()
-        this.data = data
+          `http://localhost:8000${this.$route.path}`, {
+            headers: { Accept: 'application/json' },
+          },
+        );
+        const data = await response.json();
+        this.data = data;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
+    },
   },
   computed: {
-  }
-}
+  },
+};
 </script>
 
 <style>

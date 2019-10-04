@@ -21,17 +21,17 @@
 
 <script>
 
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'MentionsTable',
-  data () {
+  data() {
     return {
       filter: '',
       loading: true,
       pagination: {
         rowsPerPage: 10,
-        sortBy: 'title'
+        sortBy: 'title',
       },
       columns: [
         {
@@ -39,32 +39,32 @@ export default {
           required: true,
           align: 'left',
           field: row => row.properties.title,
-        }
+        },
       ],
-      data: []
-    }
+      data: [],
+    };
   },
 
-  mounted () {
-    this.getItems()
+  mounted() {
+    this.getItems();
   },
 
-  async beforeMount () {
-    await this.loadLettersAction()
-    await this.loadFullNameIndexAction()
+  async beforeMount() {
+    await this.loadLettersAction();
+    await this.loadFullNameIndexAction();
   },
 
   methods: {
     ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
-    async getItems () {
+    async getItems() {
       try {
         const response = await fetch(
-          'http://localhost:8000' + this.$route.path, {
-            headers: {'Accept': 'application/json'}
-          }
-        )
-        const data = await response.json()
-        this.data = data
+          `http://localhost:8000${this.$route.path}`, {
+            headers: { Accept: 'application/json' },
+          },
+        );
+        const data = await response.json();
+        this.data = data;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
@@ -72,26 +72,26 @@ export default {
     },
   },
   computed: {
-    fullNameIndex () {
-      return this.$store.getters.fullNameIndex
+    fullNameIndex() {
+      return this.$store.getters.fullNameIndex;
     },
-    name () {
-      return this.fullNameIndex[this.$route.params.id]
+    name() {
+      return this.fullNameIndex[this.$route.params.id];
     },
-    letters () {
-      const letters = this.$store.getters.letters
-      return letters.filter(letter => {
-        var persons = letter.properties.mentioned.persons
-        var places = letter.properties.mentioned.places
-        var works = letter.properties.mentioned.works
-        persons = !persons ? [] : persons
-        places = !places ? [] : places
-        works = !works ? [] : works
-        return [...persons, ...places, ...works].includes(this.$attrs.entityId)
-      })
+    letters() {
+      const { letters } = this.$store.getters;
+      return letters.filter((letter) => {
+        let { persons } = letter.properties.mentioned;
+        let { places } = letter.properties.mentioned;
+        let { works } = letter.properties.mentioned;
+        persons = !persons ? [] : persons;
+        places = !places ? [] : places;
+        works = !works ? [] : works;
+        return [...persons, ...places, ...works].includes(this.$attrs.entityId);
+      });
     },
-  }
-}
+  },
+};
 </script>
 
 <style>

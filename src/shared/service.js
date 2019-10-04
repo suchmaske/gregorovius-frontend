@@ -23,24 +23,24 @@ const parseItem = (response, code) => {
 
 const getFullName = async function (name) {
   if (name.toponym) {
-    return name.toponym
-  } else if (name.surname && name.forename) {
-    return `${name.forename} ${name.surname}`
-  } else if (name.forename) {
-    return name.forename
-  } else if (name.surname) {
-    return name.surname
-  } else if (name.simpleName) {
-    return name.simpleName
-  } else if (name.roleName && name.simpleName) {
-    return `${name.simpleName}, ${name.roleName}`
-  } else if (name.roleName && name.forename) {
-    return `${name.forename}, ${name.roleName}`
-  } else if (name.orgName) {
-    return name.orgName
-  } else {
-    return "NN"
+    return name.toponym;
+  } if (name.surname && name.forename) {
+    return `${name.forename} ${name.surname}`;
+  } if (name.forename) {
+    return name.forename;
+  } if (name.surname) {
+    return name.surname;
+  } if (name.simpleName) {
+    return name.simpleName;
+  } if (name.roleName && name.simpleName) {
+    return `${name.simpleName}, ${name.roleName}`;
+  } if (name.roleName && name.forename) {
+    return `${name.forename}, ${name.roleName}`;
+  } if (name.orgName) {
+    return name.orgName;
   }
+  return 'NN';
+
 };
 
 const getEntities = async function (entityName) {
@@ -92,7 +92,7 @@ const getLetters = async function () {
         },
       },
     );
-    let data = parseList(response);
+    const data = parseList(response);
     return data;
   } catch (error) {
     console.error(error);
@@ -105,12 +105,12 @@ const getFullNameIndex = async function () {
     const persons = await getEntities('persons');
     const places = await getEntities('places');
     const entities = [...persons, ...places];
-    let fullNameIndex = {}
-    entities.map(async function (entity) {
-        const targetEntity = entities.find(item => item.id === entity.id)
-        fullNameIndex[entity.id] = await getFullName(targetEntity.properties.name)
-    })
-    return fullNameIndex
+    const fullNameIndex = {};
+    entities.map(async (entity) => {
+      const targetEntity = entities.find(item => item.id === entity.id);
+      fullNameIndex[entity.id] = await getFullName(targetEntity.properties.name);
+    });
+    return fullNameIndex;
   } catch (error) {
     console.error(error);
     return [];
@@ -133,21 +133,20 @@ const XSLTransform = async function (path, xsltName) {
       },
     );
     if (response.data === '') {
-      return ''
-    } else {
-      return `<div xmlns:v-bind="https://vuejs.org/v2/api/#v-bind" 
-          xmlns:v-on="https://vuejs.org/v2/api/#v-on">${response.data}</div>`;
+      return '';
     }
+    return `<div xmlns:v-bind="https://vuejs.org/v2/api/#v-bind" 
+          xmlns:v-on="https://vuejs.org/v2/api/#v-on">${response.data}</div>`;
   } catch (error) {
     console.error(error);
     return '';
   }
-}
+};
 
 export const dataService = {
   getEntities,
   getEntity,
   getLetters,
   getFullNameIndex,
-  XSLTransform
+  XSLTransform,
 };
