@@ -44,7 +44,14 @@
                 <a href="http://www.bbaw.de">
                   <img src="../statics/img/logo_bbaw.png"/>
                 </a>
+              </div>
             </div>
+            <div class="row">
+              <div class="col-md-3 col-10 q-pa-md q-ml-sm">
+                <div class="text-caption">
+                  Impressum
+                </div>
+              </div>
             </div>
           </div>
         </q-toolbar-title>

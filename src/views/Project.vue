@@ -14,7 +14,7 @@
             </q-tabs>
             <q-separator />
             <q-tab-panels v-model="tab" animated>
-              <q-tab-panel name="edi">
+              <q-tab-panel name="edi" class="text">
                 <p>
                   Ferdinand Gregorovius hat mehr als zwanzig Jahre in Rom gelebt und hier sein Hauptwerk, die „Geschichte der Stadt Rom im Mittelalter“, geschrieben, das ihm 1876 die römische Ehrenbürgerwürde einbrachte. Neben seinem historiographischen und schriftstellerischen Œuvre hat er mehrere Tausend Briefe hinterlassen, in denen er als Zeitzeuge die italienische und die deutsche Wissenschafts-, Zeit- und Kulturgeschichte des 19. Jahrhunderts beleuchtet. Da die Verlags-Briefe an und von Cotta sowie die an Brockhaus nahezu vollständig erhalten sind, erlauben diese einen konkreten Blick auf die Arbeitsbedingungen und in die Werkstatt eines außerhalb der akademischen Historiographie schreibenden Privatgelehrten und sind damit wissenschaftsgeschichtlich von höchster Relevanz.
                 </p>
@@ -56,4 +56,7 @@ export default {
 </script>
 
 <style>
+.text {
+  font-size: 13px;
+}
 </style>

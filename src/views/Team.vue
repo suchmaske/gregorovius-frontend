@@ -10,13 +10,19 @@
             <q-separator dark />
           </q-card>
             <q-card v-for="person in team" :item="person" :key="person.id" @click="openUrl(person.url)" :class="person.url ? 'cursor-pointer g-person' : 'g-person'">
-              <img src="">
-              <q-card-section>
-                <div class="text-h6">{{ person.name }}</div>
-                <div class="text-subtitle2 text-primary">{{ person.role }}</div>
-                <div class="text-secondary">{{ person.mail }}</div>
-                <div class="text-secondary">{{ person.tel }}</div>
-              </q-card-section>
+              <div class="row">
+                <div class="col-2">
+                  <img :src="person.img">
+                </div>
+                <div class="col-10">
+                  <q-card-section>
+                    <div class="text-h6">{{ person.name }}</div>
+                    <div class="text-subtitle2 text-primary">{{ person.role }}</div>
+                    <div class="text-secondary">{{ person.mail }}</div>
+                    <div class="text-secondary">{{ person.tel }}</div>
+                  </q-card-section>
+                </div>
+              </div>
             </q-card>
         </div>
     </div>
@@ -31,6 +37,7 @@ export default {
       team: [
         {
           id: "steinsiek",
+          img: require("../statics/img/steinsiek.jpg"),
           name: "Dr. Angela Steinsiek",
           role: "Projekt- und Editionsleitung (DFG-Projekt)",
           tel: "+49 (0)30 4940204",
@@ -39,6 +46,7 @@ export default {
         },
         {
           id: "costea",
+          img: require("../statics/img/costea.jpg"),
           name: "Theodor Costea M. A.",
           role: "Wissenschaftlicher Mitarbeiter (DFG-Projekt)",
           tel: "+49 (0)30 20370490",
@@ -47,6 +55,7 @@ export default {
         },
         {
           id: "weiger",
+          img: require("../statics/img/weiger.jpg"),
           name: "Dr. des. Katharina Weiger",
           role: "Wissenschaftliche Mitarbeiterin (Stipendiatin Gerda Henkel Stiftung)",
           tel: "+49 (0)7571 7572970",
@@ -55,6 +64,7 @@ export default {
         },
         {
           id: "stepken",
+          img: require("../statics/img/stepken.jpg"),
           name: "Raphael Stepken B. A.",
           role: "Wissenschaftliche Hilfskraft (DFG-Projekt)",
           tel: "",
@@ -76,5 +86,6 @@ export default {
 <style>
 .g-person {
   width: 100%;
+  max-height: 170px;
 }
 </style>

@@ -69,6 +69,10 @@
         <del> <xsl:apply-templates/> </del>
     </xsl:template> 
 
+    <xsl:template match="tei:del[@rendition='#ow']">
+        <del> <xsl:apply-templates/> </del>
+    </xsl:template> 
+
     <xsl:template match="tei:hi[@rendition='#u']">
         <u> <xsl:apply-templates/> </u>
     </xsl:template> 
