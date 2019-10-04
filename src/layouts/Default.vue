@@ -9,8 +9,8 @@
         <q-route-tab to="/places" label="ORTE" />
         <q-route-tab to="/works" label="WERKE" />
         <q-space />
-        <q-btn flat label="PROJEKT" />
-        <q-btn flat label="TEAM" />
+        <q-btn flat label="PROJEKT" @click="$router.push({name: 'Projekt'})"/>
+        <q-btn flat label="TEAM" @click="$router.push({name: 'Team'})"/>
         <q-btn flat label="EDITIONSRICHTLINIEN" />
       </q-tabs>
     </q-header>

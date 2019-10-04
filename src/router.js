@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import DefaultLayout from './layouts/Default.vue';
 import Index from './views/Index.vue';
+
 import LettersIndex from './views/LettersIndex.vue';
 import LettersDetail from './views/LettersDetail.vue';
 import PersonsIndex from './views/PersonsIndex.vue';
@@ -10,6 +11,9 @@ import PlacesIndex from './views/PlacesIndex.vue';
 import PlacesDetail from './views/PlacesDetail.vue';
 import WorksIndex from './views/WorksIndex.vue';
 import WorksDetail from './views/WorksDetail.vue';
+
+import Project from './views/Project.vue';
+import Team from './views/Team.vue';
 
 Vue.use(Router);
 
@@ -64,6 +68,16 @@ export default new Router({
           path: 'works/:id',
           name: 'Werk',
           component: WorksDetail,
+        },
+        {
+          path: 'project',
+          name: 'Projekt',
+          component: Project,
+        },
+        {
+          path: 'team',
+          name: 'Team',
+          component: Team,
         },
       ],
     },
