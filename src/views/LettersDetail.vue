@@ -39,7 +39,7 @@
 
 <div class="row justify-center">
 
-      <q-card class="col-md-8 col-12 q-pa-xl">
+      <q-card class="col-md-8 col-12 q-pa-xl q-mb-xl">
           <a :href="'http://localhost:8000' + this.$route.path">
             <q-icon name="code" class="text-primary float-right"  style="font-size: 2em;" />
           </a>
