@@ -33,7 +33,7 @@
               </q-tab-panel>
               <q-tab-panel name="tec">
                 <p>
-                  Die Dateneingabe erfolgt in Oxygen mit Hilfe von ediarum. Das ediarum.BASE-Framework wurde durch ein Addon ergänzt. Es wird laufend weiterentwickelt und ermöglicht, komplexe projektspezifische Datenstrukturen über eine benutzerfreundliche und für die Briefedition maßgeschneiderte Softwarelösung einzugeben. Das XML TEI Datenmodell der Edition basiert zum Teil auf dem Basisformat des Deutschen Textarchivs (DTABf), ein von der DFG empfohlener datentechnischer Standard. Die vorliegende Web-App wurde auf Frontend-Ebene mit Vue.js und Quasar gebaut. Die Daten werden in eXist-db gehalten und über ein Python-basiertes Backend als REST-Schnittstelle ausgegeben. Die Schnittstelle steht interessierten NutzerInnen und EntwicklerInnen als Webservice zur Verfügung.
+                  Die Dateneingabe erfolgt in Oxygen mit Hilfe von ediarum. Das ediarum.BASE-Framework wurde durch ein Addon ergänzt. Es wird laufend weiterentwickelt und ermöglicht, komplexe projektspezifische Datenstrukturen über eine benutzerfreundliche und für die Briefedition maßgeschneiderte Softwarelösung einzugeben. Das TEI XML Datenmodell der Edition basiert zum Teil auf dem Basisformat des Deutschen Textarchivs (DTABf), ein von der DFG empfohlener datentechnischer Standard. Die vorliegende Web-App wurde auf Frontend-Ebene mit Vue.js und Quasar gebaut. Die Daten werden in eXist-db gehalten und über ein Python-basiertes Backend als REST-Schnittstelle ausgegeben. Die Schnittstelle steht interessierten NutzerInnen und EntwicklerInnen als Webservice zur Verfügung.
                 </p>
               </q-tab-panel>
             </q-tab-panels>
@@ -57,6 +57,6 @@ export default {
 
 <style>
 .text {
-  font-size: 13px;
+  font-size: 16px;
 }
 </style>
