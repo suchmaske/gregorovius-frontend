@@ -8,19 +8,17 @@
               <div class="text-subtitle3 text-secondary"></div>
             </q-card-section>
             <q-separator dark />
-            <q-tabs v-model="tab" class="text-primary">
-              <q-tab name="edi" />
-              <q-tab name="tec" />
-            </q-tabs>
-            <q-separator />
-            <q-tab-panels v-model="tab" animated>
-              <q-tab-panel name="edi">
-              </q-tab-panel>
-              <q-tab-panel name="tec">
-              </q-tab-panel>
-            </q-tab-panels>
           </q-card>
-      </div>
+            <q-card v-for="person in team" :item="person" :key="person.id" @click="openUrl(person.url)" :class="person.url ? 'cursor-pointer g-person' : 'g-person'">
+              <img src="">
+              <q-card-section>
+                <div class="text-h6">{{ person.name }}</div>
+                <div class="text-subtitle2 text-primary">{{ person.role }}</div>
+                <div class="text-secondary">{{ person.mail }}</div>
+                <div class="text-secondary">{{ person.tel }}</div>
+              </q-card-section>
+            </q-card>
+        </div>
     </div>
   </q-page>
 </template>
@@ -29,11 +27,54 @@
 export default {
   name: 'Project',
   data () {
-    return {}
+    return {
+      team: [
+        {
+          id: "steinsiek",
+          name: "Dr. Angela Steinsiek",
+          role: "Projekt- und Editionsleitung (DFG-Projekt)",
+          tel: "+49 (0)30 4940204",
+          mail: "steinsiek@dhi-roma.it",
+          url: "http://dhi-roma.it/index.php?id=steinsiek"
+        },
+        {
+          id: "costea",
+          name: "Theodor Costea M. A.",
+          role: "Wissenschaftlicher Mitarbeiter (DFG-Projekt)",
+          tel: "+49 (0)30 20370490",
+          mail: "costea@dhi-roma.it",
+          url: "http://dhi-roma.it/index.php?id=costea"
+        },
+        {
+          id: "weiger",
+          name: "Dr. des. Katharina Weiger",
+          role: "Wissenschaftliche Mitarbeiterin (Stipendiatin Gerda Henkel Stiftung)",
+          tel: "+49 (0)7571 7572970",
+          mail: "weiger@dhi-roma.it",
+          url: "http://dhi-roma.it/index.php?id=fastenrath-vinattieri0"
+        },
+        {
+          id: "stepken",
+          name: "Raphael Stepken B. A.",
+          role: "Wissenschaftliche Hilfskraft (DFG-Projekt)",
+          tel: "",
+          mail: "stepken@dhi-roma.it",
+        },
+      ]
+    }
+    
   },
+  methods: {
+    openUrl (url) {
+      url ? window.open(url) : null
+    }
+  }
 
 }
 </script>
 
 <style>
+.g-person {
+  width: 100%;
+}
 </style>
