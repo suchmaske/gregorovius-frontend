@@ -62,7 +62,7 @@ export default {
       },
       loading: this.$store.state.isLoading,
       pagination: {
-        rowsPerPage: 10,
+        rowsPerPage: 20,
         sortBy: 'date'
       },
       columns: [
