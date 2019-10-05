@@ -128,7 +128,6 @@ const XSLTransform = async function (path, xsltName) {
       {
         params: {
           xslt: true,
-          token: XSLTToken,
         },
       },
     );
