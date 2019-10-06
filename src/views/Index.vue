@@ -34,7 +34,6 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,600,700&display=swap');
 
 @keyframes breath {
   from {

@@ -40,10 +40,6 @@ export default {
 </script>
 
 <style>
-@font-face {
-  font-family: Cardo;
-  src: url('../assets/fonts/Cardo-Regular.ttf');
-}
 
 .edition-text {
   font-family: Cardo;
