@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <q-header :class="(($route.path === '/') ? 'transparent' : 'bg-primary')">
-      <q-tabs inline-label indicator-color="positive" align="left">
+      <q-tabs inline-label indicator-color="positive" align="left" class="g-route-tabs">
         <img class="gt-sm logo-signature cursor-pointer q-mx-md q-pa-md" src="../statics/img/gregorovius_signature.svg" @click="$router.push({ path: '/' })"/>
         <q-icon class="lt-sm q-mr-md cursor-pointer" name="home" style="font-size: 1.3em" @click="$router.push({ path: '/' })"></q-icon>
         <q-route-tab to="/letters" label="BRIEFE" />
@@ -76,5 +76,8 @@ export default {
 }
 .q-tab__indicator {
   height: 5px !important;
+}
+.g-route-tabs {
+  font-family: IBMPlexSansMedium;
 }
 </style>

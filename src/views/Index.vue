@@ -51,12 +51,13 @@ export default {
   animation: breath 30s ease-in-out alternate infinite;
 }
 
-.landing-page-text {
-  font-family: 'IBM Plex Sans', sans-serif;
+.landing-page-text .text-bold {
+  font-family: 'IBMPlexSansBold';
+  font-weight: normal
 }
 
 .landing-button {
-  font-weight: bold !important;
+  font-family: 'IBMPlexSansBold';
 }
 
 </style>
