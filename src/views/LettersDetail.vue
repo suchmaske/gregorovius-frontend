@@ -12,7 +12,7 @@
           <q-tab label="Textgrundlage" name="tgl" />
           <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
           <q-tab v-if="supplement != ''" label="Beilagen" name="spl" />
-          <q-tab v-if="context != ''" label="Korrespondenzkontext" name="ctx" />
+          <q-tab v-if="context != []" label="Korrespondenzkontext" name="ctx" />
         </q-tabs>
         <q-separator />
         <q-tab-panels v-model="tab" animated>
@@ -26,7 +26,7 @@
             <v-runtime-template :template="supplement"/>
           </q-tab-panel>
           <q-tab-panel name="ctx">
-            {{ context }}
+            <div v-for="line in context" :key="line"> {{ line }} </div>
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -115,9 +115,26 @@ export default {
     context() {
       try {
         const context = this.data.teiHeader.profileDesc.correspDesc.correspContext.ref;
-        return `A: ${context[0]['#text']}, B: ${context[1]['#text']}`;
-      } catch (TypeError) {
-        return '';
+        var formatted = []
+        if (context.length > 1) {
+          context.map(c => {
+            if (c["@type"] == "prev") {
+              formatted.push(`B: ${c["#text"]}`)
+            } else if (c["@type"] == "next") {
+              formatted.push(`A: ${c["#text"]}`)
+            }
+          })
+        } else {
+          if (context["@type"] == "prev") {
+            formatted.push(`B: ${context["#text"]}`)
+          } else if (context["@type"] == "next") {
+            formatted.push(`A: ${context["#text"]}`)
+          }
+        }
+        return formatted
+      } catch (error) {
+        console.log(error)
+        return [];
       }
     },
   },
