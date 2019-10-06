@@ -1,19 +1,22 @@
 <template>
-  <q-page padding>
-    <div class="col-8 q-pa-xl q-gutter-y-lg">
-
-      <q-card class="col-md-8 col-12 q-pa-xl" flat bordered>
+<q-page padding>
+  <div class="row justify-center">
+    <div class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
+      <q-card class="q-pa-xl" flat>
         <q-card-section>
           <div class="text-h6">{{ name }}</div>
           <div class="text-subtitle3 text-secondary"></div>
         </q-card-section>
         <q-separator dark />
       </q-card>
-
-      <MentionsTable :entityId="this.$route.params.id" :entityName="name"/>
-
     </div>
-  </q-page>
+  </div>
+  <div class="row justify-center">
+    <div class="col-md-8 col-12 q-pb-xl q-gutter-y-lg">
+      <MentionsTable :entityId="this.$route.params.id" :entityName="name"/>
+    </div>
+  </div>
+</q-page>
 </template>
 
 <script>

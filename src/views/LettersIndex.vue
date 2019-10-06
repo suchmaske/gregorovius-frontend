@@ -3,7 +3,7 @@
     <div class="row">
     <div class="col-12 col-md-3">
       <q-card flat class="transparent">
-        <div class="q-gutter-sm col justify-center" style="max-width: 350px">
+        <div class="q-gutter-sm col justify-center" style="max-width: 500px">
           <select-auto-complete label="Empfänger" entity="recipient" :options="uniqueRecipients"/>
           <select-auto-complete label="Schreibort" entity="placeSent" :options="uniquePlacesSent"/>
           <select-auto-complete label="Empfangsort" entity="placeReceived" :options="uniquePlacesReceived"/>

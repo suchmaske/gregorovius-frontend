@@ -1,9 +1,8 @@
 <template>
-  <q-page padding>
-<div class="row justify-center">
-    <div v-if="data.teiHeader" class="col-8 q-py-xl q-gutter-y-lg">
-
-      <q-card class="col-md-8 col-12 q-pa-xl" flat>
+<q-page padding>
+  <div class="row justify-center">
+    <div v-if="data.teiHeader" class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
+      <q-card class="q-pa-xl" flat>
         <q-card-section>
           <div class="text-h6">{{ titleMain }}</div>
           <div class="text-subtitle3 text-secondary">{{ titleSecondary }}</div>
@@ -31,21 +30,25 @@
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
-</div>
-
-<div class="row justify-center">
-
-      <q-card class="col-md-8 col-12 q-pa-xl q-mb-xl">
-          <a :href="'http://localhost:8000' + this.$route.path">
-            <q-icon name="code" class="text-primary float-right"  style="font-size: 2em;" />
-          </a>
-          <LettersText/>
-      </q-card>
-
-</div>
-
     </div>
-  </q-page>
+  </div>
+  <div class="row justify-center">
+    <q-card class="col-md-8 col-12 q-pa-xl q-mb-xl" bordered flat>
+      <div class="row justify-end">
+        <q-btn 
+          label="TEI XML"
+          flat icon="code" 
+          @click="openUrl(`http://localhost:8000${$route.path}`)"
+          color="primary"
+          size="sm"
+        />
+      </div>
+      <div class="row">
+        <LettersText/>
+      </div>
+    </q-card>
+  </div>
+</q-page>
 </template>
 
 <script>
@@ -92,6 +95,9 @@ export default {
     async getXSLT(fileName, targetProp) {
       this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName);
     },
+    openUrl(url) {
+      url ? window.open(url) : null;
+    }
   },
   computed: {
     abstractGerman() {
