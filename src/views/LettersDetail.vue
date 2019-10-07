@@ -12,7 +12,7 @@
           <q-tab label="Textgrundlage" name="tgl" />
           <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
           <q-tab v-if="supplement != ''" label="Beilagen" name="spl" />
-          <q-tab v-if="context != []" label="Korrespondenzkontext" name="ctx" />
+          <q-tab v-if="context.length > 0" label="Korrespondenzkontext" name="ctx" />
         </q-tabs>
         <q-separator />
         <q-tab-panels v-model="tab" animated>
@@ -109,7 +109,7 @@ export default {
     },
     titleSecondary() {
       const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, ' ');
-      const secondPart = title.split(/ .. [A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./);
+      const secondPart = title.split(/ .?.? ?[A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./);
       return secondPart[secondPart.length - 1];
     },
     context() {

@@ -5,7 +5,6 @@
         bg-color="white"
         multiple
         use-input
-        hide-selected
         fill-input
         v-model="model"
         :options="options"
