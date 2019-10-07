@@ -83,7 +83,7 @@ export default {
           label: 'Empfänger',
           align: 'left',
           field: row => this.getFullNameArray(row.properties.recipient),
-          format: val => val.join(', '),
+          format: val => val.join('; '),
           sortable: true,
         },
         {

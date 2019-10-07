@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'items-list',
@@ -43,7 +44,7 @@ export default {
           required: true,
           label: 'Name',
           align: 'left',
-          field: row => this.formatName(row.properties.name),
+          field: row => this.fullNameIndex[row.id],
           sortable: true,
         },
       ],
@@ -51,11 +52,16 @@ export default {
     };
   },
 
+  async beforeMount() {
+    await this.loadFullNameIndexAction();
+  },
+
   mounted() {
     this.getItems();
   },
 
   methods: {
+    ...mapActions(['loadFullNameIndexAction']),
     async getItems() {
       try {
         const response = await fetch(`http://localhost:8000${this.$route.path}`);
@@ -86,6 +92,11 @@ export default {
       return 'NN';
     },
   },
+  computed: {
+    fullNameIndex() {
+      return this.$store.getters.fullNameIndex;
+    },
+  }
 
 };
 </script>

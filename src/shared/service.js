@@ -25,7 +25,7 @@ const getFullName = async function (name) {
   if (name.toponym) {
     return name.toponym;
   } if (name.surname && name.forename) {
-    return `${name.forename} ${name.surname}`;
+    return `${name.surname}, ${name.forename}`;
   } if (name.forename) {
     return name.forename;
   } if (name.surname) {
@@ -146,6 +146,7 @@ export const dataService = {
   getEntities,
   getEntity,
   getLetters,
+  getFullName,
   getFullNameIndex,
   XSLTransform,
 };
