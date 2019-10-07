@@ -9,12 +9,33 @@
             </q-card-section>
             <q-separator dark />
           </q-card>
-            <q-card v-for="person in team" :item="person" :key="person.id" @click="openUrl(person.url)" :class="person.url ? 'cursor-pointer g-person' : 'g-person'">
+            <q-card 
+              v-for="person in team" :item="person" :key="person.id" 
+              @click="openUrl(person.url)" :class="person.url ? 'cursor-pointer g-person-large gt-xs' : 'g-person-large gt-xs'"
+            >
               <div class="row">
-                <div class="col-2">
-                  <img :src="person.img">
+                <div class="col-sm-5 col-md-3">
+                  <img :src="person.img" class="gt-xs">
                 </div>
-                <div class="col-10">
+                <div class="col-sm-7 col-md-9 self-center">
+                  <q-card-section class="q-pt-sm">
+                    <div class="text-h6">{{ person.name }}</div>
+                    <div class="text-subtitle2 text-primary">{{ person.role }}</div>
+                    <div class="text-secondary">{{ person.mail }}</div>
+                    <div class="text-secondary">{{ person.tel }}</div>
+                  </q-card-section>
+                </div>
+              </div>
+            </q-card>
+            <q-card 
+              v-for="person in team" :item="person" :key="person.id" 
+              @click="openUrl(person.url)" :class="person.url ? 'cursor-pointer g-person-small lt-md' : 'g-person-small lt-md'"
+            >
+              <div class="row">
+                <div class="col-sm-4 col-md-3">
+                  <img :src="person.img" class="gt-xs">
+                </div>
+                <div class="col-sm-8 col-md-9">
                   <q-card-section>
                     <div class="text-h6">{{ person.name }}</div>
                     <div class="text-subtitle2 text-primary">{{ person.role }}</div>
@@ -83,8 +104,11 @@ export default {
 </script>
 
 <style>
-.g-person {
+.g-person-large {
   width: 100%;
   max-height: 170px;
+}
+.g-person-small {
+  width: 100%;
 }
 </style>
