@@ -48,11 +48,17 @@
             </div>
             <div class="row justify-between">
               <div class="col-md-3 col-10 q-pa-md q-ml-sm">
+                <div class="col-md-3 col-10 text-caption">
+                  Ferdinand Gregorovius Briefedition
+                  <q-badge color="primary">v1.0-beta1</q-badge>
+                </div>
+              </div>
+              <div class="col-md-3 col-10">
                 <q-btn flat class="text-caption bg-none" @click="$router.push({name: 'Impressum'})">
                   Impressum
                 </q-btn>
               </div>
-              <div class="col-md-1 col-10 q-pa-md q-ml-sm">
+              <div class="col-md-1 col-10">
                 <q-icon name="photo_camera" :class="(($route.path === '/') ? '' : 'hidden')">
                 <q-tooltip class="text-subtitle" content-style="font-size: 12px" >
                   Hintergrund: Gregorovius am Schreibtisch, Aquarell von K. Lindemann-Frommel, 

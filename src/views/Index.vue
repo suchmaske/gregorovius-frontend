@@ -24,10 +24,18 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'PageIndex',
   methods: {
-    ...mapActions(['loadFullNameIndexAction']),
+    ...mapActions(['loadLettersAction', 'loadFullNameIndexAction', 'setLoadingStatus']),
+    loadAll () {
+      if (this.$store.getters.letters.length == 0) {
+        this.loadLettersAction();
+      }
+      if (this.$store.getters.fullNameIndex.length == 0) {
+        this.loadFullNameIndexAction();
+      }
+    },
   },
   mounted() {
-    this.loadFullNameIndexAction()
+    this.loadAll()
   },
 };
 </script>

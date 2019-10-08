@@ -119,8 +119,10 @@ export default {
 
     loadAll () {
       if (this.$store.getters.letters.length == 0) {
-        this.loadFullNameIndexAction();
         this.loadLettersAction();
+      }
+      if (this.$store.getters.fullNameIndex.length == 0) {
+        this.loadFullNameIndexAction();
       }
     },
 

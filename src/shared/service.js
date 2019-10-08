@@ -30,10 +30,10 @@ const getFullName = async function (name) {
     return name.forename;
   } if (name.surname) {
     return name.surname;
-  } if (name.simpleName) {
-    return name.simpleName;
   } if (name.roleName && name.simpleName) {
     return `${name.simpleName}, ${name.roleName}`;
+  } if (name.simpleName) {
+    return name.simpleName;
   } if (name.roleName && name.forename) {
     return `${name.forename}, ${name.roleName}`;
   } if (name.orgName) {
