@@ -46,14 +46,21 @@
                 </a>
               </div>
             </div>
-            <div class="row">
+            <div class="row justify-between">
               <div class="col-md-3 col-10 q-pa-md q-ml-sm">
                 <q-btn flat class="text-caption bg-none" @click="$router.push({name: 'Impressum'})">
                   Impressum
                 </q-btn>
               </div>
+              <div class="col-md-1 col-10 q-pa-md q-ml-sm">
+                <q-icon name="photo_camera">
+                <q-tooltip class="text-subtitle" content-style="font-size: 12px" >
+                  Hintergrund: Gregorovius am Schreibtisch, Aquarell von K. Lindemann-Frommel, 
+                  BSB München, Nachlass F. Gregorovius, Gregoroviusiana 320a, urn:nbn:de:bvb:12-bsb00002519-8
+                </q-tooltip>
+                </q-icon>
+              </div>
             </div>
-          </div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>

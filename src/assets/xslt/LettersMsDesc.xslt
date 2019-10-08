@@ -76,3 +76,7 @@
         </xsl:otherwise>
     </xsl:choose>
 </xsl:template> 
+
+<xsl:template match="tei:fileDesc/tei:sourceDesc/tei:listWit//tei:witness[@select='#this']">
+    <div><q-tooltip anchor="center left" self="center right">Textgrundlage <q-icon name="arrow_right"/></q-tooltip><b><xsl:apply-templates/></b></div> 
+</xsl:template> 
