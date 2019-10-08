@@ -1,6 +1,8 @@
 module.exports = {
   pluginOptions: {
-    quasar: {},
+    quasar: {
+      animations: 'all',
+    },
   },
   transpileDependencies: [
     /[\\\/]node_modules[\\\/]quasar[\\\/]/,

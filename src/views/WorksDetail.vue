@@ -4,8 +4,16 @@
     <div class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
       <q-card class="q-pa-xl" flat>
         <q-card-section>
-          <v-runtime-template :template="title"/>
-          <div class="text-subtitle3 text-secondary"></div>
+          <transition
+            appear
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+          >
+            <v-runtime-template :template="title" v-show="showTitle"/>
+          </transition>
+          <q-inner-loading :showing="visible">
+            <q-spinner-gears size="50px" color="primary" />
+          </q-inner-loading>
         </q-card-section>
         <q-separator dark />
       </q-card>
@@ -13,7 +21,7 @@
   </div>
   <div class="row justify-center">
     <div class="col-md-8 col-12 q-pb-xl q-gutter-y-lg">
-      <MentionsTable :entityId="this.$route.params.id" entityName="Werk"/>
+      <MentionsTable :entityId="this.$route.params.id" entityName="Dieser Titel"/>
     </div>
   </div>
 </q-page>
@@ -31,14 +39,16 @@ export default {
     MentionsTable,
     VRuntimeTemplate,
   },
-  data() {
+  data () {
     return {
       data: [],
       title: '',
+      visible: true,
+      showTitle: false,
     };
   },
 
-  mounted() {
+  created () {
     this.getItems(),
     this.getXSLT('WorkTitle', 'title');
   },
@@ -60,6 +70,8 @@ export default {
     },
     async getXSLT(fileName, targetProp) {
       this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName);
+      this.visible = false
+      this.showTitle = true
     },
   },
   computed: {

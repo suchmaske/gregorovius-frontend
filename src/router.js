@@ -12,6 +12,7 @@ import PlacesDetail from '@/views/PlacesDetail.vue';
 import WorksIndex from '@/views/WorksIndex.vue';
 import WorksDetail from '@/views/WorksDetail.vue';
 
+import Impressum from '@/views/Impressum.vue';
 import Project from '@/views/Project.vue';
 import Team from '@/views/Team.vue';
 
@@ -78,6 +79,11 @@ export default new Router({
           path: 'team',
           name: 'Team',
           component: Team,
+        },
+        {
+          path: 'impressum',
+          name: 'Impressum',
+          component: Impressum,
         },
       ],
     },

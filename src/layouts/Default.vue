@@ -48,9 +48,9 @@
             </div>
             <div class="row">
               <div class="col-md-3 col-10 q-pa-md q-ml-sm">
-                <div class="text-caption">
+                <q-btn flat class="text-caption bg-none" @click="$router.push({name: 'Impressum'})">
                   Impressum
-                </div>
+                </q-btn>
               </div>
             </div>
           </div>

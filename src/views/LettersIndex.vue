@@ -20,7 +20,6 @@
         :filter-method="filterLetters"
         :pagination.sync="pagination"
         :loading="loading"
-        :no-data-label="' '"
         binary-state-sort
         flat
       >
@@ -106,19 +105,23 @@ export default {
       data: [],
     };
   },
-  async beforeMount() {
-    await this.loadLetters();
-    await this.loadFullNameIndex();
+  mounted () {
+    this.$store.watch(
+      (state, getters) => (getters.loading),
+      (newValue, oldValue) => {
+        this.loading = newValue;
+      },
+    );
+    this.loadAll();
   },
   methods: {
-    ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
+    ...mapActions(['loadLettersAction', 'loadFullNameIndexAction', 'setLoadingStatus']),
 
-    async loadLetters() {
-      await this.loadLettersAction();
-    },
-
-    async loadFullNameIndex() {
-      await this.loadFullNameIndexAction();
+    loadAll () {
+      if (this.$store.getters.letters.length == 0) {
+        this.loadFullNameIndexAction();
+        this.loadLettersAction();
+      }
     },
 
     getFullName(id, altName) {

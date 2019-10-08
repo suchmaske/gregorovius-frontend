@@ -24,11 +24,10 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'PageIndex',
   methods: {
-    ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
+    ...mapActions(['loadFullNameIndexAction']),
   },
-  async mounted() {
-    await this.loadLettersAction();
-    await this.loadFullNameIndexAction();
+  mounted() {
+    this.loadFullNameIndexAction()
   },
 };
 </script>

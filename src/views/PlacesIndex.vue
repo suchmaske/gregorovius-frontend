@@ -57,8 +57,10 @@ export default {
     this.getItems();
   },
 
-  async beforeMount() {
-    await this.loadFullNameIndexAction();
+  async beforeCreate() {
+    if (this.$store.getters.fullNameIndex.length == 0) {
+      await this.loadFullNameIndexAction();
+    }
   },
 
   methods: {

@@ -44,7 +44,13 @@
         />
       </div>
       <div class="row">
-        <LettersText/>
+        <transition
+          appear
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+        >
+          <LettersText v-show="showLetter"/>
+        </transition>
       </div>
     </q-card>
   </div>
@@ -65,6 +71,8 @@ export default {
   data() {
     return {
       data: [],
+      visible: true,
+      showLetter: false,
       tab: 'reg',
       msDesc: '',
       supplement: '',
@@ -87,13 +95,15 @@ export default {
           },
         );
         this.data = await response.json();
+        this.visible = false;
+        this.showLetter = true;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
     },
-    async getXSLT(fileName, targetProp) {
-      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName);
+    getXSLT(fileName, targetProp) {
+      this[targetProp] = dataService.XSLTransform(this.$route.path, fileName);
     },
     openUrl(url) {
       url ? window.open(url) : null;
