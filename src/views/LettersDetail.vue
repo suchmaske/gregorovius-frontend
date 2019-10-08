@@ -102,8 +102,8 @@ export default {
         console.error(error)
       }
     },
-    getXSLT(fileName, targetProp) {
-      this[targetProp] = dataService.XSLTransform(this.$route.path, fileName);
+    async getXSLT(fileName, targetProp) {
+      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName);
     },
     openUrl(url) {
       url ? window.open(url) : null;
@@ -142,8 +142,7 @@ export default {
           }
         }
         return formatted
-      } catch (error) {
-        console.log(error)
+      } catch (TypeError) {
         return [];
       }
     },

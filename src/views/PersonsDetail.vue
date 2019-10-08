@@ -37,7 +37,7 @@ export default {
     this.getItems();
   },
 
-  async beforeCreate() {
+  async beforeMount() {
     if (this.$store.getters.fullNameIndex.length == 0) {
       await this.loadFullNameIndexAction();
     }
