@@ -38,7 +38,7 @@
         <q-btn 
           label="TEI XML"
           flat icon="code" 
-          @click="openUrl(`http://localhost:8000${$route.path}`)"
+          @click="openUrl(`http://gregorovius-edition.dhi-roma.it/api${$route.path}`)"
           color="primary"
           size="sm"
         />
