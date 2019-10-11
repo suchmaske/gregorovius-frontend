@@ -1,0 +1,40 @@
+site_name: Editionsrichtlinien Gregorovius
+
+nav:
+  - Einführung: index.md
+  - Briefmetadaten:
+    - 'Titel und Korrespondenzmetadaten': 'titel.md'
+    - 'Korrespondenzkontext':             'korrespondenzkontext.md'
+    - 'Regesten':                           'regest.md'
+    - 'Überlieferung':                    'ueberlieferung.md'
+    - 'Beilagen':                         'beilagen.md'
+  - Brieftext:
+    - 'Textstrukturen':                   'textstrukturen.md'
+    - 'Varianten':                        'varianten.md'
+    - 'Empfängervermerke':                'empfaengervermerke.md'
+    - 'Normalisierungen':                 'normalisierungen.md'
+    - 'Unsichere Lesarten':               'unsichere-lesarten.md'
+    - 'Herausgebereingriffe':             'herausgebereingriffe.md'
+  - Inhaltliche Erschließung:
+    - 'Sachanmerkung':                    'sachanmerkung.md'
+    - 'Indizierung':                      'indizierung.md'
+  - Siglen und Abkürzungen:               'siglen-abk.md'
+
+theme: 
+  language: 'de'
+  name: 'material'
+  custom_dir: 'theme'
+  favicon: 'assets/images/favicon.ico'
+  logo: 'assets/images/fg-logo-bg-light.svg'
+  palette:
+    primary: 'blue'
+    accent: 'grey'
+
+markdown_extensions:
+  - codehilite
+  - admonition
+  - footnotes
+  - pymdownx.superfences
+
+plugins:
+  - search
