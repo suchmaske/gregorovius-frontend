@@ -11,7 +11,7 @@
         <q-space />
         <q-btn flat label="PROJEKT" @click="$router.push({name: 'Projekt'})"/>
         <q-btn flat label="TEAM" @click="$router.push({name: 'Team'})"/>
-        <q-btn flat label="EDITIONSRICHTLINIEN" />
+        <q-btn flat label="EDITIONSRICHTLINIEN" @click="openUrl('http://gregorovius-edition.dhi-roma.it/richtlinien/')"/>
       </q-tabs>
     </q-header>
     <q-page-container :class="(($route.path === '/') ? 'bg-none' : 'bg-grey-2')">
@@ -76,6 +76,11 @@
 <script>
 export default {
   name: 'DefaultLayout',
+  methods: {
+    openUrl(url) {
+      url ? window.open(url) : null;
+    },
+  }
 };
 </script>
 
