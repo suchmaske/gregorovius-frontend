@@ -16,6 +16,8 @@ import Impressum from '@/views/Impressum.vue';
 import Project from '@/views/Project.vue';
 import Team from '@/views/Team.vue';
 
+import Error404 from '@/views/Error404.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -87,6 +89,10 @@ export default new Router({
           path: 'impressum',
           name: 'Impressum',
           component: Impressum,
+        },
+        {
+          path: '*',
+          component: Error404
         },
       ],
     },

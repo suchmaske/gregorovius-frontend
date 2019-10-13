@@ -45,10 +45,6 @@ export default {
     };
   },
 
-  mounted() {
-    this.getItems();
-  },
-
   async beforeMount() {
     await this.loadLettersAction();
     await this.loadFullNameIndexAction();
@@ -56,20 +52,6 @@ export default {
 
   methods: {
     ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
-    async getItems() {
-      try {
-        const response = await fetch(
-          `http://localhost:8000${this.$route.path}`, {
-            headers: { Accept: 'application/json' },
-          },
-        );
-        const data = await response.json();
-        this.data = data;
-      } catch (error) {
-        // eslint-disable-next-line
-        console.error(error)
-      }
-    },
   },
   computed: {
     fullNameIndex() {
