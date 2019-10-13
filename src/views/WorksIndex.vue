@@ -41,6 +41,7 @@
 <script>
 import WorksIndexTable from '@/components/WorksIndexTable'
 import { mapActions, mapState } from 'vuex';
+import { API } from '@/shared/config';
 
 export default {
   name: 'items-list',
@@ -59,7 +60,7 @@ export default {
     async getItems() {
       this.setLoadingStatus(true);
       try {
-        const response = await fetch(`http://localhost:8000${this.$route.path}`);
+        const response = await fetch(`${API}${this.$route.path}`);
         const data = await response.json();
         this.data = data;
       } catch (error) {
