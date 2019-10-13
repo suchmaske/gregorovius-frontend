@@ -61,6 +61,7 @@
 import VRuntimeTemplate from 'v-runtime-template';
 import LettersText from '@/components/LettersText.vue';
 import { dataService } from '@/shared';
+import { API } from '@/shared/config';
 
 export default {
   name: 'item',
@@ -90,7 +91,7 @@ export default {
     async getItems() {
       try {
         const response = await fetch(
-          `http://localhost:8000${this.$route.path}`, {
+          `${API}${this.$route.path}`, {
             headers: { Accept: 'application/json' },
           },
         );

@@ -23,6 +23,7 @@
 
 import { mapActions, mapState } from 'vuex';
 import MentionsTable from '@/components/MentionsTable';
+import { API } from '@/shared/config';
 
 export default {
   name: 'PersonsDetail',
@@ -48,7 +49,7 @@ export default {
     async getItems() {
       try {
         const response = await fetch(
-          `http://localhost:8000${this.$route.path}`, {
+          `${API}${this.$route.path}`, {
             headers: { Accept: 'application/json' },
           },
         );
