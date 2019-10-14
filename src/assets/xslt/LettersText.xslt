@@ -179,7 +179,7 @@
     </xsl:variable>
     <!-- TODO: Check material design icons -->
     <q-btn 
-        color="primary" flat="" outline="" icon="plus"
+        color="primary" flat="" outline="" icon="comment"
         class="note metamark-{tei:metamark/@function} margin-right"
     >
         <q-tooltip 
@@ -190,7 +190,9 @@
             Anmerkung 
             am <xsl:value-of select="$place"/> Rand, 
             <xsl:value-of select="$hand"/> 
-            <div class="g-note-content">{text()}</div>
+            <div class="g-note-content">
+                <xsl:value-of select="text()"/> 
+            </div>
         </q-tooltip>
     </q-btn>
 </xsl:template>    
@@ -244,7 +246,9 @@
             am <xsl:value-of select="$place"/> Rand, 
             <xsl:value-of select="$hand"/> 
             <xsl:value-of select="$list"/>
-            <div class="g-note-content">{text()}</div>
+            <div class="g-note-content">
+                <xsl:value-of select="text()"/> 
+            </div>
         </q-tooltip>
     </q-btn>
 </xsl:template>    
