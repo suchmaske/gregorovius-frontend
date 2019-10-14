@@ -53,11 +53,8 @@ export default {
     };
   },
 
-  async beforeMount() {
-    await this.loadFullNameIndexAction();
-  },
-
   mounted() {
+    this.loadFullNameIndexAction();
     this.getItems();
   },
 
