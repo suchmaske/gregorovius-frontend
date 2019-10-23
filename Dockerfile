@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY ./ .
-RUN npm run build
+RUN npx vue-cli-service build --modern
 
 FROM squidfunk/mkdocs-material as build-stage-eddocs
 WORKDIR /ed-docs
