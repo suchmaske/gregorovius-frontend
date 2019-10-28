@@ -10,6 +10,11 @@
     <p><xsl:apply-templates select="tei:p[1]"/></p>
 </xsl:template> 
 
+<!-- Render supplements -->
+<xsl:template match="//tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:physDesc">
+    <div class="text-bold">Beilagen</div>
+    <div class="q-mb-md"><xsl:apply-templates select="tei:p[2]"/></div>
+</xsl:template> 
 
 <!-- Render manuscript (Handschrift) -->
 <xsl:template match="tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier">

@@ -11,7 +11,6 @@
         <q-tabs v-model="tab" class="text-primary">
           <q-tab label="Textgrundlage" name="tgl" />
           <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
-          <q-tab v-if="supplement != ''" label="Beilagen" name="spl" />
           <q-tab v-if="context.length > 0" label="Korrespondenzkontext" name="ctx" />
         </q-tabs>
         <q-separator />
@@ -21,9 +20,6 @@
           </q-tab-panel>
           <q-tab-panel name="reg">
             {{ abstractGerman }}
-          </q-tab-panel>
-          <q-tab-panel name="spl">
-            <v-runtime-template :template="supplement"/>
           </q-tab-panel>
           <q-tab-panel name="ctx">
             <div v-for="line in context" :key="line"> {{ line }} </div>
@@ -83,8 +79,7 @@ export default {
 
   mounted() {
     this.getItems(),
-    this.getXSLT('LettersMsDesc', 'msDesc'),
-    this.getXSLT('LettersSupplement', 'supplement');
+    this.getXSLT('LettersMsDesc', 'msDesc')
   },
 
   methods: {
