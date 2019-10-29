@@ -12,8 +12,14 @@
 
 <!-- Render supplements -->
 <xsl:template match="//tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:physDesc">
-    <div class="text-bold">Beilagen</div>
-    <div class="q-mb-md"><xsl:apply-templates select="tei:p[2]"/></div>
+    <xsl:choose>
+        <xsl:when test="tei:p[2]">
+            <div class="text-bold">Beilagen</div>
+            <div class="q-mb-md"><xsl:apply-templates select="tei:p[2]"/></div>
+        </xsl:when>
+        <xsl:otherwise>
+        </xsl:otherwise>
+    </xsl:choose>
 </xsl:template> 
 
 <!-- Render manuscript (Handschrift) -->
