@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div class="row justify-center">
-        <div class="col-8 q-py-xl q-gutter-y-lg">
+        <div class="q-py-xl q-gutter-y-lg">
           <q-card class="col-md-8 col-12 q-pa-xl" flat>
             <q-card-section>
               <div class="text-h6 text-center">Das Team</div>
@@ -11,31 +11,14 @@
           </q-card>
             <q-card 
               v-for="person in team" :item="person" :key="person.id" 
-              @click="openUrl(person.url)" :class="person.url ? 'cursor-pointer g-person-large gt-xs' : 'g-person-large gt-xs'"
+              @click="openUrl(person.url)" 
+              :class="person.url ? 'cursor-pointer' : ''"
             >
               <div class="row">
-                <div class="col-sm-5 col-md-3">
-                  <img :src="person.img" class="gt-xs">
+                <div class="self-center">
+                  <img :src="person.img" class="vertical-middle self-center q-pa-md" style="border-radius: 50%; max-width: 80%;">
                 </div>
-                <div class="col-sm-7 col-md-9 self-center">
-                  <q-card-section class="q-pt-sm">
-                    <div class="text-h6">{{ person.name }}</div>
-                    <div class="text-subtitle2 text-primary">{{ person.role }}</div>
-                    <div class="text-secondary">{{ person.mail }}</div>
-                    <div class="text-secondary">{{ person.tel }}</div>
-                  </q-card-section>
-                </div>
-              </div>
-            </q-card>
-            <q-card 
-              v-for="person in team" :item="person" :key="person.id" 
-              @click="openUrl(person.url)" :class="person.url ? 'cursor-pointer g-person-small lt-md' : 'g-person-small lt-md'"
-            >
-              <div class="row">
-                <div class="col-sm-4 col-md-3">
-                  <img :src="person.img" class="gt-xs">
-                </div>
-                <div class="col-sm-8 col-md-9">
+                <div class="self-center">
                   <q-card-section>
                     <div class="text-h6">{{ person.name }}</div>
                     <div class="text-subtitle2 text-primary">{{ person.role }}</div>
@@ -104,11 +87,4 @@ export default {
 </script>
 
 <style>
-.g-person-large {
-  width: 100%;
-  max-height: 170px;
-}
-.g-person-small {
-  width: 100%;
-}
 </style>
