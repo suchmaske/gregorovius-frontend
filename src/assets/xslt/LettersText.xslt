@@ -146,21 +146,6 @@
     <span class="supplied">[<xsl:apply-templates/>]</span>
 </xsl:template>
 
-<!-- Popovers: Kommentare, Anstreichungen, Anmerkungen, Erledigungsvermerke -->
-
-<!--
-<xsl:template match="tei:seg[@type='comment']">
-    <span class="comment"
-            data-tippy-content='&lt;b class="card-title"&gt;
-                                    Kommentar
-                                &lt;/b&gt;
-                                &lt;div class="card-body"&gt;
-                                    {tei:note}
-                                &lt;/div&gt;'>
-        <xsl:apply-templates select="tei:orig"/>
-    </span>
-</xsl:template>    
--->
 <xsl:template match="tei:note[@place and @hand]">
     <xsl:variable name="place">
         <xsl:choose>
@@ -184,13 +169,13 @@
     >
         <q-tooltip 
             anchor="center left" self="center right" 
-            v-bind:offset="[10, 10]" content-style="font-size: 17px"
-            content-class="bg-primary text-white"
+            v-bind:offset="[10, 10]" content-style="font-size: 15px"
+            content-class="bg-white shadow-24 text-black q-pa-md"
         >
             Anmerkung 
             am <xsl:value-of select="$place"/> Rand, 
             <xsl:value-of select="$hand"/> 
-            <div class="g-note-content">
+            <div class="edition-text text-center">
                 <xsl:value-of select="text()"/> 
             </div>
         </q-tooltip>
@@ -222,7 +207,7 @@
     </xsl:variable>
     <xsl:variable name="list">
         <xsl:choose>
-            <xsl:when test="matches(tei:metamark/@target, 'list')">, zur gesamten Liste</xsl:when>
+            <xsl:when test="contains(tei:metamark/@target, 'list')">, zur gesamten Liste</xsl:when>
             <xsl:otherwise/>
         </xsl:choose>
     </xsl:variable>
@@ -239,14 +224,14 @@
     >
         <q-tooltip 
             anchor="center left" self="center right" 
-            v-bind:offset="[10, 10]" content-style="font-size: 17px"
-            content-class="bg-primary text-white"
+            v-bind:offset="[10, 10]" content-style="font-size: 15px"
+            content-class="bg-white shadow-24 text-black q-pa-md"
         >
             <xsl:value-of select="$metamark"/> mit Anmerkung 
             am <xsl:value-of select="$place"/> Rand, 
             <xsl:value-of select="$hand"/> 
             <xsl:value-of select="$list"/>
-            <div class="g-note-content">
+            <div class="edition-text text-center">
                 <xsl:value-of select="text()"/> 
             </div>
         </q-tooltip>
@@ -296,8 +281,8 @@
     >
         <q-tooltip 
             anchor="center left" self="center right" 
-            v-bind:offset="[10, 10]" content-style="font-size: 17px"
-            content-class="bg-primary text-white"
+            v-bind:offset="[10, 10]" content-style="font-size: 15px"
+            content-class="bg-white shadow-24 text-black q-pa-md"
         >
             <xsl:value-of select="$metamark"/> 
             am <xsl:value-of select="$place"/> Rand, 
@@ -349,8 +334,8 @@
     >
         <q-tooltip 
             anchor="center left" self="center right" 
-            v-bind:offset="[10, 10]" content-style="font-size: 17px"
-            content-class="bg-primary text-white"
+            v-bind:offset="[10, 10]" content-style="font-size: 15px"
+            content-class="bg-white shadow-24 text-black q-pa-md"
         >
             <xsl:value-of select="$metamark"/> 
             am <xsl:value-of select="$place"/> Rand, 
