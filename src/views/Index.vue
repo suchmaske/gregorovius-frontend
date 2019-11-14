@@ -10,61 +10,60 @@
       </q-btn>
       <div class="row q-mt-lg">
         <div class="text-h7 text-left text-white text-bold q-pr-xs">Projektleitung</div>
-        <div class="text-h7 text-left text-white">Prof. Dr. Martin Baumeister und Dr. Angela Steinsiek</div>
+        <div class="text-h7 text-left text-white">
+          Prof. Dr. Martin Baumeister und Dr. Angela Steinsiek
+        </div>
       </div>
     </div>
-    <q-img class="landing-page fullscreen" style="z-index: -1">
-    </q-img>
+    <q-img class="landing-page fullscreen" style="z-index: -1"> </q-img>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from "vuex";
 
 export default {
-  name: 'PageIndex',
+  name: "PageIndex",
   methods: {
-    ...mapActions(['loadLettersAction', 'loadFullNameIndexAction', 'setLoadingStatus']),
-    loadAll () {
+    ...mapActions(["loadLettersAction", "loadFullNameIndexAction", "setLoadingStatus"]),
+    loadAll() {
       if (this.$store.getters.letters.length == 0) {
         this.loadLettersAction();
       }
       if (this.$store.getters.fullNameIndex.length == 0) {
         this.loadFullNameIndexAction();
       }
-    },
+    }
   },
   mounted() {
-    this.loadAll()
-  },
+    this.loadAll();
+  }
 };
 </script>
 
 <style>
-
 @keyframes breath {
   from {
     transform: scale(1);
   }
   to {
-    transform: scale(1.2)
+    transform: scale(1.2);
   }
 }
 
 .landing-page {
-  background: url('../statics/img/gregorovius-frommel-bsb.jpg') center center no-repeat;
+  background: url("../statics/img/gregorovius-frommel-bsb.jpg") center center no-repeat;
   background-size: cover;
   background-attachment: fixed;
   animation: breath 30s ease-in-out alternate infinite;
 }
 
 .landing-page-text .text-bold {
-  font-family: 'IBMPlexSansBold';
-  font-weight: normal
+  font-family: "IBMPlexSansBold";
+  font-weight: normal;
 }
 
 .landing-button {
-  font-family: 'IBMPlexSansBold';
+  font-family: "IBMPlexSansBold";
 }
-
 </style>

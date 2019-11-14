@@ -11,10 +11,15 @@
         flat
       >
         <template v-slot:body-cell="props">
-          <q-td :props="props" @click.native="$router.push({ path: `/institutions/${props.row.id}` })" class="cursor-pointer">{{ props.value }}</q-td>
+          <q-td
+            :props="props"
+            class="cursor-pointer"
+            @click.native="$router.push({ path: `/institutions/${props.row.id}` })"
+            >{{ props.value }}</q-td
+          >
         </template>
         <template v-slot:top-left>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Suche">
+          <q-input v-model="filter" borderless dense debounce="300" placeholder="Suche">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -26,27 +31,26 @@
 </template>
 
 <script>
-
 export default {
-  name: 'items-list',
+  name: "ItemsList",
   data() {
     return {
-      filter: '',
+      filter: "",
       loading: true,
       pagination: {
-        rowsPerPage: 10,
+        rowsPerPage: 10
       },
       columns: [
         {
-          name: 'name',
+          name: "name",
           required: true,
-          label: 'Name',
-          align: 'left',
+          label: "Name",
+          align: "left",
           field: row => row.properties.name.orgName,
-          sortable: true,
-        },
+          sortable: true
+        }
       ],
-      data: [],
+      data: []
     };
   },
 
@@ -65,11 +69,9 @@ export default {
         // eslint-disable-next-line
         console.error(error)
       }
-    },
-  },
-
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -3,19 +3,19 @@
 </template>
 
 <script>
-import VRuntimeTemplate from 'v-runtime-template';
-import { xslt } from '@/mixins/xslt';
-import { dataService } from '@/shared';
+import VRuntimeTemplate from "v-runtime-template";
+import { xslt } from "@/mixins/xslt";
+import { dataService } from "@/shared";
 
 export default {
-  name: 'LettersText',
+  name: "LettersText",
   components: {
-    VRuntimeTemplate,
+    VRuntimeTemplate
   },
   mixins: [xslt],
   data() {
     return {
-      data: null,
+      data: null
     };
   },
 
@@ -26,21 +26,19 @@ export default {
   methods: {
     async getItems() {
       try {
-        const response = await dataService.XSLTransform(this.$route.path, 'LettersText');
+        const response = await dataService.XSLTransform(this.$route.path, "LettersText");
         const data = await response;
         this.data = data;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
-    },
-  },
-
+    }
+  }
 };
 </script>
 
 <style>
-
 .edition-text {
   font-family: Cardo;
   font-size: 14pt;
@@ -79,7 +77,6 @@ del {
   box-shadow: inset 0 -2.5rem 0 0 hsla(144.9, 100%, 82.5%, 1);
 }
 
-
 .margin-right {
   display: block;
   position: absolute !important;
@@ -93,8 +90,7 @@ span.list {
 
 span.list-item {
   display: flex;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   margin-left: 1.5rem;
 }
-
 </style>

@@ -1,36 +1,35 @@
 <template>
-<q-page padding>
-  <div class="row justify-center">
-    <div class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
-      <q-card class="q-pa-xl" flat>
-        <q-card-section>
-          <div class="text-h6">{{ name }}</div>
-          <div class="text-subtitle3 text-secondary"></div>
-        </q-card-section>
-        <q-separator dark />
-      </q-card>
+  <q-page padding>
+    <div class="row justify-center">
+      <div class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
+        <q-card class="q-pa-xl" flat>
+          <q-card-section>
+            <div class="text-h6">{{ name }}</div>
+            <div class="text-subtitle3 text-secondary"></div>
+          </q-card-section>
+          <q-separator dark />
+        </q-card>
+      </div>
     </div>
-  </div>
-  <div class="row justify-center">
-    <div class="col-md-8 col-12 q-pb-xl q-gutter-y-lg">
-      <MentionsTable :entityId="this.$route.params.id" :entityName="name"/>
+    <div class="row justify-center">
+      <div class="col-md-8 col-12 q-pb-xl q-gutter-y-lg">
+        <MentionsTable :entity-id="this.$route.params.id" :entity-name="name" />
+      </div>
     </div>
-  </div>
-</q-page>
+  </q-page>
 </template>
 
 <script>
-
-import { mapActions, mapState } from 'vuex';
-import MentionsTable from '@/components/MentionsTable';
-import { API } from '@/shared/config';
+import { mapActions, mapState } from "vuex";
+import MentionsTable from "@/components/MentionsTable";
+import { API } from "@/shared/config";
 
 export default {
-  name: 'PersonsDetail',
+  name: "PersonsDetail",
   components: { MentionsTable },
   data() {
     return {
-      data: [],
+      data: []
     };
   },
 
@@ -45,29 +44,26 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadLettersAction', 'loadFullNameIndexAction']),
+    ...mapActions(["loadLettersAction", "loadFullNameIndexAction"]),
     async getItems() {
       try {
-        const response = await fetch(
-          `${API}${this.$route.path}`, {
-            headers: { Accept: 'application/json' },
-          },
-        );
+        const response = await fetch(`${API}${this.$route.path}`, {
+          headers: { Accept: "application/json" }
+        });
         const data = await response.json();
         this.data = data;
       } catch (error) {
         // eslint-disable-next-line
         console.error(error)
       }
-    },
+    }
   },
   computed: {
     name() {
       return this.$store.getters.fullNameIndex[this.$route.params.id];
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

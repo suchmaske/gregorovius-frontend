@@ -1,21 +1,21 @@
 <template>
   <div class="q-pa-md">
       <q-select
+        ref="selector"
+        v-model="model"
         filled
         bg-color="white"
-        v-model="model"
         use-input
         hide-selected
         fill-input
         :options="options"
         :label="label"
+        :value="this.model.value"
         @filter="filterFn"
         @input="setSelected"
-        ref="selector"
-        :value="this.model.value"
       >
         <template v-if="model.value !== ''" v-slot:append>
-          <q-icon name="cancel" @click.stop="model = {label: '', value: ''}; setSelected()" class="cursor-pointer" />
+          <q-icon name="cancel" class="cursor-pointer" @click.stop="model = {label: '', value: ''}; setSelected()" />
         </template>
       </q-select>
     </div>

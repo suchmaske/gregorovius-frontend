@@ -1,21 +1,19 @@
 module.exports = {
   pluginOptions: {
     quasar: {
-      animations: 'all',
-    },
+      animations: "all"
+    }
   },
-  transpileDependencies: [
-    /[\\\/]node_modules[\\\/]quasar[\\\/]/,
-  ],
+  transpileDependencies: [/[\\\/]node_modules[\\\/]quasar[\\\/]/],
   runtimeCompiler: true,
   configureWebpack: {
     module: {
       rules: [
         {
           test: /\.xslt$/i,
-          use: 'raw-loader',
-        },
-      ],
-    },
-  },
+          use: "raw-loader"
+        }
+      ]
+    }
+  }
 };

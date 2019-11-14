@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import { dataService } from './shared';
+import Vue from "vue";
+import Vuex from "vuex";
+import { dataService } from "./shared";
 
 Vue.use(Vuex);
 
@@ -12,10 +12,10 @@ export default new Vuex.Store({
     places: [],
     works: [],
     fullNameIndex: [],
-    selectedRecipient: '',
-    selectedPlaceReceived: '',
-    selectedPlaceSent: '',
-    selectedYears: [],
+    selectedRecipient: "",
+    selectedPlaceReceived: "",
+    selectedPlaceSent: "",
+    selectedYears: []
   },
   mutations: {
     SET_LOADING_STATUS(state) {
@@ -35,46 +35,46 @@ export default new Vuex.Store({
     },
     SET_SELECTED(state, payload) {
       switch (payload.entity) {
-        case 'recipient':
+        case "recipient":
           state.selectedRecipient = payload.value;
           break;
-        case 'placeReceived':
+        case "placeReceived":
           state.selectedPlaceReceived = payload.value;
           break;
-        case 'placeSent':
+        case "placeSent":
           state.selectedPlaceSent = payload.value;
           break;
-        case 'years':
+        case "years":
           state.selectedYears = payload.value;
           break;
         default:
           break;
       }
-    },
+    }
   },
   actions: {
     async loadLettersAction({ commit }) {
-      commit('SET_LOADING_STATUS', true);
+      commit("SET_LOADING_STATUS", true);
       const letters = await dataService.getLetters();
-      commit('GET_LETTERS', letters);
-      commit('SET_LOADING_STATUS', false);
+      commit("GET_LETTERS", letters);
+      commit("SET_LOADING_STATUS", false);
     },
     async loadPersonsAction({ commit }) {
-      commit('SET_LOADING_STATUS', true);
-      const persons = await dataService.getEntities('persons');
-      commit('GET_LETTERS', persons);
-      commit('SET_LOADING_STATUS', false);
+      commit("SET_LOADING_STATUS", true);
+      const persons = await dataService.getEntities("persons");
+      commit("GET_LETTERS", persons);
+      commit("SET_LOADING_STATUS", false);
     },
     async loadFullNameIndexAction({ commit }) {
       const fullNameIndex = await dataService.getFullNameIndex();
-      commit('GET_FULLNAME_INDEX', fullNameIndex);
+      commit("GET_FULLNAME_INDEX", fullNameIndex);
     },
     async setSelectedAction({ commit }, payload) {
-      commit('SET_SELECTED', payload);
+      commit("SET_SELECTED", payload);
     },
     async setLoadingStatus({ commit }, value) {
-      commit('SET_LOADING_STATUS', value);
-    },
+      commit("SET_LOADING_STATUS", value);
+    }
   },
   getters: {
     letters: state => state.letters,
@@ -84,6 +84,6 @@ export default new Vuex.Store({
     selectedRecipient: state => state.selectedRecipient,
     selectedPlaceReceived: state => state.selectedPlaceReceived,
     selectedPlaceSent: state => state.selectedPlaceSent,
-    selectedYears: state => state.selectedYears,
-  },
+    selectedYears: state => state.selectedYears
+  }
 });

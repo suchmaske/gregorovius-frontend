@@ -1,95 +1,129 @@
 <template>
-<q-page padding>
-  <div class="row justify-center">
-    <div v-if="data.teiHeader" class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
-      <q-card class="q-pa-xl" flat>
-        <q-card-section>
-          <div class="text-h6">{{ titleMain }}</div>
-          <div class="text-subtitle3 text-secondary">{{ titleSecondary }}</div>
-        </q-card-section>
-        <q-separator dark />
-        <q-tabs v-model="tab" class="text-primary">
-          <q-tab label="Textgrundlage" name="tgl" />
-          <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
-          <q-tab v-if="context.length > 0" label="Korrespondenzkontext" name="ctx" />
-        </q-tabs>
-        <q-separator />
-        <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="tgl">
-            <v-runtime-template :template="msDesc"/>
-          </q-tab-panel>
-          <q-tab-panel name="reg">
-            {{ abstractGerman }}
-          </q-tab-panel>
-          <q-tab-panel name="ctx">
-            <div v-for="line in context" :key="line"> {{ line }} </div>
-          </q-tab-panel>
-        </q-tab-panels>
+  <q-page padding>
+    <div class="row justify-center">
+      <div v-if="data.teiHeader" class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
+        <q-card class="q-pa-xl" flat>
+          <q-card-section>
+            <div class="text-h6">{{ titleMain }}</div>
+            <div class="text-subtitle3 text-secondary">{{ titleSecondary }}</div>
+          </q-card-section>
+          <q-separator dark />
+          <q-tabs v-model="tab" class="text-primary">
+            <q-tab label="Textgrundlage" name="tgl" />
+            <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
+            <q-tab v-if="context.length > 0" label="Korrespondenzkontext" name="ctx" />
+          </q-tabs>
+          <q-separator />
+          <q-tab-panels v-model="tab" animated>
+            <q-tab-panel name="tgl">
+              <v-runtime-template :template="msDesc" />
+            </q-tab-panel>
+            <q-tab-panel name="reg">
+              {{ abstractGerman }}
+            </q-tab-panel>
+            <q-tab-panel name="ctx">
+              <div v-for="line in context" :key="line">{{ line }}</div>
+            </q-tab-panel>
+          </q-tab-panels>
+        </q-card>
+      </div>
+    </div>
+    <div class="row justify-center">
+      <q-card class="col-md-8 col-12 q-pa-xl q-mb-xl" bordered flat>
+        <div class="row justify-end">
+          <q-btn
+            label="TEI XML"
+            flat
+            icon="code"
+            color="primary"
+            size="sm"
+            @click="openUrl(`http://gregorovius-edition.dhi-roma.it/api${$route.path}`)"
+          />
+        </div>
+        <div class="row">
+          <transition
+            appear
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+          >
+            <LettersText v-show="showLetter" />
+          </transition>
+        </div>
       </q-card>
     </div>
-  </div>
-  <div class="row justify-center">
-    <q-card class="col-md-8 col-12 q-pa-xl q-mb-xl" bordered flat>
-      <div class="row justify-end">
-        <q-btn 
-          label="TEI XML"
-          flat icon="code" 
-          @click="openUrl(`http://gregorovius-edition.dhi-roma.it/api${$route.path}`)"
-          color="primary"
-          size="sm"
-        />
-      </div>
-      <div class="row">
-        <transition
-          appear
-          enter-active-class="animated fadeIn"
-          leave-active-class="animated fadeOut"
-        >
-          <LettersText v-show="showLetter"/>
-        </transition>
-      </div>
-    </q-card>
-  </div>
-</q-page>
+  </q-page>
 </template>
 
 <script>
-import VRuntimeTemplate from 'v-runtime-template';
-import LettersText from '@/components/LettersText.vue';
-import { dataService } from '@/shared';
-import { API } from '@/shared/config';
+import VRuntimeTemplate from "v-runtime-template";
+import LettersText from "@/components/LettersText.vue";
+import { dataService } from "@/shared";
+import { API } from "@/shared/config";
 
 export default {
-  name: 'item',
+  name: "Item",
   components: {
     LettersText,
-    VRuntimeTemplate,
+    VRuntimeTemplate
   },
   data() {
     return {
       data: [],
       visible: true,
       showLetter: false,
-      tab: 'reg',
-      msDesc: '',
-      supplement: '',
-      physDesc: '',
+      tab: "reg",
+      msDesc: "",
+      supplement: "",
+      physDesc: ""
     };
+  },
+  computed: {
+    abstractGerman() {
+      return this.data.teiHeader.profileDesc.abstract.p[0]["#text"];
+    },
+    titleMain() {
+      const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, " ");
+      return title.split(/\. (?=([A-Z][a-zà-ý]*|St\.)( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?,)/)[0];
+    },
+    titleSecondary() {
+      const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, " ");
+      const secondPart = title.split(/ .?.? ?[A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./);
+      return secondPart[secondPart.length - 1];
+    },
+    context() {
+      try {
+        const context = this.data.teiHeader.profileDesc.correspDesc.correspContext.ref;
+        const formatted = [];
+        if (context.length > 1) {
+          context.map(c => {
+            if (c["@type"] == "prev") {
+              formatted.push(`B: ${c["#text"]}`);
+            } else if (c["@type"] == "next") {
+              formatted.push(`A: ${c["#text"]}`);
+            }
+          });
+        } else if (context["@type"] == "prev") {
+          formatted.push(`B: ${context["#text"]}`);
+        } else if (context["@type"] == "next") {
+          formatted.push(`A: ${context["#text"]}`);
+        }
+        return formatted;
+      } catch (TypeError) {
+        return [];
+      }
+    }
   },
 
   mounted() {
-    this.getItems(),
-    this.getXSLT('LettersMsDesc', 'msDesc')
+    this.getItems(), this.getXSLT("LettersMsDesc", "msDesc");
   },
 
   methods: {
     async getItems() {
       try {
-        const response = await fetch(
-          `${API}${this.$route.path}`, {
-            headers: { Accept: 'application/json' },
-          },
-        );
+        const response = await fetch(`${API}${this.$route.path}`, {
+          headers: { Accept: "application/json" }
+        });
         this.data = await response.json();
         this.visible = false;
         this.showLetter = true;
@@ -104,47 +138,8 @@ export default {
     openUrl(url) {
       url ? window.open(url) : null;
     }
-  },
-  computed: {
-    abstractGerman() {
-      return this.data.teiHeader.profileDesc.abstract.p[0]['#text'];
-    },
-    titleMain() {
-      const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, ' ');
-      return title.split(/\. (?=([A-Z][a-zà-ý]*|St\.)( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?,)/)[0];
-    },
-    titleSecondary() {
-      const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, ' ');
-      const secondPart = title.split(/ .?.? ?[A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./);
-      return secondPart[secondPart.length - 1];
-    },
-    context() {
-      try {
-        const context = this.data.teiHeader.profileDesc.correspDesc.correspContext.ref;
-        var formatted = []
-        if (context.length > 1) {
-          context.map(c => {
-            if (c["@type"] == "prev") {
-              formatted.push(`B: ${c["#text"]}`)
-            } else if (c["@type"] == "next") {
-              formatted.push(`A: ${c["#text"]}`)
-            }
-          })
-        } else {
-          if (context["@type"] == "prev") {
-            formatted.push(`B: ${context["#text"]}`)
-          } else if (context["@type"] == "next") {
-            formatted.push(`A: ${context["#text"]}`)
-          }
-        }
-        return formatted
-      } catch (TypeError) {
-        return [];
-      }
-    },
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

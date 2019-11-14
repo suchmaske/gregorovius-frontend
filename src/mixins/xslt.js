@@ -7,8 +7,8 @@ export const xslt = {
         const stylesheetModule = await import(`@/assets/xslt/${xsltName}.xslt`);
         const xsltStylesheet = stylesheetModule.default;
         const parser = new DOMParser();
-        const xmlParsed = parser.parseFromString(xmlString, 'text/xml');
-        const xsltParsed = parser.parseFromString(xsltStylesheet, 'text/xml');
+        const xmlParsed = parser.parseFromString(xmlString, "text/xml");
+        const xsltParsed = parser.parseFromString(xsltStylesheet, "text/xml");
         const processor = new XSLTProcessor();
         processor.importStylesheet(xsltParsed);
         const html = processor.transformToDocument(xmlParsed);
@@ -16,8 +16,8 @@ export const xslt = {
             xmlns:v-on="https://vuejs.org/v2/api/#v-on">${html.documentElement.innerHTML}</div>`;
       } catch (error) {
         console.error(error);
-        return '';
+        return "";
       }
-    },
-  },
+    }
+  }
 };

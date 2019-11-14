@@ -11,10 +11,15 @@
         flat
       >
         <template v-slot:body-cell="props">
-          <q-td :props="props" @click.native="$router.push({ path: `/persons/${props.row.id}` })" class="cursor-pointer">{{ props.value }}</q-td>
+          <q-td
+            :props="props"
+            class="cursor-pointer"
+            @click.native="$router.push({ path: `/persons/${props.row.id}` })"
+            >{{ props.value }}</q-td
+          >
         </template>
         <template v-slot:top-left>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Suche">
+          <q-input v-model="filter" borderless dense debounce="300" placeholder="Suche">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -26,30 +31,30 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import { API } from '@/shared/config';
+import { mapActions, mapState } from "vuex";
+import { API } from "@/shared/config";
 
 export default {
-  name: 'items-list',
+  name: "ItemsList",
   data() {
     return {
-      filter: '',
+      filter: "",
       loading: true,
       pagination: {
         rowsPerPage: 10,
-        sortBy: 'name',
+        sortBy: "name"
       },
       columns: [
         {
-          name: 'name',
+          name: "name",
           required: true,
-          label: 'Name',
-          align: 'left',
+          label: "Name",
+          align: "left",
           field: row => this.fullNameIndex[row.id],
-          sortable: true,
-        },
+          sortable: true
+        }
       ],
-      data: [],
+      data: []
     };
   },
 
@@ -59,7 +64,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadFullNameIndexAction']),
+    ...mapActions(["loadFullNameIndexAction"]),
     async getItems() {
       try {
         const response = await fetch(`${API}${this.$route.path}`);
@@ -74,30 +79,34 @@ export default {
     formatName(name) {
       if (name.surname && name.forename) {
         return `${name.forename} ${name.surname}`;
-      } if (name.forename) {
+      }
+      if (name.forename) {
         return name.forename;
-      } if (name.surname) {
+      }
+      if (name.surname) {
         return name.surname;
-      } if (name.simpleName) {
+      }
+      if (name.simpleName) {
         return name.simpleName;
-      } if (name.roleName && name.simpleName) {
+      }
+      if (name.roleName && name.simpleName) {
         return `${name.simpleName}, ${name.roleName}`;
-      } if (name.roleName && name.forename) {
+      }
+      if (name.roleName && name.forename) {
         return `${name.forename}, ${name.roleName}`;
-      } if (name.orgName) {
+      }
+      if (name.orgName) {
         return name.orgName;
       }
-      return 'NN';
-    },
+      return "NN";
+    }
   },
   computed: {
     fullNameIndex() {
       return this.$store.getters.fullNameIndex;
-    },
+    }
   }
-
 };
 </script>
 
-<style>
-</style>
+<style></style>

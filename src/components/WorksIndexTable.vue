@@ -1,39 +1,37 @@
 <template>
-<q-table
-  :data="this.$attrs.data"
-  :columns="columns"
-  row-key="id"
-  :filter="filter"
-  :pagination.sync="pagination"
-  :loading="loading"
-  flat
->
-  <template v-slot:body-cell="props">
-    <q-td 
-      :props="props" 
-      @click.native="$router.push({ path: `/works/${props.row.id}` })" 
-      class="cursor-pointer"
-    >{{ props.value }}</q-td>
-  </template>
-  <template v-slot:top-left>
-    <q-input borderless dense debounce="300" 
-      v-model="filter" placeholder="Suche"
-    >
-      <template v-slot:append>
-        <q-icon name="search" />
-      </template>
-    </q-input>
-  </template>
-</q-table>
+  <q-table
+    :data="this.$attrs.data"
+    :columns="columns"
+    row-key="id"
+    :filter="filter"
+    :pagination.sync="pagination"
+    :loading="loading"
+    flat
+  >
+    <template v-slot:body-cell="props">
+      <q-td
+        :props="props"
+        class="cursor-pointer"
+        @click.native="$router.push({ path: `/works/${props.row.id}` })"
+        >{{ props.value }}</q-td
+      >
+    </template>
+    <template v-slot:top-left>
+      <q-input v-model="filter" borderless dense debounce="300" placeholder="Suche">
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+    </template>
+  </q-table>
 </template>
 
 <script>
-
 export default {
-  name: 'works-index-table',
+  name: "WorksIndexTable",
   data() {
     return {
-      filter: '',
+      filter: "",
       loading: this.$store.state.isLoading,
       pagination: {
         rowsPerPage: 10,
@@ -41,27 +39,26 @@ export default {
       },
       columns: [
         {
-          name: 'title',
+          name: "title",
           required: true,
-          label: 'Titel',
-          align: 'left',
+          label: "Titel",
+          align: "left",
           field: row => row.properties.title,
-          sortable: true,
-        },
+          sortable: true
+        }
       ],
-      data: [],
+      data: []
     };
   },
-  beforeMount () {
+  beforeMount() {
     this.$store.watch(
-      (state, getters) => (getters.loading),
+      (state, getters) => getters.loading,
       (newValue, oldValue) => {
         this.loading = newValue;
-      },
+      }
     );
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
