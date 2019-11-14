@@ -1,5 +1,5 @@
 <xsl:template match="/">
-    <div class="edition-text">
+    <div class="g-edition-text">
         <xsl:apply-templates select="//tei:body"/>
     </div>
 </xsl:template> 
@@ -9,7 +9,7 @@
 
 <xsl:template match="tei:pb">
     |
-    <span class="pb">
+    <span class="g-pb">
         <xsl:apply-templates select="./@n" />
     </span>
 </xsl:template>
@@ -18,10 +18,10 @@
 
 <xsl:template match="tei:signed | tei:salute | tei:dateline | tei:note[@type='postscript']">
     <xsl:choose>
-        <xsl:when test="@rendition = '#right'">
+        <xsl:when test="contains(@rendition, '#right')">
             <p class="text-right"> <xsl:apply-templates/> </p>
         </xsl:when>
-        <xsl:when test="@rendition = '#c'">
+        <xsl:when test="contains(@rendition, '#c')">
             <p class="text-center"> <xsl:apply-templates/> </p>
         </xsl:when>
         <xsl:otherwise>
@@ -33,23 +33,32 @@
 <!-- Letter body -->
 
 <xsl:template match="tei:p">
-    <xsl:choose>
-        <xsl:when test="@xml:id | @prev | @next">
-            <p class="coupled"> <xsl:apply-templates/> </p>
-        </xsl:when>
-        <xsl:when test="@rendition = '#right'">
-            <p class="text-right"> <xsl:apply-templates/> </p>
-        </xsl:when>
-        <xsl:when test="@rendition = '#c'">
-            <p class="text-center"> <xsl:apply-templates/> </p>
-        </xsl:when>
-        <xsl:when test="@rendition = '#et'">
-            <p class="ml-4"> <xsl:apply-templates/> </p>
-        </xsl:when>
-        <xsl:otherwise>
-            <p> <xsl:apply-templates/> </p>
-        </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="class-coupled">
+        <xsl:choose>
+            <xsl:when test="@xml:id | @prev | @next">coupled</xsl:when>
+            <xsl:otherwise/>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="class-aq">
+        <xsl:choose>
+            <xsl:when test="contains(@rendition, '#mPrint')">g-mprint</xsl:when>
+            <xsl:otherwise/>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="class-indent">
+        <xsl:choose>
+            <xsl:when test="contains(@rendition, '#et')">q-ml-4</xsl:when>
+            <xsl:otherwise/>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="class-align">
+        <xsl:choose>
+            <xsl:when test="contains(@rendition, '#right')">text-right</xsl:when>
+            <xsl:when test="contains(@rendition, '#c')">text-center</xsl:when>
+            <xsl:otherwise/>
+        </xsl:choose>
+    </xsl:variable>
+    <p class="{$class-coupled} {$class-aq} {$class-indent} {$class-align}"> <xsl:apply-templates/> </p>
 </xsl:template>
 
 <xsl:template match="tei:add">
@@ -69,7 +78,7 @@
 </xsl:template> 
 
 <xsl:template match="tei:hi[@rendition='#aq']">
-    <span class="aq"> <xsl:apply-templates/> </span>
+    <span class="g-aq"> <xsl:apply-templates/> </span>
 </xsl:template> 
 
 <xsl:template match="tei:ex">
@@ -165,7 +174,7 @@
     <!-- TODO: Check material design icons -->
     <q-btn 
         color="primary" flat="" outline="" icon="comment"
-        class="note metamark-{tei:metamark/@function} margin-right"
+        class="note metamark-{tei:metamark/@function} g-margin-right"
     >
         <q-tooltip 
             anchor="center left" self="center right" 
@@ -175,7 +184,7 @@
             Anmerkung 
             am <xsl:value-of select="$place"/> Rand, 
             <xsl:value-of select="$hand"/> 
-            <div class="edition-text text-center">
+            <div class="g-edition-text text-center">
                 <xsl:value-of select="text()"/> 
             </div>
         </q-tooltip>
@@ -220,7 +229,7 @@
     </xsl:variable>
     <q-btn 
         color="primary" flat="" outline="" icon="{$icon-type}"
-        class="note metamark-{tei:metamark/@function} margin-right"
+        class="note metamark-{tei:metamark/@function} g-margin-right"
     >
         <q-tooltip 
             anchor="center left" self="center right" 
@@ -231,7 +240,7 @@
             am <xsl:value-of select="$place"/> Rand, 
             <xsl:value-of select="$hand"/> 
             <xsl:value-of select="$list"/>
-            <div class="edition-text text-center">
+            <div class="g-edition-text text-center">
                 <xsl:value-of select="text()"/> 
             </div>
         </q-tooltip>
@@ -277,7 +286,7 @@
 
     <q-btn 
         color="primary" flat="" outline="" icon="{$icon-type}"
-        class="metamark-{tei:metamark/@function} margin-right"
+        class="metamark-{tei:metamark/@function} g-margin-right"
     >
         <q-tooltip 
             anchor="center left" self="center right" 
@@ -330,7 +339,7 @@
 
     <q-btn 
         color="primary" flat="" outline="" icon="{$icon-type}"
-        class="metamark-{tei:metamark/@function} margin-right"
+        class="metamark-{tei:metamark/@function} g-margin-right"
     >
         <q-tooltip 
             anchor="center left" self="center right" 
@@ -359,25 +368,25 @@
             <xsl:otherwise/>
         </xsl:choose>
     </xsl:variable>
-    <span class="list{$indent}">
+    <span class="g-list{$indent}">
         <xsl:apply-templates/>
     </span>
 </xsl:template>
 
 <xsl:template match="tei:item">
-    <span class="list-item">
-        <span class="list-item-content">
+    <span class="g-list-item">
+        <span class="g-list-item-content">
             <xsl:apply-templates/>
         </span>
     </span>
 </xsl:template>
 
 <xsl:template match="tei:item[tei:label]">
-    <span class="list-item">
-        <span class="list-label">
+    <span class="g-list-item">
+        <span class="g-list-label">
             <xsl:apply-templates select="tei:label"/>
         </span>
-        <span class="list-item-content">
+        <span class="g-list-item-content">
             <xsl:apply-templates select="text() | *[not(self::tei:label)]"/>
         </span>
     </span>

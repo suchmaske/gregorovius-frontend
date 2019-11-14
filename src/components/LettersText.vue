@@ -39,13 +39,13 @@ export default {
 </script>
 
 <style>
-.edition-text {
+.g-edition-text {
   font-family: Cardo;
   font-size: 14pt;
   padding: 16px;
 }
 
-span.pb {
+span.g-pb {
   display: block;
   position: absolute;
   left: 1em;
@@ -53,7 +53,7 @@ span.pb {
   font-size: 0.8em;
 }
 
-span.add {
+span.g-add {
   color: green;
 }
 
@@ -77,18 +77,35 @@ del {
   box-shadow: inset 0 -2.5rem 0 0 hsla(144.9, 100%, 82.5%, 1);
 }
 
-.margin-right {
+.g-mprint {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12pt;
+  letter-spacing: 2px;
+}
+
+.g-aq {
+  font-family: 'IBMPlexSans';
+  font-size: 13pt;
+}
+
+.g-margin-right {
   display: block;
   position: absolute !important;
   right: 0em;
 }
 
-span.list {
+span.g-list {
   display: block;
   margin-bottom: 1em;
 }
 
-span.list-item {
+span.g-list-item {
+  display: flex;
+  margin-bottom: 0.5em;
+  margin-left: 1.5rem;
+}
+
+span.g-list-item-content {
   display: flex;
   margin-bottom: 0.5em;
   margin-left: 1.5rem;
