@@ -58,7 +58,8 @@
                 </p>
                 <p class="text-bold">
                   Der aktuelle Stand der Arbeit an den Texten und Datensätzen wird als Betaversion
-                  präsentiert, die in regelmäßigen Abständen aktualisiert wird.
+                  präsentiert, die in regelmäßigen Abständen aktualisiert und in den
+                  Funktionalitäten weiterentwickelt wird.
                 </p>
                 <p>
                   Das auf eine Laufzeit von vier Jahren angelegte Projekt des Deutschen Historischen
@@ -69,13 +70,13 @@
                   unterstützt.
                 </p>
                 <p>
-                  Von Dr. Wiebke Fastenrath-Vinattieri stammen Rohtranskriptionen und erste
-                  Kommentargrundlagen der Briefe von Gregorovius an Aleardo Aleardi, Michele Amari,
-                  Emilia Viola Ferretti, Raffaele Mariano (21.7.1873 bis 8.12.1877 und 30.11.1879),
-                  Oreste Tommasini, Tommaso Gar und an Gustavo Strafforello. Frederike Neuber
-                  verantwortet die Textherstellung und die Kommentare dieser Briefe. Die
-                  Rohtranskriptionen der Briefe von Gregorovius an Angelo de Gubernatis, Giuseppe De
-                  Leva, Ferdinand Martini, Francesco Protonotari und an Filippo Zamboni erstellte
+                  Von Dr. Wiebke Fastenrath Vinattieri stammen Rohtranskriptionen und erste
+                  Kommentargrundlagen der Briefe von Gregorovius an Michele Amari, Emilia Viola
+                  Ferretti, Raffaele Mariano (21.7.1873 bis 8.12.1877 und 30.11.1879), Oreste
+                  Tommasini, Tommaso Gar und an Gustavo Strafforello. Frederike Neuber verantwortet
+                  die Textherstellung und die Kommentare dieser Briefe. Die Rohtranskriptionen der
+                  Briefe von Gregorovius an Aleardo Aleardi, Angelo de Gubernatis, Giuseppe De Leva,
+                  Ferdinand Martini, Francesco Protonotari und an Filippo Zamboni erstellte
                   ebenfalls Dr. Wiebke Fastenrath-Vinattieri. Eric Müller hat als wissenschaftliche
                   Hilfskraft wesentliche, die Edition vorbereitende Arbeiten übernommen.
                 </p>

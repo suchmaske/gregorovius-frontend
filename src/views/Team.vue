@@ -34,6 +34,32 @@
             </div>
           </div>
         </q-card>
+        <q-card class="col-md-8 col-12 q-mt-xl" flat>
+          <q-card-section>
+            <div class="text-h6 text-center">Ehemalige Mitarbeiter</div>
+          </q-card-section>
+          <q-separator dark />
+        </q-card>
+        <q-card>
+          <div class="row">
+            <div class="self-center">
+              <q-card-section>
+                <div class="text-h6">Dr. Wiebke Fastenrath Vinattieri</div>
+                <div class="text-secondary">(bis Februar 2019)</div>
+              </q-card-section>
+            </div>
+          </div>
+        </q-card>
+        <q-card>
+          <div class="row">
+            <div class="self-center">
+              <q-card-section>
+                <div class="text-h6">Eric Müller M. A.</div>
+                <div class="text-secondary">(bis Juni 2019)</div>
+              </q-card-section>
+            </div>
+          </div>
+        </q-card>
       </div>
     </div>
   </q-page>
@@ -73,12 +99,21 @@ export default {
           url: "http://dhi-roma.it/index.php?id=fastenrath-vinattieri0"
         },
         {
+          id: "neuber",
+          img: require("../statics/img/neuber.jpg"),
+          name: "Frederike Neuber",
+          role: "Werkauftrag",
+          tel: "",
+          mail: "",
+        },
+        {
           id: "stepken",
           img: require("../statics/img/stepken.jpg"),
           name: "Raphael Stepken B. A.",
           role: "Wissenschaftliche Hilfskraft (DFG-Projekt)",
           tel: "",
-          mail: "stepken@dhi-roma.it"
+          mail: "stepken@dhi-roma.it",
+          url: "http://dhi-roma.it/index.php?id=mueller0"
         }
       ]
     };
