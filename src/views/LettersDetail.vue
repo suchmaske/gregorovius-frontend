@@ -83,7 +83,7 @@ export default {
     },
     titleSecondary() {
       const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, " ");
-      const secondPart = title.split(/ .?.? ?[A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./);
+      const secondPart = title.split(/ .?.? ?[A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?(\(\?\))?\./);
       return secondPart[secondPart.length - 1];
     },
   },
