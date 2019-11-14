@@ -104,10 +104,4 @@ span.g-list-item {
   margin-bottom: 0.5em;
   margin-left: 1.5rem;
 }
-
-span.g-list-item-content {
-  display: flex;
-  margin-bottom: 0.5em;
-  margin-left: 1.5rem;
-}
 </style>

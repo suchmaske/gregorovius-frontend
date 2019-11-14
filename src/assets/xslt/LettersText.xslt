@@ -8,8 +8,8 @@
 <!-- Page breaks -->
 
 <xsl:template match="tei:pb">
-    |
-    <span class="g-pb">
+    <span class="text-red-10">| </span>
+    <span class="g-pb text-red-10">
         <xsl:apply-templates select="./@n" />
     </span>
 </xsl:template>
@@ -141,18 +141,15 @@
 </xsl:template>
 
 <xsl:template match="tei:unclear">
-    <span class="unclear">
-        <xsl:apply-templates/>
-        <em> (?)</em>
-    </span>
+    <span class="bg-warning text-grey-8"><xsl:apply-templates/></span>
 </xsl:template>
 
 <xsl:template match="tei:gap">
-    <span class="gap">[...]</span>
+    <span class="text-grey-8">[...]</span>
 </xsl:template>
 
 <xsl:template match="tei:supplied">
-    <span class="supplied">[<xsl:apply-templates/>]</span>
+    <span class="g-supplied">[<xsl:apply-templates/>]</span>
 </xsl:template>
 
 <xsl:template match="tei:note[@place and @hand]">
@@ -386,7 +383,7 @@
         <span class="g-list-label">
             <xsl:apply-templates select="tei:label"/>
         </span>
-        <span class="g-list-item-content">
+        <span class="q-ml-md">
             <xsl:apply-templates select="text() | *[not(self::tei:label)]"/>
         </span>
     </span>
