@@ -90,8 +90,12 @@
     <div><q-tooltip anchor="center left" self="center right">Textgrundlage <q-icon name="arrow_right"/></q-tooltip><b><xsl:apply-templates/></b></div> 
 </xsl:template> 
 
-<xsl:template match="tei:correspContext/tei:ref">
+<xsl:template match="tei:correspContext">
     <div class="q-pt-md text-bold">Korrespondenzkontext</div>
+    <xsl:apply-templates/>
+</xsl:template> 
+
+<xsl:template match="tei:correspContext/tei:ref">
     <xsl:choose>
         <xsl:when test="@type='next'">
             <div>
