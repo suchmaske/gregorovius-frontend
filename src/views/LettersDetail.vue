@@ -11,7 +11,6 @@
           <q-tabs v-model="tab" class="text-primary">
             <q-tab label="Textgrundlage" name="tgl" />
             <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
-            <q-tab v-if="context.length > 0" label="Korrespondenzkontext" name="ctx" />
           </q-tabs>
           <q-separator />
           <q-tab-panels v-model="tab" animated>
@@ -20,9 +19,6 @@
             </q-tab-panel>
             <q-tab-panel name="reg">
               {{ abstractGerman }}
-            </q-tab-panel>
-            <q-tab-panel name="ctx">
-              <div v-for="line in context" :key="line">{{ line }}</div>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
@@ -36,7 +32,7 @@
             flat
             icon="code"
             color="primary"
-            size="sm"
+            size="md"
             @click="openUrl(`http://gregorovius-edition.dhi-roma.it/api${$route.path}`)"
           />
         </div>
@@ -90,28 +86,6 @@ export default {
       const secondPart = title.split(/ .?.? ?[A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?\./);
       return secondPart[secondPart.length - 1];
     },
-    context() {
-      try {
-        const context = this.data.teiHeader.profileDesc.correspDesc.correspContext.ref;
-        const formatted = [];
-        if (context.length > 1) {
-          context.map(c => {
-            if (c["@type"] == "prev") {
-              formatted.push(`B: ${c["#text"]}`);
-            } else if (c["@type"] == "next") {
-              formatted.push(`A: ${c["#text"]}`);
-            }
-          });
-        } else if (context["@type"] == "prev") {
-          formatted.push(`B: ${context["#text"]}`);
-        } else if (context["@type"] == "next") {
-          formatted.push(`A: ${context["#text"]}`);
-        }
-        return formatted;
-      } catch (TypeError) {
-        return [];
-      }
-    }
   },
 
   mounted() {
