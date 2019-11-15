@@ -34,13 +34,10 @@ export default {
   },
 
   mounted() {
-    this.getItems();
-  },
-
-  async beforeCreate() {
     if (this.$store.getters.fullNameIndex.length == 0) {
-      await this.loadFullNameIndexAction();
+      this.loadFullNameIndexAction();
     }
+    this.getItems();
   },
 
   methods: {
