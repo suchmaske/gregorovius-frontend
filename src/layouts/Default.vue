@@ -63,7 +63,7 @@
             <div class="col-md-3 col-10 q-pa-md q-ml-sm">
               <div class="col-md-3 col-10 text-caption">
                 Ferdinand Gregorovius Briefedition
-                <q-badge color="primary">v1.2-beta</q-badge>
+                <q-badge color="primary">v1.0.1-beta</q-badge>
               </div>
             </div>
             <div class="col-md-3 col-10">
