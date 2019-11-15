@@ -129,9 +129,10 @@ export default {
       }
     );
     this.loadAll();
+    this.setSelectedAction({entity: "recipient", value: this.$route.query.recipient ? this.$route.query.recipient : ""});
   },
   methods: {
-    ...mapActions(["loadLettersAction", "loadFullNameIndexAction", "setLoadingStatus"]),
+    ...mapActions(["loadLettersAction", "loadFullNameIndexAction", "setLoadingStatus", "setSelectedAction"]),
 
     loadAll() {
       if (this.$store.getters.letters.length == 0) {
@@ -140,6 +141,9 @@ export default {
       if (this.$store.getters.fullNameIndex.length == 0) {
         this.loadFullNameIndexAction();
       }
+      this.filter.recipient = this.$route.query.recipient ? this.$route.query.recipient : "";
+      this.filter.placeSent = this.$route.query.placeSent ? this.$route.query.placeSent : "";
+      this.filter.placeReceived = this.$route.query.placeReceived ? this.$route.query.placeReceived : "";
     },
 
     getFullName(id, altName) {
@@ -268,26 +272,29 @@ export default {
       (state, getters) => getters.selectedRecipient,
       (newValue, oldValue) => {
         this.filter.recipient = newValue;
+        this.$router.push({query: Object.assign({}, this.$route.query, {recipient: newValue})});
       }
     ),
-      this.$store.watch(
-        (state, getters) => getters.selectedPlaceReceived,
-        (newValue, oldValue) => {
-          this.filter.placeReceived = newValue;
-        }
-      ),
-      this.$store.watch(
-        (state, getters) => getters.selectedPlaceSent,
-        (newValue, oldValue) => {
-          this.filter.placeSent = newValue;
-        }
-      ),
-      this.$store.watch(
-        (state, getters) => getters.selectedYears,
-        (newValue, oldValue) => {
-          this.filter.years = newValue;
-        }
-      );
+    this.$store.watch(
+      (state, getters) => getters.selectedPlaceReceived,
+      (newValue, oldValue) => {
+        this.filter.placeReceived = newValue;
+        this.$router.push({query: Object.assign({}, this.$route.query, {placeReceived: newValue})});
+      }
+    ),
+    this.$store.watch(
+      (state, getters) => getters.selectedPlaceSent,
+      (newValue, oldValue) => {
+        this.filter.placeSent = newValue;
+        this.$router.push({query: Object.assign({}, this.$route.query, {placeSent: newValue})});
+      }
+    ),
+    this.$store.watch(
+      (state, getters) => getters.selectedYears,
+      (newValue, oldValue) => {
+        this.filter.years = newValue;
+      }
+    );
   }
 };
 </script>

@@ -1,24 +1,26 @@
 <template>
   <div class="q-pa-md">
-      <q-select
-        ref="selector"
-        v-model="model"
-        filled
-        bg-color="white"
-        use-input
-        hide-selected
-        fill-input
-        :options="options"
-        :label="label"
-        :value="this.model.value"
-        @filter="filterFn"
-        @input="setSelected"
-      >
-        <template v-if="model.value !== ''" v-slot:append>
-          <q-icon name="cancel" class="cursor-pointer" @click.stop="model = {label: '', value: ''}; setSelected()" />
-        </template>
-      </q-select>
-    </div>
+    <q-select
+      ref="selector"
+      v-model="model"
+      filled
+      bg-color="white"
+      use-input
+      hide-selected
+      fill-input
+      :options="options"
+      :label="label"
+      :value="this.model.value"
+      @filter="filterFn"
+      @input="setSelected"
+    >
+      <template v-if="model.value !== ''" v-slot:append>
+        <q-icon
+          name="cancel" class="cursor-pointer" 
+          @click.stop="model = {label: '', value: ''}; setSelected()" 
+        />
+      </template>
+    </q-select>
   </div>
 </template>
 
@@ -32,10 +34,15 @@ export default {
     return {
       model: {
         label: '',
-        value: '',
+        value: ''
       },
       options: this.$attrs.options,
+      hideSelected: true,
+      useInput: true
     };
+  },
+  beforeDestroy() {
+    this.getSelected()
   },
   methods: {
     ...mapActions(['setSelectedAction']),
@@ -52,6 +59,14 @@ export default {
     },
     setSelected() {
       this.setSelectedAction({ entity: this.$props.entity, value: this.value });
+    },
+    getSelected() {
+      const toTitleCase = s => 'selected' + s.substr(0, 1).toUpperCase() + s.substr(1); 
+      const key = toTitleCase(this.$props.entity)
+      const selectedId = this.$store.getters[key]
+      if (selectedId != "") {
+        return this.optionsFull.find(pair => {return pair.value === selectedId})
+      }
     },
   },
   computed: {
