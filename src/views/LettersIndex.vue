@@ -121,6 +121,11 @@ export default {
       data: []
     };
   },
+  created() {
+    for (const [paramKey, paramValue] of Object.entries(this.$route.query)) {
+      this.setSelectedAction({entity: paramKey, value: paramValue});
+    }
+  },
   mounted() {
     this.$store.watch(
       (state, getters) => getters.loading,
@@ -129,17 +134,14 @@ export default {
       }
     );
     this.loadAll();
-    this.setSelectedAction({entity: "recipient", value: this.$route.query.recipient ? this.$route.query.recipient : ""});
   },
   methods: {
-    ...mapActions(["loadLettersAction", "loadFullNameIndexAction", "setLoadingStatus", "setSelectedAction"]),
+    ...mapActions(["loadLettersAction", "setLoadingStatus", "setSelectedAction"]),
 
     loadAll() {
+      ['recipient', 'placeReceived', 'placeSent', 'years'].map(this.watchQueryParam)
       if (this.$store.getters.letters.length == 0) {
         this.loadLettersAction();
-      }
-      if (this.$store.getters.fullNameIndex.length == 0) {
-        this.loadFullNameIndexAction();
       }
       this.filter.recipient = this.$route.query.recipient ? this.$route.query.recipient : "";
       this.filter.placeSent = this.$route.query.placeSent ? this.$route.query.placeSent : "";
@@ -233,7 +235,29 @@ export default {
         );
       }
       return rows;
-    }
+    },
+
+    watchQueryParam(entityKey) {
+      const selectedEntityKey = "selected" + entityKey[0].toUpperCase() + entityKey.slice(1)
+      this.$store.watch(
+        (state, getters) => getters[selectedEntityKey],
+        (newValue, oldValue) => {
+          this.filter[entityKey] = newValue.value;
+          if (newValue.value == "") {
+            var newQuery = {...this.$route.query}
+            delete newQuery[entityKey]
+            this.$router.push({query: newQuery});
+          } else {
+            this.$router.push({query: Object.assign({}, this.$route.query, {[entityKey]: newValue.value})});
+          }
+        }
+      )
+    },
+
+    loadQueryToStore() {
+      
+    },
+
   },
 
   computed: {
@@ -264,38 +288,10 @@ export default {
         } catch (TypeError) {}
       });
       return [...new Set(years)].filter(year => year !== undefined).sort();
-    }
+    },
+
   },
 
-  beforeCreate() {
-    this.$store.watch(
-      (state, getters) => getters.selectedRecipient,
-      (newValue, oldValue) => {
-        this.filter.recipient = newValue;
-        this.$router.push({query: Object.assign({}, this.$route.query, {recipient: newValue})});
-      }
-    ),
-    this.$store.watch(
-      (state, getters) => getters.selectedPlaceReceived,
-      (newValue, oldValue) => {
-        this.filter.placeReceived = newValue;
-        this.$router.push({query: Object.assign({}, this.$route.query, {placeReceived: newValue})});
-      }
-    ),
-    this.$store.watch(
-      (state, getters) => getters.selectedPlaceSent,
-      (newValue, oldValue) => {
-        this.filter.placeSent = newValue;
-        this.$router.push({query: Object.assign({}, this.$route.query, {placeSent: newValue})});
-      }
-    ),
-    this.$store.watch(
-      (state, getters) => getters.selectedYears,
-      (newValue, oldValue) => {
-        this.filter.years = newValue;
-      }
-    );
-  }
 };
 </script>
 

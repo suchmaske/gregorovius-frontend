@@ -32,17 +32,12 @@ export default {
   props: ['label', 'entity'],
   data() {
     return {
-      model: {
-        label: '',
-        value: ''
-      },
+      model: {},
       options: this.$attrs.options,
-      hideSelected: true,
-      useInput: true
     };
   },
-  beforeDestroy() {
-    this.getSelected()
+  async mounted () {
+    await this.getSelected()
   },
   methods: {
     ...mapActions(['setSelectedAction']),
@@ -61,12 +56,7 @@ export default {
       this.setSelectedAction({ entity: this.$props.entity, value: this.value });
     },
     getSelected() {
-      const toTitleCase = s => 'selected' + s.substr(0, 1).toUpperCase() + s.substr(1); 
-      const key = toTitleCase(this.$props.entity)
-      const selectedId = this.$store.getters[key]
-      if (selectedId != "") {
-        return this.optionsFull.find(pair => {return pair.value === selectedId})
-      }
+      this.model = this.$store.getters["selected" + this.$props.entity[0].toUpperCase() + this.$props.entity.slice(1)]
     },
   },
   computed: {

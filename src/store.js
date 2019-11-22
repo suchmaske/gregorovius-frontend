@@ -12,9 +12,9 @@ export default new Vuex.Store({
     places: [],
     works: [],
     fullNameIndex: [],
-    selectedRecipient: "",
-    selectedPlaceReceived: "",
-    selectedPlaceSent: "",
+    selectedRecipient: { label: "", value: "" },
+    selectedPlaceReceived: { label: "", value: "" },
+    selectedPlaceSent: { label: "", value: "" },
     selectedYears: []
   },
   mutations: {
@@ -34,18 +34,19 @@ export default new Vuex.Store({
       state.fullNameIndex = fullNameIndex;
     },
     SET_SELECTED(state, payload) {
+      const newModel = { label: state.fullNameIndex[payload.value], value: payload.value };
       switch (payload.entity) {
         case "recipient":
-          state.selectedRecipient = payload.value;
+          state.selectedRecipient = newModel;
           break;
         case "placeReceived":
-          state.selectedPlaceReceived = payload.value;
+          state.selectedPlaceReceived = newModel;
           break;
         case "placeSent":
-          state.selectedPlaceSent = payload.value;
+          state.selectedPlaceSent = newModel;
           break;
         case "years":
-          state.selectedYears = payload.value;
+          state.selectedYears = newModel;
           break;
         default:
           break;

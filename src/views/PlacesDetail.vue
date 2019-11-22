@@ -33,9 +33,9 @@ export default {
     };
   },
 
-  mounted() {
+  async mounted() {
     if (this.$store.getters.fullNameIndex.length == 0) {
-      this.loadFullNameIndexAction();
+      await this.loadFullNameIndexAction();
     }
     this.getItems();
   },

@@ -58,8 +58,10 @@ export default {
     };
   },
 
-  mounted() {
-    this.loadFullNameIndexAction();
+  async mounted() {
+    if (this.$store.getters.fullNameIndex.length == 0) {
+      await this.loadFullNameIndexAction();
+    }
     this.getItems();
   },
 

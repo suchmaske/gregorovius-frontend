@@ -16,7 +16,10 @@ import Impressum from "@/views/Impressum.vue";
 import Project from "@/views/Project.vue";
 import Team from "@/views/Team.vue";
 
+import store from "@/store";
+
 import Error404 from "@/views/Error404.vue";
+import { nextTick } from "q";
 
 Vue.use(Router);
 
@@ -38,7 +41,13 @@ export default new Router({
         {
           path: "letters",
           name: "Briefe",
-          component: LettersIndex
+          component: LettersIndex,
+          async beforeEnter(to, from, next) {
+            if (store.getters.fullNameIndex.length == 0) {
+              await store.dispatch("loadFullNameIndexAction");
+            }
+            next();
+          }
         },
         {
           path: "letters/:id",
