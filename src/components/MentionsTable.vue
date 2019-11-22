@@ -50,8 +50,12 @@ export default {
   },
 
   async beforeMount() {
-    await this.loadLettersAction();
-    await this.loadFullNameIndexAction();
+      if (this.$store.getters.letters.length == 0) {
+        await this.loadLettersAction();
+      }
+      if (this.$store.getters.fullNameIndex.length == 0) {
+        await this.loadFullNameIndexAction();
+      }
   },
 
   methods: {
@@ -73,7 +77,7 @@ export default {
         persons = !persons ? [] : persons;
         places = !places ? [] : places;
         works = !works ? [] : works;
-        return [...persons, ...places, ...works].includes(this.$attrs.entityId);
+        return [...persons, ...places, ...works].includes(this.$route.params.id);
       });
     }
   }
