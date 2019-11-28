@@ -157,7 +157,15 @@ export default {
   },
   created() {
     for (const [paramKey, paramValue] of Object.entries(this.$route.query)) {
-      this.setSelectedAction({ entity: paramKey, value: paramValue });
+      if (paramKey === "years") {
+        try {
+          this.setSelectedAction({ entity: paramKey, value: paramValue.split(",") });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        this.setSelectedAction({ entity: paramKey, value: paramValue });
+      }
     }
   },
   mounted() {
@@ -173,7 +181,8 @@ export default {
     ...mapActions(["loadLettersAction", "setLoadingStatus", "setSelectedAction"]),
 
     loadAll() {
-      ["recipient", "placeReceived", "placeSent", "years"].map(this.watchQueryParam);
+      ["recipient", "placeReceived", "placeSent"].map(this.watchQueryParam);
+      this.watchQueryParamYears();
       if (this.$store.getters.letters.length == 0) {
         this.loadLettersAction();
       }
@@ -182,6 +191,7 @@ export default {
       this.filter.placeReceived = this.$route.query.placeReceived
         ? this.$route.query.placeReceived
         : "";
+      this.filter.years = this.$route.query.years ? this.$route.query.years : [];
     },
 
     getFullName(id, altName) {
@@ -286,6 +296,24 @@ export default {
           } else {
             this.$router.push({
               query: Object.assign({}, this.$route.query, { [entityKey]: newValue.value })
+            });
+          }
+        }
+      );
+    },
+
+    watchQueryParamYears() {
+      this.$store.watch(
+        (state, getters) => getters.selectedYears,
+        newValue => {
+          this.filter.years = newValue;
+          if (newValue == []) {
+            var newQuery = { ...this.$route.query };
+            delete newQuery.years;
+            this.$router.push({ query: newQuery });
+          } else {
+            this.$router.push({
+              query: Object.assign({}, this.$route.query, { years: newValue.join() })
             });
           }
         }

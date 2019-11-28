@@ -50,10 +50,17 @@ export default {
       return this.$attrs.options;
     }
   },
+  mounted() {
+    this.getSelected();
+  },
   methods: {
     ...mapActions(["setSelectedAction"]),
     setSelected() {
-      this.setSelectedAction({ entity: this.$props.entity, value: this.model });
+      this.setSelectedAction({ entity: "years", value: this.model });
+    },
+    getSelected() {
+      const years = this.$store.getters.selectedYears;
+      this.model = years;
     }
   }
 };
