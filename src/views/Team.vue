@@ -104,7 +104,7 @@ export default {
           name: "Frederike Neuber",
           role: "Werkauftrag",
           tel: "",
-          mail: "",
+          mail: ""
         },
         {
           id: "stepken",

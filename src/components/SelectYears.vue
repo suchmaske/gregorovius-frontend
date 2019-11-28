@@ -9,12 +9,12 @@
       fill-input
       :options="options"
       :label="label"
-      :value="this.model"
+      :value="model"
     >
       <template v-slot:option="scope">
         <q-item>
           <q-item-section>
-            <q-item-label v-html="scope.opt"></q-item-label>
+            <q-item-label>{{ scope.opt }}</q-item-label>
           </q-item-section>
           <q-item-section side>
             <q-toggle v-model="model" :val="scope.opt" @input="setSelected" />
@@ -30,21 +30,30 @@ import { mapActions } from "vuex";
 
 export default {
   name: "SelectYears",
-  props: ["label", "entity"],
+  props: {
+    label: {
+      type: String,
+      default: ""
+    },
+    entity: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
       model: []
     };
   },
+  computed: {
+    options() {
+      return this.$attrs.options;
+    }
+  },
   methods: {
     ...mapActions(["setSelectedAction"]),
     setSelected() {
       this.setSelectedAction({ entity: this.$props.entity, value: this.model });
-    }
-  },
-  computed: {
-    options() {
-      return this.$attrs.options;
     }
   }
 };

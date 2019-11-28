@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import { API } from "@/shared/config";
 
 export default {
@@ -58,6 +58,12 @@ export default {
     };
   },
 
+  computed: {
+    fullNameIndex() {
+      return this.$store.getters.fullNameIndex;
+    }
+  },
+
   mounted() {
     this.getItems();
   },
@@ -80,11 +86,6 @@ export default {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
-  },
-  computed: {
-    fullNameIndex() {
-      return this.$store.getters.fullNameIndex;
     }
   }
 };

@@ -78,13 +78,13 @@ del {
 }
 
 .g-mprint {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 12pt;
   letter-spacing: 2px;
 }
 
 .g-aq {
-  font-family: 'IBMPlexSans';
+  font-family: "IBMPlexSans";
   font-size: 13pt;
 }
 

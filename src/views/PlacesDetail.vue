@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import MentionsTable from "@/components/MentionsTable";
 import { API } from "@/shared/config";
 
@@ -31,6 +31,12 @@ export default {
     return {
       data: []
     };
+  },
+
+  computed: {
+    name() {
+      return this.$store.getters.fullNameIndex[this.$route.params.id];
+    }
   },
 
   async mounted() {
@@ -53,11 +59,6 @@ export default {
         // eslint-disable-next-line
         console.error(error)
       }
-    }
-  },
-  computed: {
-    name() {
-      return this.$store.getters.fullNameIndex[this.$route.params.id];
     }
   }
 };

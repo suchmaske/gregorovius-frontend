@@ -53,7 +53,7 @@ export default {
   beforeMount() {
     this.$store.watch(
       (state, getters) => getters.loading,
-      (newValue, oldValue) => {
+      newValue => {
         this.loading = newValue;
       }
     );

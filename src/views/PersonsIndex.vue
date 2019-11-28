@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import { API } from "@/shared/config";
 
 export default {
@@ -56,6 +56,12 @@ export default {
       ],
       data: []
     };
+  },
+
+  computed: {
+    fullNameIndex() {
+      return this.$store.getters.fullNameIndex;
+    }
   },
 
   async mounted() {
@@ -101,11 +107,6 @@ export default {
         return name.orgName;
       }
       return "NN";
-    }
-  },
-  computed: {
-    fullNameIndex() {
-      return this.$store.getters.fullNameIndex;
     }
   }
 };

@@ -20,10 +20,13 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "PageIndex",
+  mounted() {
+    this.loadAll();
+  },
   methods: {
     ...mapActions(["loadLettersAction", "loadFullNameIndexAction", "setLoadingStatus"]),
     loadAll() {
@@ -34,9 +37,6 @@ export default {
         this.loadFullNameIndexAction();
       }
     }
-  },
-  mounted() {
-    this.loadAll();
   }
 };
 </script>

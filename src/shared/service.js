@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 import axios from "axios";
-import { API, XSLTToken } from "./config";
+import { API } from "./config";
 
 const parseList = response => {
   if (response.status !== 200) throw Error(response.message);

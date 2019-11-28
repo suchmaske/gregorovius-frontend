@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "MentionsTable",
@@ -49,18 +49,6 @@ export default {
     };
   },
 
-  async beforeMount() {
-      if (this.$store.getters.letters.length == 0) {
-        await this.loadLettersAction();
-      }
-      if (this.$store.getters.fullNameIndex.length == 0) {
-        await this.loadFullNameIndexAction();
-      }
-  },
-
-  methods: {
-    ...mapActions(["loadLettersAction", "loadFullNameIndexAction"])
-  },
   computed: {
     fullNameIndex() {
       return this.$store.getters.fullNameIndex;
@@ -80,6 +68,19 @@ export default {
         return [...persons, ...places, ...works].includes(this.$route.params.id);
       });
     }
+  },
+
+  async beforeMount() {
+    if (this.$store.getters.letters.length == 0) {
+      await this.loadLettersAction();
+    }
+    if (this.$store.getters.fullNameIndex.length == 0) {
+      await this.loadFullNameIndexAction();
+    }
+  },
+
+  methods: {
+    ...mapActions(["loadLettersAction", "loadFullNameIndexAction"])
   }
 };
 </script>

@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import SelectAutoComplete from "../components/SelectAutoComplete.vue";
 import SelectYears from "../components/SelectYears.vue";
 
@@ -121,144 +121,6 @@ export default {
       data: []
     };
   },
-  created() {
-    for (const [paramKey, paramValue] of Object.entries(this.$route.query)) {
-      this.setSelectedAction({entity: paramKey, value: paramValue});
-    }
-  },
-  mounted() {
-    this.$store.watch(
-      (state, getters) => getters.loading,
-      (newValue, oldValue) => {
-        this.loading = newValue;
-      }
-    );
-    this.loadAll();
-  },
-  methods: {
-    ...mapActions(["loadLettersAction", "setLoadingStatus", "setSelectedAction"]),
-
-    loadAll() {
-      ['recipient', 'placeReceived', 'placeSent', 'years'].map(this.watchQueryParam)
-      if (this.$store.getters.letters.length == 0) {
-        this.loadLettersAction();
-      }
-      this.filter.recipient = this.$route.query.recipient ? this.$route.query.recipient : "";
-      this.filter.placeSent = this.$route.query.placeSent ? this.$route.query.placeSent : "";
-      this.filter.placeReceived = this.$route.query.placeReceived ? this.$route.query.placeReceived : "";
-    },
-
-    getFullName(id, altName) {
-      const fullName = this.fullNameIndex[id];
-      return fullName || altName;
-    },
-
-    getFullNameArray(nameIdArray) {
-      if (nameIdArray) {
-        return nameIdArray.map(r => this.getFullName(r, "NN"));
-      }
-      return [];
-    },
-
-    getArrayOptions(entityName, propertyName) {
-      // Get a set of possible values from an array property
-      const optionIds = [].concat.apply(
-        [],
-        this[entityName].map(e => {
-          const stack = propertyName.split(".");
-          var output = e.properties;
-          while (stack.length > 1) {
-            var output = output[stack.shift()];
-          }
-          return output[stack.shift()];
-        })
-      );
-      const uniqueIds = [...new Set(optionIds)].filter(id => id !== null);
-      const idNameMap = uniqueIds.map(id => ({
-        label: this.getFullName(id, "NN"),
-        value: id
-      }));
-      return idNameMap;
-    },
-
-    getOptions(entityName, propertyName) {
-      // Get a set of possible values from a string property
-      const optionIds = this[entityName].map(e => {
-        const stack = propertyName.split(".");
-        var output = e.properties;
-        while (stack.length > 1) {
-          var output = output[stack.shift()];
-        }
-        return output[stack.shift()];
-      });
-      const uniqueIds = [...new Set(optionIds)].filter(id => id !== null);
-      const idNameMap = uniqueIds.map(id => ({
-        label: this.getFullName(id, "NN"),
-        value: id
-      }));
-      return idNameMap;
-    },
-
-    hasValue(item, property, value) {
-      // Check if a property (Array or String) contains or is equal to a value
-      const stack = property.split(".");
-      var prop = item.properties;
-      while (stack.length > 1) {
-        var prop = prop[stack.shift()];
-      }
-      prop = prop[stack.shift()];
-
-      if (prop instanceof Array) {
-        return prop.includes(value);
-      }
-      return prop === value;
-    },
-
-    filterItems(objectArray, property, value) {
-      const filtered = objectArray.filter(item => this.hasValue(item, property, value));
-      return filtered;
-    },
-
-    filterLetters(rows, terms, cols) {
-      if (terms.recipient !== "") {
-        rows = rows.filter(r => this.hasValue(r, "recipient", terms.recipient));
-      }
-      if (terms.placeSent !== "") {
-        rows = rows.filter(r => this.hasValue(r, "place.sent", terms.placeSent));
-      }
-      if (terms.placeReceived !== "") {
-        rows = rows.filter(r => this.hasValue(r, "place.received", terms.placeReceived));
-      }
-      if (terms.years.length > 0) {
-        rows = rows.filter(r =>
-          !r.properties.date ? false : terms.years.includes(r.properties.date.slice(0, 4))
-        );
-      }
-      return rows;
-    },
-
-    watchQueryParam(entityKey) {
-      const selectedEntityKey = "selected" + entityKey[0].toUpperCase() + entityKey.slice(1)
-      this.$store.watch(
-        (state, getters) => getters[selectedEntityKey],
-        (newValue, oldValue) => {
-          this.filter[entityKey] = newValue.value;
-          if (newValue.value == "") {
-            var newQuery = {...this.$route.query}
-            delete newQuery[entityKey]
-            this.$router.push({query: newQuery});
-          } else {
-            this.$router.push({query: Object.assign({}, this.$route.query, {[entityKey]: newValue.value})});
-          }
-        }
-      )
-    },
-
-    loadQueryToStore() {
-      
-    },
-
-  },
 
   computed: {
     fullNameIndex() {
@@ -285,13 +147,153 @@ export default {
       const years = this.letters.map(e => {
         try {
           return e.properties.date.slice(0, 4);
-        } catch (TypeError) {}
+        } catch (error) {
+          console.log(error);
+          return [];
+        }
       });
       return [...new Set(years)].filter(year => year !== undefined).sort();
+    }
+  },
+  created() {
+    for (const [paramKey, paramValue] of Object.entries(this.$route.query)) {
+      this.setSelectedAction({ entity: paramKey, value: paramValue });
+    }
+  },
+  mounted() {
+    this.$store.watch(
+      (state, getters) => getters.loading,
+      newValue => {
+        this.loading = newValue;
+      }
+    );
+    this.loadAll();
+  },
+  methods: {
+    ...mapActions(["loadLettersAction", "setLoadingStatus", "setSelectedAction"]),
+
+    loadAll() {
+      ["recipient", "placeReceived", "placeSent", "years"].map(this.watchQueryParam);
+      if (this.$store.getters.letters.length == 0) {
+        this.loadLettersAction();
+      }
+      this.filter.recipient = this.$route.query.recipient ? this.$route.query.recipient : "";
+      this.filter.placeSent = this.$route.query.placeSent ? this.$route.query.placeSent : "";
+      this.filter.placeReceived = this.$route.query.placeReceived
+        ? this.$route.query.placeReceived
+        : "";
     },
 
-  },
+    getFullName(id, altName) {
+      const fullName = this.fullNameIndex[id];
+      return fullName || altName;
+    },
 
+    getFullNameArray(nameIdArray) {
+      if (nameIdArray) {
+        return nameIdArray.map(r => this.getFullName(r, "NN"));
+      }
+      return [];
+    },
+
+    getArrayOptions(entityName, propertyName) {
+      // Get a set of possible values from an array property
+      const optionIds = [].concat.apply(
+        [],
+        this[entityName].map(e => {
+          const stack = propertyName.split(".");
+          var output = e.properties;
+          while (stack.length > 1) {
+            output = output[stack.shift()];
+          }
+          return output[stack.shift()];
+        })
+      );
+      const uniqueIds = [...new Set(optionIds)].filter(id => id !== null);
+      const idNameMap = uniqueIds.map(id => ({
+        label: this.getFullName(id, "NN"),
+        value: id
+      }));
+      return idNameMap;
+    },
+
+    getOptions(entityName, propertyName) {
+      // Get a set of possible values from a string property
+      const optionIds = this[entityName].map(e => {
+        const stack = propertyName.split(".");
+        var output = e.properties;
+        while (stack.length > 1) {
+          output = output[stack.shift()];
+        }
+        return output[stack.shift()];
+      });
+      const uniqueIds = [...new Set(optionIds)].filter(id => id !== null);
+      const idNameMap = uniqueIds.map(id => ({
+        label: this.getFullName(id, "NN"),
+        value: id
+      }));
+      return idNameMap;
+    },
+
+    hasValue(item, property, value) {
+      // Check if a property (Array or String) contains or is equal to a value
+      const stack = property.split(".");
+      var prop = item.properties;
+      while (stack.length > 1) {
+        prop = prop[stack.shift()];
+      }
+      prop = prop[stack.shift()];
+
+      if (prop instanceof Array) {
+        return prop.includes(value);
+      }
+      return prop === value;
+    },
+
+    filterItems(objectArray, property, value) {
+      const filtered = objectArray.filter(item => this.hasValue(item, property, value));
+      return filtered;
+    },
+
+    filterLetters(rows, terms) {
+      if (terms.recipient !== "") {
+        rows = rows.filter(r => this.hasValue(r, "recipient", terms.recipient));
+      }
+      if (terms.placeSent !== "") {
+        rows = rows.filter(r => this.hasValue(r, "place.sent", terms.placeSent));
+      }
+      if (terms.placeReceived !== "") {
+        rows = rows.filter(r => this.hasValue(r, "place.received", terms.placeReceived));
+      }
+      if (terms.years.length > 0) {
+        rows = rows.filter(r =>
+          !r.properties.date ? false : terms.years.includes(r.properties.date.slice(0, 4))
+        );
+      }
+      return rows;
+    },
+
+    watchQueryParam(entityKey) {
+      const selectedEntityKey = "selected" + entityKey[0].toUpperCase() + entityKey.slice(1);
+      this.$store.watch(
+        (state, getters) => getters[selectedEntityKey],
+        newValue => {
+          this.filter[entityKey] = newValue.value;
+          if (newValue.value == "") {
+            var newQuery = { ...this.$route.query };
+            delete newQuery[entityKey];
+            this.$router.push({ query: newQuery });
+          } else {
+            this.$router.push({
+              query: Object.assign({}, this.$route.query, { [entityKey]: newValue.value })
+            });
+          }
+        }
+      );
+    },
+
+    loadQueryToStore() {}
+  }
 };
 </script>
 

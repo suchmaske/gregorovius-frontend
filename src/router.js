@@ -19,7 +19,6 @@ import Team from "@/views/Team.vue";
 import store from "@/store";
 
 import Error404 from "@/views/Error404.vue";
-import { nextTick } from "q";
 
 Vue.use(Router);
 

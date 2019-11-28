@@ -4,7 +4,7 @@ module.exports = {
       animations: "all"
     }
   },
-  transpileDependencies: [/[\\\/]node_modules[\\\/]quasar[\\\/]/],
+  transpileDependencies: [/[\\/]node_modules[\\/]quasar[\\/]/],
   runtimeCompiler: true,
   configureWebpack: {
     module: {
