@@ -71,13 +71,19 @@
                 Impressum
               </q-btn>
             </div>
-            <div class="col-md-1 col-10">
+            <div class="col-md-1 col-10 cursor-pointer">
               <q-icon name="photo_camera" :class="$route.path === '/' ? '' : 'hidden'">
-                <q-tooltip class="text-subtitle" content-style="font-size: 12px">
-                  Hintergrund: Gregorovius am Schreibtisch, Aquarell von K. Lindemann-Frommel, BSB
-                  München, Nachlass F. Gregorovius, Gregoroviusiana 320a,
-                  urn:nbn:de:bvb:12-bsb00002519-8
-                </q-tooltip>
+                <q-popup-proxy>
+                  <q-banner class="text-subtitle" content-style="font-size: 12px">
+                    <b>Hintergrundbild:</b>
+                    Gregorovius am Schreibtisch, Aquarell von K. Lindemann-Frommel, BSB München,
+                    Nachlass F. Gregorovius, Gregoroviusiana 30.a.9,
+                    <a
+                      href="https://www.deutsche-digitale-bibliothek.de/item/AQJADPGLHSGLR3TY2KJCZ5CCUOCHDIZI"
+                      >urn:nbn:de:bvb:12-bsb00002519-8
+                    </a>
+                  </q-banner>
+                </q-popup-proxy>
               </q-icon>
             </div>
           </div>
