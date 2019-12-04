@@ -5,7 +5,12 @@
         <q-card class="q-pa-xl" flat>
           <q-card-section>
             <div class="text-h6">{{ name }}</div>
-            <div class="text-subtitle3 text-secondary"></div>
+            <div
+              v-if="data.person.birth || data.person.death"
+              class="text-subtitle3 text-secondary"
+            >
+              {{ data.person.birth }} - {{ data.person.death }}
+            </div>
           </q-card-section>
           <q-separator dark />
         </q-card>
@@ -29,7 +34,13 @@ export default {
   components: { MentionsTable },
   data() {
     return {
-      data: []
+      data: {
+        person: {
+          persName: "",
+          birth: "",
+          death: ""
+        }
+      }
     };
   },
 
