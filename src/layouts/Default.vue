@@ -78,9 +78,8 @@
                     <b>Hintergrundbild:</b>
                     Gregorovius am Schreibtisch, Aquarell von K. Lindemann-Frommel, BSB München,
                     Nachlass F. Gregorovius, Gregoroviusiana 30.a.9,
-                    <a
-                      href="https://www.deutsche-digitale-bibliothek.de/item/AQJADPGLHSGLR3TY2KJCZ5CCUOCHDIZI"
-                      >urn:nbn:de:bvb:12-bsb00002519-8
+                    <a href="http://mdz-nbn-resolving.de/urn:nbn:de:bvb:12-bsb00002519-8">
+                      urn:nbn:de:bvb:12-bsb00002519-8
                     </a>
                   </q-banner>
                 </q-popup-proxy>
