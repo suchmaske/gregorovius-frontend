@@ -32,6 +32,7 @@
           :filter-method="filterLetters"
           :pagination.sync="pagination"
           :loading="loading"
+          :visible-columns="visibleColumns"
           binary-state-sort
           flat
         >
@@ -64,11 +65,13 @@ export default {
   data() {
     return {
       model: "",
+      visibleColumns: ["date", "recipient", "placeSent", "placeRecv"],
       filter: {
         recipient: "",
         placeSent: "",
         placeReceived: "",
-        years: []
+        years: [],
+        resp: ""
       },
       loading: this.$store.state.isLoading,
       pagination: {
@@ -116,6 +119,11 @@ export default {
           align: "left",
           field: row => this.getFullName(row.properties.place.received, "o. O."),
           sortable: true
+        },
+        {
+          name: "resp",
+          label: "resp",
+          field: row => row.properties.resp
         }
       ],
       data: []
@@ -192,6 +200,7 @@ export default {
         ? this.$route.query.placeReceived
         : "";
       this.filter.years = this.$route.query.years ? this.$route.query.years : [];
+      this.filter.resp = this.$route.query.resp ? this.$route.query.resp : "";
     },
 
     getFullName(id, altName) {
@@ -278,6 +287,11 @@ export default {
       if (terms.years.length > 0) {
         rows = rows.filter(r =>
           !r.properties.date ? false : terms.years.includes(r.properties.date.slice(0, 4))
+        );
+      }
+      if (terms.resp !== "") {
+        rows = rows.filter(r =>
+          !r.properties.resp ? false : r.properties.resp.includes(terms.resp)
         );
       }
       return rows;
