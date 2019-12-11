@@ -62,8 +62,13 @@
           <div class="row justify-between">
             <div class="col-md-3 col-10 q-pa-md q-ml-sm">
               <div class="col-md-3 col-10 text-caption">
-                Ferdinand Gregorovius Briefedition
-                <q-badge color="primary">v{{ appVersion }}</q-badge>
+                <b>Ferdinand Gregorovius Briefedition </b>
+                <q-badge color="black">v{{ appVersion }}</q-badge>
+              </div>
+              <div class="col-md-3 col-10 text-caption">
+                <a href="https://creativecommons.org/licenses/by/4.0/deed.de">
+                  <img src="../statics/img/badge_cc_by.png" alt="" />
+                </a>
               </div>
             </div>
             <div class="col-md-3 col-10">
