@@ -1,33 +1,44 @@
 <template>
-  <q-page padding>
-    <div class="row justify-center">
-      <div class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
-        <q-card class="q-pa-xl" flat>
-          <q-card-section>
-            <div class="text-h6">{{ name }}</div>
-            <div
-              v-if="data.person.birth || data.person.death"
-              class="text-subtitle3 text-secondary"
-            >
-              {{ data.person.birth }} - {{ data.person.death }}
-            </div>
-          </q-card-section>
-          <q-separator dark />
-        </q-card>
+  <div>
+    <q-page v-show="!this.$store.getters.loading && loading == false" padding>
+      <div class="row justify-center">
+        <div class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
+          <q-card class="q-pa-xl" flat>
+            <q-card-section>
+              <div class="text-h6">{{ name }}</div>
+              <div
+                v-if="data.person.birth || data.person.death"
+                class="text-subtitle3 text-secondary"
+              >
+                {{ data.person.birth }} - {{ data.person.death }}
+              </div>
+            </q-card-section>
+            <q-separator dark />
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row justify-center">
-      <div class="col-md-8 col-12 q-pb-xl q-gutter-y-lg">
-        <MentionsTable :entity-id="this.$route.params.id" :entity-name="name" />
+      <div class="row justify-center">
+        <div class="col-md-8 col-12 q-pb-xl q-gutter-y-lg">
+          <MentionsTable
+            :entity-id="this.$route.params.id"
+            :entity-name="name"
+            entity-type="persons"
+          />
+        </div>
       </div>
-    </div>
-  </q-page>
+    </q-page>
+    <q-page v-show="this.$store.getters.loading || loading == true">
+      <div class="q-pt-xl row justify-center">
+        <q-spinner-hourglass color="primary" size="5em" />
+      </div>
+    </q-page>
+  </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import MentionsTable from "@/components/MentionsTable";
-import { API } from "@/shared/config";
+import { dataService } from "@/shared";
 
 export default {
   name: "PersonsDetail",
@@ -40,7 +51,8 @@ export default {
           birth: "",
           death: ""
         }
-      }
+      },
+      loading: true
     };
   },
 
@@ -53,26 +65,19 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
     if (this.$store.getters.fullNameIndex.length == 0) {
-      this.loadFullNameIndexAction();
+      await this.loadFullNameIndexAction();
     }
-    this.getItems();
+    await this.getItems();
   },
 
   methods: {
     ...mapActions(["loadLettersAction", "loadFullNameIndexAction"]),
     async getItems() {
-      try {
-        const response = await fetch(`${API}${this.$route.path}`, {
-          headers: { Accept: "application/json" }
-        });
-        const data = await response.json();
-        this.data = data;
-      } catch (error) {
-        // eslint-disable-next-line
-        console.error(error)
-      }
+      const data = await dataService.getEntity("persons", this.$route.params.id, "json");
+      this.data = { ...this.data, ...data };
+      this.loading = false;
     }
   }
 };

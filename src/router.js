@@ -11,6 +11,7 @@ import PlacesIndex from "@/views/PlacesIndex.vue";
 import PlacesDetail from "@/views/PlacesDetail.vue";
 import WorksIndex from "@/views/WorksIndex.vue";
 import WorksDetail from "@/views/WorksDetail.vue";
+import WorksDetailMultiple from "@/views/WorksDetailMultiple.vue";
 
 import Impressum from "@/views/Impressum.vue";
 import Project from "@/views/Project.vue";
@@ -82,6 +83,12 @@ export default new Router({
           path: "works/:id",
           name: "Werk",
           component: WorksDetail
+        },
+        {
+          path: "works-multiple",
+          name: "Werk (mehrfach)",
+          component: WorksDetailMultiple,
+          props: route => ({ ids: route.query.ids })
         },
         {
           path: "project",

@@ -67,8 +67,10 @@ export default new Vuex.Store({
       commit("SET_LOADING_STATUS", false);
     },
     async loadFullNameIndexAction({ commit }) {
+      commit("SET_LOADING_STATUS", true);
       const fullNameIndex = await dataService.getFullNameIndex();
       commit("GET_FULLNAME_INDEX", fullNameIndex);
+      commit("SET_LOADING_STATUS", false);
     },
     async setSelectedAction({ commit }, payload) {
       commit("SET_SELECTED", payload);

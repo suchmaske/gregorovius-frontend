@@ -5,6 +5,11 @@
         <div class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
           <q-card class="q-pa-xl" flat>
             <q-card-section>
+              <div class="text-h6">
+                Mehrfache Indizierung von Werken
+              </div>
+            </q-card-section>
+            <q-card-section v-for="title in titles" :key="title">
               <v-runtime-template :template="title" />
             </q-card-section>
             <q-separator dark />
@@ -14,8 +19,8 @@
       <div class="row justify-center">
         <div class="col-md-8 col-12 q-pb-xl q-gutter-y-lg">
           <MentionsTable
-            :entity-id="this.$route.params.id"
-            entity-name="Dieser Titel"
+            :entity-id="ids.join(' ')"
+            entity-name="Diese Sammlung von Titeln"
             entity-type="works"
           />
         </div>
@@ -36,7 +41,7 @@ import MentionsTable from "@/components/MentionsTable";
 import { API } from "@/shared/config";
 
 export default {
-  name: "PersonsDetail",
+  name: "WorksDetailMultiple",
   components: {
     MentionsTable,
     VRuntimeTemplate
@@ -44,34 +49,40 @@ export default {
   data() {
     return {
       data: [],
-      title: ""
+      titles: []
     };
   },
   computed: {
+    ids() {
+      return this.$attrs.ids.split(",");
+    },
     name() {
       return this.data;
     }
   },
 
-  created() {
-    this.getItems();
-    this.getXSLT("WorkTitle", "title");
+  async created() {
+    this.ids.map(async id => await this.getXSLT("WorkTitle", "titles", id));
   },
 
   methods: {
-    async getItems() {
+    async getItem(id) {
       try {
-        const response = await fetch(`${API}${this.$route.path}`, {
+        const response = await fetch(`${API}/works/${id}`, {
           headers: { Accept: "application/json" }
         });
         const data = await response.json();
-        this.data = data;
+        this.data.push(data);
       } catch (error) {
         console.error(error);
       }
     },
-    async getXSLT(fileName, targetProp) {
-      this[targetProp] = await dataService.XSLTransform(this.$route.path, fileName);
+    async getXSLT(fileName, targetProp, id) {
+      try {
+        this[targetProp].push(await dataService.XSLTransform(`works/${id}`, fileName));
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 };

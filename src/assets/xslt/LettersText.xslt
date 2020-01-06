@@ -132,7 +132,9 @@
         </xsl:when>
         <!--TODO: Mehrfache Literaturverweise-->
         <xsl:when test="@corresp">
-            <xsl:apply-templates/>
+            <a class="g-entity-link" v-on:click="$router.push({{ name: 'Werk (mehrfach)', query: {{ ids: '{@corresp}'.split(' ').join(',') }} }})">
+                <xsl:apply-templates/>
+            </a>
         </xsl:when>
         <xsl:otherwise>
             <xsl:apply-templates/>

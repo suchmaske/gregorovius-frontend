@@ -1,10 +1,11 @@
 <template>
   <q-card class="col-md-8 col-12 q-pa-xl" flat bordered>
     <q-table
-      v-if="letters.length > 0"
+      v-if="loading == false && letters.length > 0"
       title="Erwähnt in"
       :data="letters"
       :columns="columns"
+      :loading="loading"
       row-key="id"
       :pagination.sync="pagination"
       flat
@@ -18,8 +19,13 @@
         >
       </template>
     </q-table>
-    <q-banner v-if="letters.length == 0" inline-actions rounded class="bg-warning text-center">
-      {{ this.$attrs.entityName }} wird in keinem Brief erwähnt.
+    <q-banner
+      v-if="letters.length == 0 && loading == false"
+      class="bg-warning text-center"
+      inline-actions
+      rounded
+    >
+      {{ entityName }} wird in keinem Brief erwähnt.
     </q-banner>
   </q-card>
 </template>
@@ -29,6 +35,21 @@ import { mapActions } from "vuex";
 
 export default {
   name: "MentionsTable",
+  props: {
+    entityType: {
+      type: String,
+      required: true
+    },
+    entityName: {
+      type: String,
+      required: false,
+      default: "Diese Entität"
+    },
+    entityId: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       filter: "",
@@ -53,20 +74,8 @@ export default {
     fullNameIndex() {
       return this.$store.getters.fullNameIndex;
     },
-    name() {
-      return this.fullNameIndex[this.$route.params.id];
-    },
     letters() {
-      const { letters } = this.$store.getters;
-      return letters.filter(letter => {
-        let { persons } = letter.properties.mentioned;
-        let { places } = letter.properties.mentioned;
-        let { works } = letter.properties.mentioned;
-        persons = !persons ? [] : persons;
-        places = !places ? [] : places;
-        works = !works ? [] : works;
-        return [...persons, ...places, ...works].includes(this.$route.params.id);
-      });
+      return this.getMentioned(this.entityType);
     }
   },
 
@@ -80,7 +89,18 @@ export default {
   },
 
   methods: {
-    ...mapActions(["loadLettersAction", "loadFullNameIndexAction"])
+    ...mapActions(["loadLettersAction", "loadFullNameIndexAction"]),
+    getMentioned(entityName) {
+      this.loading = true;
+      const { letters } = this.$store.getters;
+      const filtered = letters.filter(letter => {
+        let entities = letter.properties.mentioned[entityName];
+        entities = !entities ? [] : entities;
+        return [...entities].some(id => id.includes(this.entityId));
+      });
+      this.loading = false;
+      return filtered;
+    }
   }
 };
 </script>
