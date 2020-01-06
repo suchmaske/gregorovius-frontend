@@ -117,6 +117,25 @@ const getFullNameIndex = async function() {
   }
 };
 
+const getSearchResults = async function(entityName, searchInput) {
+  try {
+    const response = await axios.get(`${API}/search`, {
+      headers: {
+        Accept: "application/json"
+      },
+      params: {
+        entity: entityName,
+        q: searchInput
+      }
+    });
+    const data = parseList(response);
+    return data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 const XSLTransform = async function(path, xsltName) {
   try {
     const stylesheetModule = await import(`@/assets/xslt/${xsltName}.xslt`);
@@ -143,5 +162,6 @@ export const dataService = {
   getLetters,
   getFullName,
   getFullNameIndex,
+  getSearchResults,
   XSLTransform
 };

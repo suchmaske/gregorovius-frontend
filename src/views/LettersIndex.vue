@@ -4,6 +4,13 @@
       <div class="col-12 col-md-3">
         <q-card flat class="transparent">
           <div class="q-gutter-sm col justify-center" style="max-width: 500px">
+            <div class="q-pa-md">
+              <q-input v-model="filter.searchInput" label="Volltextsuche">
+                <template v-slot:append>
+                  <q-icon name="search" />
+                </template>
+              </q-input>
+            </div>
             <select-auto-complete
               label="Empfänger"
               entity="recipient"
@@ -53,6 +60,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { dataService } from "../shared";
 import SelectAutoComplete from "../components/SelectAutoComplete.vue";
 import SelectYears from "../components/SelectYears.vue";
 
@@ -71,7 +79,8 @@ export default {
         placeSent: "",
         placeReceived: "",
         years: [],
-        resp: ""
+        resp: "",
+        searchInput: "",
       },
       loading: this.$store.state.isLoading,
       pagination: {
@@ -294,7 +303,21 @@ export default {
           !r.properties.resp ? false : r.properties.resp.includes(terms.resp)
         );
       }
-      return rows;
+      var searchRequest = undefined;
+      if (terms.searchInput !== "") {
+        var results = [];
+        this.loading = true;
+        searchRequest = dataService.getSearchResults("letters", terms.searchInput).then(response => {
+          results = response.results;
+          this.loading = false;
+          for (const result of results) {
+            rows = rows.filter(r =>
+              r.id === result.entity_id
+            );
+          }
+        });
+      }
+      return rows
     },
 
     watchQueryParam(entityKey) {
