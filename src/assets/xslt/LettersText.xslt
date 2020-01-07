@@ -35,7 +35,7 @@
 <xsl:template match="tei:p">
     <xsl:variable name="class-coupled">
         <xsl:choose>
-            <xsl:when test="@xml:id | @prev | @next">coupled</xsl:when>
+            <xsl:when test="@xml:id | @prev | @next">g-coupled</xsl:when>
             <xsl:otherwise/>
         </xsl:choose>
     </xsl:variable>

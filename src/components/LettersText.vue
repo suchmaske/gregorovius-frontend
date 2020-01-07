@@ -94,6 +94,10 @@ del {
   right: 0em;
 }
 
+.g-coupled {
+  display: inline;
+}
+
 span.g-list {
   display: block;
   margin-bottom: 1em;
