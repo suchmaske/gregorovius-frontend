@@ -5,7 +5,12 @@
         <q-card flat class="transparent">
           <div class="q-gutter-sm col justify-center" style="max-width: 500px">
             <div class="q-pa-md">
-              <q-input v-model="filter.searchInput" label="Volltextsuche">
+              <q-input
+                v-model="searchInput"
+                label="Volltextsuche"
+                debounce="300"
+                @input="getSearchResults()"
+              >
                 <template v-slot:append>
                   <q-icon name="search" />
                 </template>
@@ -43,14 +48,44 @@
           binary-state-sort
           flat
         >
-          <template v-slot:body-cell="props">
-            <q-td
+          <template v-slot:body="props">
+            <q-tr
               :props="props"
               class="cursor-pointer"
+              :class="searchInput ? 'cursor-pointer g-searchrow' : 'cursor-pointer'"
               @click.native="$router.push({ name: 'Brief', params: { id: props.row.id } })"
             >
-              {{ props.value }}
-            </q-td>
+              <q-td key="desc" :props="props">
+                {{ props.row.name }}
+                <q-btn
+                  dense
+                  round
+                  flat
+                  :icon="props.expand ? 'arrow_drop_up' : 'arrow_drop_down'"
+                  @click="props.expand = !props.expand"
+                />
+              </q-td>
+              <q-td key="date" :props="props">{{ props.row.properties.date | formatDate }}</q-td>
+              <q-td key="recipient" :props="props">{{
+                getFullNameArray(props.row.properties.recipient).join("; ")
+              }}</q-td>
+              <q-td key="placeSent" :props="props">{{
+                getFullName(props.row.properties.place.sent, "o. O")
+              }}</q-td>
+              <q-td key="placeRecv" :props="props">{{
+                getFullName(props.row.properties.place.received, "o. O.")
+              }}</q-td>
+            </q-tr>
+            <q-tr v-if="searchInput" :props="props" no-hover>
+              <q-td colspan="100%" class="bg-grey-1 text-grey-8">
+                <div class="g-searchresult text-left">
+                  <q-icon name="search" class="q-mr-md text-primary" />
+                  „{{ getKwic(props.row.id).previous }}
+                  <div class="g-keyword text-primary text-bold">{{ getKwic(props.row.id).hi }}</div>
+                  {{ getKwic(props.row.id).following }}“
+                </div>
+              </q-td>
+            </q-tr>
           </template>
         </q-table>
       </div>
@@ -70,8 +105,23 @@ export default {
     SelectAutoComplete,
     SelectYears
   },
+  filters: {
+    formatDate(isoDate) {
+      const date = isoDate ? new Date(isoDate) : new Date("2000")
+      if (date.getFullYear() != "2000") {
+        return date.toLocaleDateString("de-DE", {
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        });
+      } else {
+        return "o. D.";
+      }
+    }
+  },
   data() {
     return {
+      searchInput: "",
       model: "",
       visibleColumns: ["date", "recipient", "placeSent", "placeRecv"],
       filter: {
@@ -80,7 +130,7 @@ export default {
         placeReceived: "",
         years: [],
         resp: "",
-        searchInput: "",
+        searchResults: []
       },
       loading: this.$store.state.isLoading,
       pagination: {
@@ -94,14 +144,6 @@ export default {
           label: "Schreibdatum",
           align: "left",
           field: row => (row.properties.date ? new Date(row.properties.date) : new Date("2000")),
-          format: val =>
-            val.getFullYear() != "2000"
-              ? val.toLocaleDateString("de-DE", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric"
-                })
-              : "o. D.",
           sortable: true
         },
         {
@@ -110,7 +152,6 @@ export default {
           label: "Empfänger",
           align: "left",
           field: row => this.getFullNameArray(row.properties.recipient),
-          format: val => val.join("; "),
           sortable: true
         },
         {
@@ -166,7 +207,7 @@ export default {
           return e.properties.date.slice(0, 4);
         } catch (error) {
           console.log(error);
-          return [];
+          return "";
         }
       });
       return [...new Set(years)].filter(year => year !== undefined).sort();
@@ -197,6 +238,18 @@ export default {
   methods: {
     ...mapActions(["loadLettersAction", "setLoadingStatus", "setSelectedAction"]),
 
+    async getSearchResults() {
+      this.loading = true;
+      try {
+        const { results } = await dataService.getSearchResults("letters", this.searchInput);
+        this.filter.searchResults = results ? results : [];
+      } catch (error) {
+        console.log(error);
+        this.filter.searchResults = [];
+      }
+      this.loading = false;
+    },
+
     loadAll() {
       ["recipient", "placeReceived", "placeSent"].map(this.watchQueryParam);
       this.watchQueryParamYears();
@@ -222,6 +275,10 @@ export default {
         return nameIdArray.map(r => this.getFullName(r, "NN"));
       }
       return [];
+    },
+
+    getKwic(entityId) {
+      return this.filter.searchResults.find(result => result.entity_id === entityId);
     },
 
     getArrayOptions(entityName, propertyName) {
@@ -303,21 +360,11 @@ export default {
           !r.properties.resp ? false : r.properties.resp.includes(terms.resp)
         );
       }
-      var searchRequest = undefined;
-      if (terms.searchInput !== "") {
-        var results = [];
-        this.loading = true;
-        searchRequest = dataService.getSearchResults("letters", terms.searchInput).then(response => {
-          results = response.results;
-          this.loading = false;
-          for (const result of results) {
-            rows = rows.filter(r =>
-              r.id === result.entity_id
-            );
-          }
-        });
+      if (this.searchInput) {
+        const ids = terms.searchResults.map(result => result.entity_id);
+        rows = rows.filter(r => ids.includes(r.id));
       }
-      return rows
+      return rows;
     },
 
     watchQueryParam(entityKey) {
@@ -362,4 +409,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.g-searchresult {
+  font-family: Cardo;
+  font-size: 1.2em;
+}
+.g-searchrow td {
+  border-bottom: 0 !important;
+}
+.g-keyword {
+  display: inline;
+}
+</style>

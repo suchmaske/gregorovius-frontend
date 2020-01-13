@@ -125,7 +125,8 @@ const getSearchResults = async function(entityName, searchInput) {
       },
       params: {
         entity: entityName,
-        q: searchInput
+        q: searchInput,
+        width: "60"
       }
     });
     const data = parseList(response);
