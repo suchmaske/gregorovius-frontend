@@ -25,7 +25,7 @@
               <q-separator />
               <q-list>
                 <q-item
-                  class="cursor-pointer"
+                  class="cursor-pointer g-card"
                   @click.native="$router.push({ path: `/persons/${props.row.id}` })"
                 >
                   <q-item-section>
@@ -52,7 +52,7 @@ import { mapActions } from "vuex";
 import { API } from "@/shared/config";
 
 export default {
-  name: "ItemsList",
+  name: "PersonsIndex",
   filters: {
     formatPersonType(rawType) {
       if (rawType === "org") {
@@ -108,8 +108,7 @@ export default {
         this.data = data;
         this.loading = false;
       } catch (error) {
-        // eslint-disable-next-line
-        console.error(error)
+        console.error(error);
       }
     },
     formatName(name) {
@@ -140,4 +139,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.g-card:hover {
+  background: #f7f7f7;
+}
+</style>

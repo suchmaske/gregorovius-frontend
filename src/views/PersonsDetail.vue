@@ -13,6 +13,20 @@
                 {{ data.person.birth }} - {{ data.person.death }}
               </div>
             </q-card-section>
+            <q-card-section>
+              <div v-if="data.person.idno">
+                <a :href="data.person.idno['#text']">
+                  <q-chip color="blue-1" class="q-ml-none">
+                    <q-avatar rounded font-size="11px" color="blue-5" class="text-white">
+                      GND
+                    </q-avatar>
+                    <div class="text-blue text-caption q-pl-sm">
+                      {{ data.person.idno["#text"] }}
+                    </div>
+                  </q-chip>
+                </a>
+              </div>
+            </q-card-section>
             <q-separator dark />
           </q-card>
         </div>
@@ -49,7 +63,8 @@ export default {
         person: {
           persName: "",
           birth: "",
-          death: ""
+          death: "",
+          idno: ""
         }
       },
       loading: true
