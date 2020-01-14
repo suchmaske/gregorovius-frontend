@@ -9,6 +9,7 @@
                 v-model="searchInput"
                 label="Volltextsuche"
                 debounce="300"
+                outlined
                 @input="getSearchResults()"
               >
                 <template v-slot:append>
@@ -107,7 +108,7 @@ export default {
   },
   filters: {
     formatDate(isoDate) {
-      const date = isoDate ? new Date(isoDate) : new Date("2000")
+      const date = isoDate ? new Date(isoDate) : new Date("2000");
       if (date.getFullYear() != "2000") {
         return date.toLocaleDateString("de-DE", {
           day: "numeric",
