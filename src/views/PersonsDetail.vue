@@ -15,13 +15,13 @@
             </q-card-section>
             <q-card-section>
               <div v-if="data.person.idno">
-                <a :href="data.person.idno['#text']">
+                <a :href="authorityUri">
                   <q-chip color="blue-1" class="q-ml-none">
                     <q-avatar rounded font-size="11px" color="blue-5" class="text-white">
                       GND
                     </q-avatar>
                     <div class="text-blue text-caption q-pl-sm">
-                      {{ data.person.idno["#text"] }}
+                      {{ authorityUri }}
                     </div>
                   </q-chip>
                 </a>
@@ -72,11 +72,13 @@ export default {
   },
 
   computed: {
-    fullNameIndex() {
-      return this.$store.getters.fullNameIndex;
-    },
     name() {
-      return this.fullNameIndex[this.$route.params.id];
+      return this.$store.getters.fullNameIndex[this.$route.params.id];
+    },
+    authorityUri() {
+      return this.data.person.idno.length > 1
+        ? this.data.person.idno[0]["#text"]
+        : this.data.person.idno["#text"];
     }
   },
 
