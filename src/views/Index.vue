@@ -14,6 +14,38 @@
           Prof. Dr. Martin Baumeister und Dr. Angela Steinsiek
         </div>
       </div>
+      <div class="row q-mt-xl">
+        <q-card
+          class="bg-secondary text-white cursor-pointer"
+          @click="
+            openUrl('http://www.bbaw.de/veranstaltungen/2020/februar/preussen-im-kirchenstaat')
+          "
+        >
+          <q-card-section>
+            <div class="text-subtitle2">
+              <q-icon name="calendar_today" class="q-mr-md" style="font-size: 1.4em;" />Launch-Event
+              in der BBAW am 5. Februar
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+      <div class="row q-mt-md">
+        <q-card
+          class="bg-secondary text-white cursor-pointer"
+          @click="
+            openUrl(
+              'https://application.dhi-roma.it/Jobs/Detail/9fd204bd-3410-4f16-bbd6-f76e2e891800'
+            )
+          "
+        >
+          <q-card-section>
+            <div class="text-subtitle2">
+              <q-icon name="work_outline" class="q-mr-md" style="font-size: 1.4em;" />Job: Wiss.
+              Mitarbeiter/in Digital Humanities (m/w/d) 50%
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
     </div>
     <q-img class="landing-page fullscreen" style="z-index: -1"> </q-img>
   </div>
@@ -29,6 +61,9 @@ export default {
   },
   methods: {
     ...mapActions(["loadLettersAction", "loadFullNameIndexAction", "setLoadingStatus"]),
+    openUrl(url) {
+      url ? window.open(url) : null;
+    },
     loadAll() {
       if (this.$store.getters.letters.length == 0) {
         this.loadLettersAction();
