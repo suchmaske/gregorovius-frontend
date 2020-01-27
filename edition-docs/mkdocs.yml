@@ -26,8 +26,10 @@ theme:
   custom_dir: 'theme'
   favicon: 'assets/images/favicon.ico'
   logo: 'assets/images/fg-logo-bg-light.svg'
+  font:
+    text: 'IBM Plex Sans'
   palette:
-    primary: 'blue'
+    primary: 
     accent: 'grey'
 
 markdown_extensions:
@@ -38,3 +40,6 @@ markdown_extensions:
 
 plugins:
   - search
+
+extra_css:
+  - 'stylesheets/extra.css'
