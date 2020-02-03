@@ -23,7 +23,7 @@
     </q-page>
     <q-page v-show="this.$store.getters.loading">
       <div class="q-pt-xl row justify-center">
-        <q-spinner-hourglass color="primary" size="5em" />
+        <q-spinner-oval color="primary" size="5em" />
       </div>
     </q-page>
   </div>
