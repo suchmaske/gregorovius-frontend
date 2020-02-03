@@ -59,8 +59,8 @@ export default {
       this.setSelectedAction({ entity: "years", value: this.model });
     },
     getSelected() {
-      const years = this.$store.getters.selectedYears;
-      this.model = years;
+      if ("years" in this.$route.query) this.model = this.$route.query.years.split(",");
+      else this.model = [];
     }
   }
 };

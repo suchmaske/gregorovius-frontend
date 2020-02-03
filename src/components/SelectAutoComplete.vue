@@ -14,7 +14,7 @@
       @filter="filterFn"
       @input="setSelected"
     >
-      <template v-if="model.value !== ''" v-slot:append>
+      <template v-if="model.value" v-slot:append>
         <q-icon
           name="cancel"
           class="cursor-pointer"
@@ -77,9 +77,17 @@ export default {
       this.setSelectedAction({ entity: this.$props.entity, value: this.value });
     },
     getSelected() {
-      this.model = this.$store.getters[
-        "selected" + this.$props.entity[0].toUpperCase() + this.$props.entity.slice(1)
-      ];
+      if (this.$props.entity in this.$route.query) {
+        const selectedValue = this.$route.query[this.$props.entity];
+        const selectedLabel = this.$store.getters.fullNameIndex[selectedValue];
+        this.model = {
+          label: selectedLabel,
+          value: selectedValue
+        };
+      }
+      // this.model = this.$store.getters[
+      //   "selected" + this.$props.entity[0].toUpperCase() + this.$props.entity.slice(1)
+      // ];
     }
   }
 };
