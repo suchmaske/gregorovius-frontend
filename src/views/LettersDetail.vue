@@ -30,7 +30,7 @@
           <q-btn
             label="TEI XML"
             flat
-            icon="code"
+            icon="arrow_right_alt"
             color="primary"
             size="md"
             @click="openUrl(`http://gregorovius-edition.dhi-roma.it/api${$route.path}`)"
@@ -77,14 +77,17 @@ export default {
     abstractGerman() {
       return this.data.teiHeader.profileDesc.abstract.p[0]["#text"];
     },
+    // Splits the title and returns the first part.
     titleMain() {
       const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, " ");
       return title.split(/\. (?=([A-Z][a-zà-ý]*|St\.)( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?,)/)[0];
     },
+    // Splits the title and returns the second part.
+    // Is different than titleMain because of lookbehind limitations.
     titleSecondary() {
       const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, " ");
       const secondPart = title.split(
-        / .?.? ?[A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?(\(\?\))?\./
+        / .?.? ?[A-Z][a-zà-ý)]*( [a-zà-ý]*)?( [A-Z][a-zà-ý]*)?(-[A-Z][-a-zà-ý]*)?(\(\?\))?\./
       );
       return secondPart[secondPart.length - 1];
     }
