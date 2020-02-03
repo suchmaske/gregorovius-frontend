@@ -204,11 +204,8 @@ export default {
 
     uniqueYears() {
       const years = this.letters.map(e => {
-        try {
+        if (e.properties.date !== null) {
           return e.properties.date.slice(0, 4);
-        } catch (error) {
-          console.log(error);
-          return "";
         }
       });
       return [...new Set(years)].filter(year => year !== undefined).sort();
