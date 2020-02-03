@@ -1,6 +1,6 @@
 <template>
   <q-table
-    :data="this.$attrs.data"
+    :data="works"
     :columns="columns"
     row-key="id"
     :filter="filter"
@@ -29,6 +29,13 @@
 <script>
 export default {
   name: "WorksIndexTable",
+  props: {
+    type: {
+      type: String,
+      default: "",
+      required: true
+    }
+  },
   data() {
     return {
       filter: "",
@@ -49,6 +56,11 @@ export default {
       ],
       data: []
     };
+  },
+  computed: {
+    works() {
+      return this.$store.getters.works.filter(w => w.properties.type === this.$props.type);
+    }
   },
   beforeMount() {
     this.$store.watch(

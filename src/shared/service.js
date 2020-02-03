@@ -57,13 +57,7 @@ const getEntities = async function(entityName) {
       }
     });
     const data = parseList(response, 200);
-    const entities = data.map(e => {
-      if (e.properties.name) {
-        e.properties.name.fullName = getFullName(e.properties.name);
-        return e;
-      }
-    });
-    return entities;
+    return data;
   } catch (error) {
     console.error(error);
     return [];

@@ -13,19 +13,19 @@
         <q-separator />
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="wgr">
-            <works-index-table :data="gregoroviusMain" />
+            <works-index-table type="gregoroviusMain" />
           </q-tab-panel>
           <q-tab-panel name="ueb">
-            <works-index-table :data="gregoroviusTranslations" />
+            <works-index-table type="gregoroviusTranslation" />
           </q-tab-panel>
           <q-tab-panel name="waa">
-            <works-index-table :data="othersMain" />
+            <works-index-table type="othersMain" />
           </q-tab-panel>
           <q-tab-panel name="zgq">
-            <works-index-table :data="contemporarySources" />
+            <works-index-table type="contemporarySources" />
           </q-tab-panel>
           <q-tab-panel name="skl">
-            <works-index-table :data="secondary" />
+            <works-index-table type="secondary" />
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -36,7 +36,6 @@
 <script>
 import { mapActions } from "vuex";
 import WorksIndexTable from "@/components/WorksIndexTable";
-import { API } from "@/shared/config";
 
 export default {
   name: "ItemsList",
@@ -47,38 +46,24 @@ export default {
       data: []
     };
   },
-  computed: {
-    gregoroviusMain() {
-      return this.data.filter(w => w.properties.type == "gregoroviusMain");
-    },
-    othersMain() {
-      return this.data.filter(w => w.properties.type == "othersMain");
-    },
-    gregoroviusTranslations() {
-      return this.data.filter(w => w.properties.type == "gregoroviusTranslation");
-    },
-    contemporarySources() {
-      return this.data.filter(w => w.properties.type == "contemporarySources");
-    },
-    secondary() {
-      return this.data.filter(w => w.properties.type == "secondary");
-    }
-  },
-  mounted() {
+  async mounted() {
     this.getItems();
   },
   methods: {
     ...mapActions(["setLoadingStatus"]),
     async getItems() {
-      this.setLoadingStatus(true);
-      try {
-        const response = await fetch(`${API}${this.$route.path}`);
-        const data = await response.json();
-        this.data = data;
-      } catch (error) {
-        console.error(error);
+      if (this.$store.getters.works.length == 0) {
+        await this.$store.dispatch("loadWorksAction");
       }
-      this.setLoadingStatus(false);
+      this.loading = false;
+      // try {
+      //   const response = await fetch(`${API}${this.$route.path}`);
+      //   const data = await response.json();
+      //   this.data = data;
+      // } catch (error) {
+      //   console.error(error);
+      // }
+      // this.setLoadingStatus(false);
     }
   }
 };

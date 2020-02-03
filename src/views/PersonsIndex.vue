@@ -3,7 +3,7 @@
     <div class="q-pa-md">
       <q-table
         grid
-        :data="data"
+        :data="persons"
         :columns="columns"
         row-key="id"
         :filter="filter"
@@ -48,9 +48,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { API } from "@/shared/config";
-
 export default {
   name: "PersonsIndex",
   filters: {
@@ -89,27 +86,22 @@ export default {
   computed: {
     fullNameIndex() {
       return this.$store.getters.fullNameIndex;
+    },
+    persons() {
+      return this.$store.getters.persons;
     }
   },
 
   async mounted() {
-    if (this.$store.getters.fullNameIndex.length == 0) {
-      await this.loadFullNameIndexAction();
-    }
-    this.getItems();
+    await this.getItems();
   },
 
   methods: {
-    ...mapActions(["loadFullNameIndexAction"]),
     async getItems() {
-      try {
-        const response = await fetch(`${API}${this.$route.path}`);
-        const data = await response.json();
-        this.data = data;
-        this.loading = false;
-      } catch (error) {
-        console.error(error);
+      if (this.$store.getters.persons.length == 0) {
+        await this.$store.dispatch("loadPersonsAction");
       }
+      this.loading = false;
     },
     formatName(name) {
       if (name.surname && name.forename) {

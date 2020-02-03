@@ -57,7 +57,13 @@ export default new Router({
         {
           path: "persons",
           name: "Personen",
-          component: PersonsIndex
+          component: PersonsIndex,
+          async afterEnter(to, from, next) {
+            if (store.getters.fullNameIndex.length == 0) {
+              await store.dispatch("loadFullNameIndexAction");
+            }
+            next();
+          }
         },
         {
           path: "persons/:id",
@@ -67,7 +73,13 @@ export default new Router({
         {
           path: "places",
           name: "Orte",
-          component: PlacesIndex
+          component: PlacesIndex,
+          async beforeEnter(to, from, next) {
+            if (store.getters.fullNameIndex.length == 0) {
+              await store.dispatch("loadFullNameIndexAction");
+            }
+            next();
+          }
         },
         {
           path: "places/:id",

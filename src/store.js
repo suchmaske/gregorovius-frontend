@@ -28,7 +28,10 @@ export default new Vuex.Store({
       state.persons = persons;
     },
     GET_PLACES(state, places) {
-      state.persons = places;
+      state.places = places;
+    },
+    GET_WORKS(state, works) {
+      state.works = works;
     },
     GET_FULLNAME_INDEX(state, fullNameIndex) {
       state.fullNameIndex = fullNameIndex;
@@ -55,22 +58,24 @@ export default new Vuex.Store({
   },
   actions: {
     async loadLettersAction({ commit }) {
-      commit("SET_LOADING_STATUS", true);
       const letters = await dataService.getLetters();
       commit("GET_LETTERS", letters);
-      commit("SET_LOADING_STATUS", false);
     },
     async loadPersonsAction({ commit }) {
-      commit("SET_LOADING_STATUS", true);
       const persons = await dataService.getEntities("persons");
-      commit("GET_LETTERS", persons);
-      commit("SET_LOADING_STATUS", false);
+      commit("GET_PERSONS", persons);
+    },
+    async loadPlacesAction({ commit }) {
+      const places = await dataService.getEntities("places");
+      commit("GET_PLACES", places);
+    },
+    async loadWorksAction({ commit }) {
+      const works = await dataService.getEntities("works");
+      commit("GET_WORKS", works);
     },
     async loadFullNameIndexAction({ commit }) {
-      commit("SET_LOADING_STATUS", true);
       const fullNameIndex = await dataService.getFullNameIndex();
       commit("GET_FULLNAME_INDEX", fullNameIndex);
-      commit("SET_LOADING_STATUS", false);
     },
     async setSelectedAction({ commit }, payload) {
       commit("SET_SELECTED", payload);
@@ -82,6 +87,8 @@ export default new Vuex.Store({
   getters: {
     letters: state => state.letters,
     persons: state => state.persons,
+    places: state => state.places,
+    works: state => state.works,
     loading: state => state.isLoading,
     fullNameIndex: state => state.fullNameIndex,
     selectedRecipient: state => state.selectedRecipient,
