@@ -96,7 +96,7 @@ export default {
           role: "Wissenschaftliche Mitarbeiterin (Stipendiatin Gerda Henkel Stiftung)",
           tel: "+49 (0)7571 7572970",
           mail: "weiger@dhi-roma.it",
-          url: "http://dhi-roma.it/index.php?id=fastenrath-vinattieri0"
+          url: "http://dhi-roma.it/index.php?id=2475"
         },
         {
           id: "neuber",
