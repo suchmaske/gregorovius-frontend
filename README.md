@@ -1,34 +1,34 @@
-# gregorovius-frontend
+The **Gregorovius Frontend** repo contains the main frontend of the [Gregorovius Correspondence Edition](https://gregorovius-edition.dhi-roma.it) and the [Edition Guidelines](https://gregorovius-edition.dhi-roma.it/richtlinien).
 
-## Project setup
-```
+# Main frontend
+
+The edition's main frontend is built as a SPA with [Vue.js](https://vuejs.org/), [Vue CLI](https://cli.vuejs.org/) and [Quasar](https://quasar.dev/). 
+
+## Setup for development
+
+Make sure you have npm installed, `cd` into the root project directory and run
+
+```shell
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
+to install all required dependencies.
+
+To compile and hot-reload for development run
+
+```shell
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# Edition Guidelines
 
-### Run your tests
-```
-npm run test
-```
+The edition guidelines are built with [MkDocs](https://www.mkdocs.org/) and [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
+The content is all markdown-based and the structure of the page can be configured with a central configuration file (see the MkDocs documentation).
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Setup for development
 
-### Run your unit tests
-```
-npm run test:unit
-```
+Make sure you have Python and MkDocs installed, `cd` into the `edition-docs` directory and run
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```shell
+mkdocs serve
+```
