@@ -10,7 +10,7 @@
                 v-if="data.person.birth || data.person.death"
                 class="text-subtitle3 text-secondary"
               >
-                {{ data.person.birth }} - {{ data.person.death }}
+                {{ data.person.birth }} – {{ data.person.death }}
               </div>
             </q-card-section>
             <q-card-section>
