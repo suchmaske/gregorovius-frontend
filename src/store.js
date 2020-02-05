@@ -18,8 +18,8 @@ export default new Vuex.Store({
     selectedYears: []
   },
   mutations: {
-    SET_LOADING_STATUS(state) {
-      state.isLoading = !state.isLoading;
+    SET_LOADING_STATUS(state, loading) {
+      state.isLoading = loading;
     },
     GET_LETTERS(state, letters) {
       state.letters = letters;
@@ -58,8 +58,10 @@ export default new Vuex.Store({
   },
   actions: {
     async loadLettersAction({ commit }) {
+      commit("SET_LOADING_STATUS", true);
       const letters = await dataService.getLetters();
       commit("GET_LETTERS", letters);
+      commit("SET_LOADING_STATUS", false);
     },
     async loadPersonsAction({ commit }) {
       const persons = await dataService.getEntities("persons");
