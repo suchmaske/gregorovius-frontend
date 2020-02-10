@@ -83,9 +83,7 @@ export default {
   },
 
   async mounted() {
-    if (this.$store.getters.fullNameIndex.length == 0) {
-      await this.loadFullNameIndexAction();
-    }
+    await this.loadFullNameIndexAction();
     await this.getItems();
   },
 

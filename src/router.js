@@ -42,8 +42,8 @@ export default new Router({
           path: "letters",
           name: "Briefe",
           component: LettersIndex,
-          beforeEnter(to, from, next) {
-            store.dispatch("loadFullNameIndexAction");
+          async beforeEnter(to, from, next) {
+            await store.dispatch("loadFullNameIndexAction");
             next();
           }
         },

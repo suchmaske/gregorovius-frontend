@@ -90,34 +90,6 @@ export default new Vuex.Store({
       }
     },
     async loadFullNameIndexAction({ commit }) {
-      const getFullName = async function(name) {
-        if (name.toponym) {
-          return name.toponym;
-        }
-        if (name.surname && name.forename) {
-          return `${name.surname}, ${name.forename}`;
-        }
-        if (name.forename) {
-          return name.forename;
-        }
-        if (name.surname) {
-          return name.surname;
-        }
-        if (name.roleName && name.simpleName) {
-          return `${name.simpleName}, ${name.roleName}`;
-        }
-        if (name.simpleName) {
-          return name.simpleName;
-        }
-        if (name.roleName && name.forename) {
-          return `${name.forename}, ${name.roleName}`;
-        }
-        if (name.orgName) {
-          return name.orgName;
-        }
-        return "NN";
-      };
-
       await this.dispatch("loadPersonsAction");
       await this.dispatch("loadPlacesAction");
       if (this.getters.fullNameIndex.length === 0) {
@@ -126,7 +98,8 @@ export default new Vuex.Store({
         const fullNameIndex = {};
         entities.map(async entity => {
           const targetEntity = entities.find(item => item.id === entity.id);
-          fullNameIndex[entity.id] = await getFullName(targetEntity.properties.name);
+          fullNameIndex[entity.id] =
+            targetEntity.properties.name.toponym || targetEntity.properties.name.fullName || "NN";
         });
         commit("GET_FULLNAME_INDEX", fullNameIndex);
         commit("SET_LOADING_STATUS", false);
