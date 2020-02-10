@@ -64,7 +64,11 @@ export default new Router({
         {
           path: "persons/:id",
           name: "Person",
-          component: PersonsDetail
+          component: PersonsDetail,
+          beforeEnter(to, from, next) {
+            store.dispatch("loadFullNameIndexAction");
+            next();
+          }
         },
         {
           path: "places",
@@ -78,7 +82,11 @@ export default new Router({
         {
           path: "places/:id",
           name: "Ort",
-          component: PlacesDetail
+          component: PlacesDetail,
+          beforeEnter(to, from, next) {
+            store.dispatch("loadFullNameIndexAction");
+            next();
+          }
         },
         {
           path: "works",
