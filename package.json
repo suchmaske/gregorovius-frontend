@@ -1,6 +1,6 @@
 {
   "name": "gregorovius-frontend",
-  "version": "1.4.5-beta",
+  "version": "1.5.5-beta",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
