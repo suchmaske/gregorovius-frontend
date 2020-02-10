@@ -93,8 +93,9 @@ export default {
     }
   },
 
-  mounted() {
-    this.getItems(), this.getXSLT("LettersMsDesc", "msDesc");
+  async mounted() {
+    await this.getItems();
+    await this.getXSLT("LettersMsDesc", "msDesc");
   },
 
   methods: {
@@ -107,8 +108,7 @@ export default {
         this.visible = false;
         this.showLetter = true;
       } catch (error) {
-        // eslint-disable-next-line
-        console.error(error)
+        console.error(error);
       }
     },
     async getXSLT(fileName, targetProp) {

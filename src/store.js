@@ -58,30 +58,85 @@ export default new Vuex.Store({
   },
   actions: {
     async loadLettersAction({ commit }) {
-      commit("SET_LOADING_STATUS", true);
-      const letters = await dataService.getLetters();
-      commit("GET_LETTERS", letters);
-      commit("SET_LOADING_STATUS", false);
+      if (this.getters.letters.length === 0) {
+        commit("SET_LOADING_STATUS", true);
+        const letters = await dataService.getLetters();
+        commit("GET_LETTERS", letters);
+        commit("SET_LOADING_STATUS", false);
+      }
     },
     async loadPersonsAction({ commit }) {
-      const persons = await dataService.getEntities("persons");
-      commit("GET_PERSONS", persons);
+      if (this.getters.persons.length === 0) {
+        commit("SET_LOADING_STATUS", true);
+        const persons = await dataService.getEntities("persons");
+        commit("GET_PERSONS", persons);
+        commit("SET_LOADING_STATUS", false);
+      }
     },
     async loadPlacesAction({ commit }) {
-      const places = await dataService.getEntities("places");
-      commit("GET_PLACES", places);
+      if (this.getters.places.length === 0) {
+        commit("SET_LOADING_STATUS", true);
+        const places = await dataService.getEntities("places");
+        commit("GET_PLACES", places);
+        commit("SET_LOADING_STATUS", false);
+      }
     },
     async loadWorksAction({ commit }) {
-      const works = await dataService.getEntities("works");
-      commit("GET_WORKS", works);
+      if (this.getters.works.length === 0) {
+        commit("SET_LOADING_STATUS", true);
+        const works = await dataService.getEntities("works");
+        commit("GET_WORKS", works);
+        commit("SET_LOADING_STATUS", false);
+      }
     },
     async loadFullNameIndexAction({ commit }) {
-      const fullNameIndex = await dataService.getFullNameIndex();
-      commit("GET_FULLNAME_INDEX", fullNameIndex);
+      const getFullName = async function(name) {
+        if (name.toponym) {
+          return name.toponym;
+        }
+        if (name.surname && name.forename) {
+          return `${name.surname}, ${name.forename}`;
+        }
+        if (name.forename) {
+          return name.forename;
+        }
+        if (name.surname) {
+          return name.surname;
+        }
+        if (name.roleName && name.simpleName) {
+          return `${name.simpleName}, ${name.roleName}`;
+        }
+        if (name.simpleName) {
+          return name.simpleName;
+        }
+        if (name.roleName && name.forename) {
+          return `${name.forename}, ${name.roleName}`;
+        }
+        if (name.orgName) {
+          return name.orgName;
+        }
+        return "NN";
+      };
+
+      await this.dispatch("loadPersonsAction");
+      await this.dispatch("loadPlacesAction");
+      if (this.getters.fullNameIndex.length === 0) {
+        commit("SET_LOADING_STATUS", true);
+        const entities = [...this.getters.persons, ...this.getters.places];
+        const fullNameIndex = {};
+        entities.map(async entity => {
+          const targetEntity = entities.find(item => item.id === entity.id);
+          fullNameIndex[entity.id] = await getFullName(targetEntity.properties.name);
+        });
+        commit("GET_FULLNAME_INDEX", fullNameIndex);
+        commit("SET_LOADING_STATUS", false);
+      }
     },
+
     async setSelectedAction({ commit }, payload) {
       commit("SET_SELECTED", payload);
     },
+
     async setLoadingStatus({ commit }, value) {
       commit("SET_LOADING_STATUS", value);
     }

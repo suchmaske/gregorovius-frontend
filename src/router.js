@@ -42,10 +42,8 @@ export default new Router({
           path: "letters",
           name: "Briefe",
           component: LettersIndex,
-          async beforeEnter(to, from, next) {
-            if (store.getters.fullNameIndex.length == 0) {
-              await store.dispatch("loadFullNameIndexAction");
-            }
+          beforeEnter(to, from, next) {
+            store.dispatch("loadFullNameIndexAction");
             next();
           }
         },
@@ -58,10 +56,8 @@ export default new Router({
           path: "persons",
           name: "Personen",
           component: PersonsIndex,
-          async afterEnter(to, from, next) {
-            if (store.getters.fullNameIndex.length == 0) {
-              await store.dispatch("loadFullNameIndexAction");
-            }
+          beforeEnter(to, from, next) {
+            store.dispatch("loadFullNameIndexAction");
             next();
           }
         },
@@ -74,10 +70,8 @@ export default new Router({
           path: "places",
           name: "Orte",
           component: PlacesIndex,
-          async beforeEnter(to, from, next) {
-            if (store.getters.fullNameIndex.length == 0) {
-              await store.dispatch("loadFullNameIndexAction");
-            }
+          beforeEnter(to, from, next) {
+            store.dispatch("loadFullNameIndexAction");
             next();
           }
         },
@@ -119,6 +113,7 @@ export default new Router({
         },
         {
           path: "*",
+          name: "404",
           component: Error404
         }
       ]

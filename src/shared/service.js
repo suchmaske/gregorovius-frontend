@@ -21,34 +21,6 @@ const parseItem = (response, code) => {
   return item;
 };
 
-const getFullName = async function(name) {
-  if (name.toponym) {
-    return name.toponym;
-  }
-  if (name.surname && name.forename) {
-    return `${name.surname}, ${name.forename}`;
-  }
-  if (name.forename) {
-    return name.forename;
-  }
-  if (name.surname) {
-    return name.surname;
-  }
-  if (name.roleName && name.simpleName) {
-    return `${name.simpleName}, ${name.roleName}`;
-  }
-  if (name.simpleName) {
-    return name.simpleName;
-  }
-  if (name.roleName && name.forename) {
-    return `${name.forename}, ${name.roleName}`;
-  }
-  if (name.orgName) {
-    return name.orgName;
-  }
-  return "NN";
-};
-
 const getEntities = async function(entityName) {
   try {
     const response = await axios.get(`${API}/${entityName}`, {
@@ -59,7 +31,7 @@ const getEntities = async function(entityName) {
     const data = parseList(response, 200);
     return data;
   } catch (error) {
-    console.error(error);
+    console.error(`${error}: Could not load ${entityName}`);
     return [];
   }
 };
@@ -88,23 +60,6 @@ const getLetters = async function() {
     });
     const data = parseList(response);
     return data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
-const getFullNameIndex = async function() {
-  try {
-    const persons = await getEntities("persons");
-    const places = await getEntities("places");
-    const entities = [...persons, ...places];
-    const fullNameIndex = {};
-    entities.map(async entity => {
-      const targetEntity = entities.find(item => item.id === entity.id);
-      fullNameIndex[entity.id] = await getFullName(targetEntity.properties.name);
-    });
-    return fullNameIndex;
   } catch (error) {
     console.error(error);
     return [];
@@ -155,8 +110,6 @@ export const dataService = {
   getEntities,
   getEntity,
   getLetters,
-  getFullName,
-  getFullNameIndex,
   getSearchResults,
   XSLTransform
 };

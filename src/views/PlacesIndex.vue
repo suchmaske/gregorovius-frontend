@@ -137,6 +137,9 @@ export default {
 
   methods: {
     async getItems() {
+      if (this.$store.getters.fullNameIndex.length == 0) {
+        await this.$store.dispatch("loadFullNameIndexAction");
+      }
       if (this.$store.getters.places.length == 0) {
         await this.$store.dispatch("loadPlacesAction");
       }

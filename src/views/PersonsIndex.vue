@@ -8,7 +8,7 @@
         row-key="id"
         :filter="filter"
         :pagination.sync="pagination"
-        :loading="loading"
+        :loading="this.$store.getters.loading"
         flat
       >
         <template v-slot:top-left>
@@ -29,7 +29,7 @@
                   @click.native="$router.push({ path: `/persons/${props.row.id}` })"
                 >
                   <q-item-section>
-                    <q-item-label>{{ fullNameIndex[props.row.id] }}</q-item-label>
+                    <q-item-label>{{ props.row.properties.name | formatName }}</q-item-label>
                   </q-item-section>
                   <q-chip
                     size="12px"
@@ -59,53 +59,10 @@ export default {
         return "Person";
       }
       return rawType;
-    }
-  },
-  data() {
-    return {
-      filter: "",
-      loading: true,
-      pagination: {
-        rowsPerPage: 50,
-        sortBy: "name"
-      },
-      columns: [
-        {
-          name: "name",
-          required: true,
-          label: "Name",
-          align: "left",
-          field: row => this.fullNameIndex[row.id],
-          sortable: true
-        }
-      ],
-      data: []
-    };
-  },
-
-  computed: {
-    fullNameIndex() {
-      return this.$store.getters.fullNameIndex;
-    },
-    persons() {
-      return this.$store.getters.persons;
-    }
-  },
-
-  async mounted() {
-    await this.getItems();
-  },
-
-  methods: {
-    async getItems() {
-      if (this.$store.getters.persons.length == 0) {
-        await this.$store.dispatch("loadPersonsAction");
-      }
-      this.loading = false;
     },
     formatName(name) {
       if (name.surname && name.forename) {
-        return `${name.forename} ${name.surname}`;
+        return `${name.surname}, ${name.forename}`;
       }
       if (name.forename) {
         return name.forename;
@@ -127,6 +84,42 @@ export default {
       }
       return "NN";
     }
+  },
+
+  data() {
+    return {
+      filter: "",
+      loading: true,
+      pagination: {
+        rowsPerPage: 50,
+        sortBy: "name"
+      },
+      columns: [
+        {
+          name: "name",
+          required: true,
+          label: "Name",
+          align: "left",
+          field: row =>
+            row.properties.name.orgName ||
+            row.properties.name.simpleName ||
+            row.properties.name.surname,
+          sortable: true
+        }
+      ],
+      data: []
+    };
+  },
+
+  computed: {
+    persons() {
+      return this.$store.getters.persons;
+    }
+  },
+
+  async mounted() {
+    await this.$store.dispatch("loadFullNameIndexAction");
+    this.loading = false;
   }
 };
 </script>
