@@ -1,7 +1,6 @@
 <template>
-  <div class="fixed-center text-center">
-    <p class="text-faded">Hier ist leider nichts zu finden...<strong>(404)</strong></p>
-    <q-btn color="secondary" style="width:200px;" @click="$router.go(-1)">Zurück</q-btn>
+  <div class="q-pt-xl text-center">
+    <p class="text-faded">Ressource leider nicht gefunden <strong>(404)</strong></p>
   </div>
 </template>
 

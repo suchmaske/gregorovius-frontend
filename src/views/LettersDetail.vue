@@ -1,53 +1,54 @@
 <template>
-  <q-page padding>
-    <div class="row justify-center">
-      <div v-if="data.teiHeader" class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
-        <q-card class="q-pa-xl" flat>
-          <q-card-section>
-            <div class="text-h6">{{ titleMain }}</div>
-            <div class="text-subtitle3 text-secondary">{{ titleSecondary }}</div>
-          </q-card-section>
-          <q-separator dark />
-          <q-tabs v-model="tab" class="text-primary">
-            <q-tab label="Textgrundlage" name="tgl" />
-            <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
-          </q-tabs>
-          <q-separator />
-          <q-tab-panels v-model="tab" animated>
-            <q-tab-panel name="tgl">
-              <v-runtime-template :template="msDesc" />
-            </q-tab-panel>
-            <q-tab-panel name="reg">
-              {{ abstractGerman }}
-            </q-tab-panel>
-          </q-tab-panels>
+  <div>
+    <q-page v-show="!loading" padding>
+      <div class="row justify-center">
+        <div v-if="data.teiHeader" class="col-md-8 col-12 q-py-xl q-gutter-y-lg">
+          <q-card class="q-pa-xl" flat>
+            <q-card-section>
+              <div class="text-h6">{{ titleMain }}</div>
+              <div class="text-subtitle3 text-secondary">{{ titleSecondary }}</div>
+            </q-card-section>
+            <q-separator dark />
+            <q-tabs v-model="tab" class="text-primary">
+              <q-tab label="Textgrundlage" name="tgl" />
+              <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
+            </q-tabs>
+            <q-separator />
+            <q-tab-panels v-model="tab" animated>
+              <q-tab-panel name="tgl">
+                <v-runtime-template :template="msDesc" />
+              </q-tab-panel>
+              <q-tab-panel name="reg">
+                {{ abstractGerman }}
+              </q-tab-panel>
+            </q-tab-panels>
+          </q-card>
+        </div>
+      </div>
+      <div class="row justify-center">
+        <q-card class="col-md-8 col-12 q-pa-xl q-mb-xl" bordered flat>
+          <div class="row justify-end">
+            <q-btn
+              label="TEI XML"
+              flat
+              icon="arrow_right_alt"
+              color="primary"
+              size="md"
+              @click="openUrl(`http://gregorovius-edition.dhi-roma.it/api${$route.path}`)"
+            />
+          </div>
+          <div class="row">
+            <LettersText />
+          </div>
         </q-card>
       </div>
-    </div>
-    <div class="row justify-center">
-      <q-card class="col-md-8 col-12 q-pa-xl q-mb-xl" bordered flat>
-        <div class="row justify-end">
-          <q-btn
-            label="TEI XML"
-            flat
-            icon="arrow_right_alt"
-            color="primary"
-            size="md"
-            @click="openUrl(`http://gregorovius-edition.dhi-roma.it/api${$route.path}`)"
-          />
-        </div>
-        <div class="row">
-          <transition
-            appear
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-          >
-            <LettersText v-show="showLetter" />
-          </transition>
-        </div>
-      </q-card>
-    </div>
-  </q-page>
+    </q-page>
+    <q-page v-show="loading">
+      <div class="q-pt-xl row justify-center">
+        <q-spinner-oval color="primary" size="5em" />
+      </div>
+    </q-page>
+  </div>
 </template>
 
 <script>
@@ -65,8 +66,7 @@ export default {
   data() {
     return {
       data: [],
-      visible: true,
-      showLetter: false,
+      loading: true,
       tab: "reg",
       msDesc: "",
       supplement: "",
@@ -96,6 +96,7 @@ export default {
   async mounted() {
     await this.getItems();
     await this.getXSLT("LettersMsDesc", "msDesc");
+    this.loading = false;
   },
 
   methods: {
@@ -105,8 +106,9 @@ export default {
           headers: { Accept: "application/json" }
         });
         this.data = await response.json();
-        this.visible = false;
-        this.showLetter = true;
+        if (response.status === 404) {
+          this.$router.push({ path: "/404" });
+        }
       } catch (error) {
         console.error(error);
       }
