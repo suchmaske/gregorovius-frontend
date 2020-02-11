@@ -29,7 +29,7 @@
                   @click.native="$router.push({ path: `/persons/${props.row.id}` })"
                 >
                   <q-item-section>
-                    <q-item-label>{{ props.row.properties.name | formatName }}</q-item-label>
+                    <q-item-label>{{ props.row.properties.name.fullName }}</q-item-label>
                   </q-item-section>
                   <q-chip
                     size="12px"
@@ -59,30 +59,6 @@ export default {
         return "Person";
       }
       return rawType;
-    },
-    formatName(name) {
-      if (name.surname && name.forename) {
-        return `${name.surname}, ${name.forename}`;
-      }
-      if (name.forename) {
-        return name.forename;
-      }
-      if (name.surname) {
-        return name.surname;
-      }
-      if (name.simpleName) {
-        return name.simpleName;
-      }
-      if (name.roleName && name.simpleName) {
-        return `${name.simpleName}, ${name.roleName}`;
-      }
-      if (name.roleName && name.forename) {
-        return `${name.forename}, ${name.roleName}`;
-      }
-      if (name.orgName) {
-        return name.orgName;
-      }
-      return "NN";
     }
   },
 

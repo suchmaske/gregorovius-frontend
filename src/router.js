@@ -41,11 +41,7 @@ export default new Router({
         {
           path: "letters",
           name: "Briefe",
-          component: LettersIndex,
-          async beforeEnter(to, from, next) {
-            await store.dispatch("loadFullNameIndexAction");
-            next();
-          }
+          component: LettersIndex
         },
         {
           path: "letters/:id",
@@ -55,11 +51,7 @@ export default new Router({
         {
           path: "persons",
           name: "Personen",
-          component: PersonsIndex,
-          beforeEnter(to, from, next) {
-            store.dispatch("loadFullNameIndexAction");
-            next();
-          }
+          component: PersonsIndex
         },
         {
           path: "persons/:id",

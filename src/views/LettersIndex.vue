@@ -224,13 +224,14 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     this.$store.watch(
       (state, getters) => getters.loading,
       newValue => {
         this.loading = newValue;
       }
     );
+    await this.$store.dispatch("loadFullNameIndexAction");
     this.loadAll();
   },
   methods: {
@@ -254,13 +255,11 @@ export default {
       if (this.$store.getters.letters.length == 0) {
         this.loadLettersAction();
       }
-      this.filter.recipient = this.$route.query.recipient ? this.$route.query.recipient : "";
-      this.filter.placeSent = this.$route.query.placeSent ? this.$route.query.placeSent : "";
-      this.filter.placeReceived = this.$route.query.placeReceived
-        ? this.$route.query.placeReceived
-        : "";
-      this.filter.years = this.$route.query.years ? this.$route.query.years : [];
-      this.filter.resp = this.$route.query.resp ? this.$route.query.resp : "";
+      this.filter.recipient = this.$route.query.recipient || "";
+      this.filter.placeSent = this.$route.query.placeSent || "";
+      this.filter.placeReceived = this.$route.query.placeReceived || "";
+      this.filter.years = this.$route.query.years || [];
+      this.filter.resp = this.$route.query.resp || "";
     },
 
     getFullName(id, altName) {
