@@ -18,21 +18,6 @@
         <q-card
           class="bg-secondary text-white cursor-pointer"
           @click="
-            openUrl('http://www.bbaw.de/veranstaltungen/2020/februar/preussen-im-kirchenstaat')
-          "
-        >
-          <q-card-section>
-            <div class="text-subtitle2">
-              <q-icon name="calendar_today" class="q-mr-md" style="font-size: 1.4em;" />Launch-Event
-              in der BBAW am 5. Februar
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-      <div class="row q-mt-md">
-        <q-card
-          class="bg-secondary text-white cursor-pointer"
-          @click="
             openUrl(
               'https://application.dhi-roma.it/Jobs/Detail/9fd204bd-3410-4f16-bbd6-f76e2e891800'
             )
