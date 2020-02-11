@@ -52,25 +52,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
   name: "PageIndex",
-  mounted() {
-    this.loadAll();
-  },
   methods: {
-    ...mapActions(["loadLettersAction", "loadFullNameIndexAction", "setLoadingStatus"]),
     openUrl(url) {
       url ? window.open(url) : null;
-    },
-    loadAll() {
-      if (this.$store.getters.letters.length == 0) {
-        this.loadLettersAction();
-      }
-      if (this.$store.getters.fullNameIndex.length == 0) {
-        this.loadFullNameIndexAction();
-      }
     }
   }
 };
