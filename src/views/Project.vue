@@ -70,13 +70,16 @@
                   unterstützt.
                 </p>
                 <p>
-                  Von Dr. Wiebke Fastenrath Vinattieri stammen Rohtranskriptionen und erste Kommentargrundlagen der Briefe von Gregorovius an Michele Amari (11.7.1863 bis 7.7.1872), Emilia Viola Ferretti, Raffaele Mariano (21.7.1873 bis 8.12.1877 und 30.11.1879), Oreste
-                  Tommasini, Tommaso Gar und an Gustavo Strafforello. Frederike Neuber verantwortet
-                  die Textherstellung und die Kommentare dieser Briefe. Die Rohtranskriptionen der
-                  Briefe von Gregorovius an Aleardo Aleardi, Angelo de Gubernatis, Giuseppe De Leva,
-                  Ferdinand Martini, Francesco Protonotari und an Filippo Zamboni erstellte
-                  ebenfalls Dr. Wiebke Fastenrath-Vinattieri. Eric Müller hat als wissenschaftliche
-                  Hilfskraft wesentliche, die Edition vorbereitende Arbeiten übernommen.
+                  Von Dr. Wiebke Fastenrath Vinattieri stammen Rohtranskriptionen und erste
+                  Kommentargrundlagen der Briefe von Gregorovius an Michele Amari (11.7.1863 bis
+                  7.7.1872), Emilia Viola Ferretti, Raffaele Mariano (21.7.1873 bis 8.12.1877 und
+                  30.11.1879), Oreste Tommasini, Tommaso Gar und an Gustavo Strafforello. Frederike
+                  Neuber verantwortet die Textherstellung und die Kommentare dieser Briefe. Die
+                  Rohtranskriptionen der Briefe von Gregorovius an Aleardo Aleardi, Angelo de
+                  Gubernatis, Giuseppe De Leva, Ferdinand Martini, Francesco Protonotari und an
+                  Filippo Zamboni erstellte ebenfalls Dr. Wiebke Fastenrath-Vinattieri. Eric Müller
+                  hat als wissenschaftliche Hilfskraft wesentliche, die Edition vorbereitende
+                  Arbeiten übernommen.
                 </p>
               </div>
             </q-tab-panel>
