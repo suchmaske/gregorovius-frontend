@@ -11,7 +11,7 @@
             <q-separator dark />
             <q-tabs v-model="tab" class="text-primary">
               <q-tab label="Textgrundlage" name="tgl" />
-              <q-tab v-if="abstractGerman != ''" label="Regest" name="reg" />
+              <q-tab v-if="getGermanAbstract() !== ''" label="Regest" name="reg" />
             </q-tabs>
             <q-separator />
             <q-tab-panels v-model="tab" animated>
@@ -19,7 +19,7 @@
                 <v-runtime-template :template="msDesc" />
               </q-tab-panel>
               <q-tab-panel name="reg">
-                {{ abstractGerman }}
+                {{ getGermanAbstract() }}
               </q-tab-panel>
             </q-tab-panels>
           </q-card>
@@ -74,9 +74,6 @@ export default {
     };
   },
   computed: {
-    abstractGerman() {
-      return this.data.teiHeader.profileDesc.abstract.p[0]["#text"];
-    },
     // Splits the title and returns the first part.
     titleMain() {
       const title = this.data.teiHeader.fileDesc.titleStmt.title.replace(/[\n ]+/g, " ");
@@ -100,6 +97,14 @@ export default {
   },
 
   methods: {
+    getGermanAbstract() {
+      try {
+        return this.data.teiHeader.profileDesc.abstract.p[0]["#text"];
+      } catch (TypeError) {
+        this.tab = "tgl";
+        return "";
+      }
+    },
     async getItems() {
       try {
         const response = await fetch(`${API}${this.$route.path}`, {
