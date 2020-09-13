@@ -56,17 +56,13 @@
               :class="searchInput ? 'cursor-pointer g-searchrow' : 'cursor-pointer'"
               @click.native="$router.push({ name: 'Brief', params: { id: props.row.id } })"
             >
-
-              <q-menu
-                touch-position
-                context-menu
-              >
+              <q-menu touch-position context-menu>
                 <q-list dense style="min-width: 100px">
-                  <q-item @click.native="openItem(props.row.id, 'window')" clickable v-close-popup>
+                  <q-item v-close-popup clickable @click.native="openItem(props.row.id, 'window')">
                     <q-item-section>In neuem Fenster öffnen</q-item-section>
                   </q-item>
                   <q-separator />
-                  <q-item @click.native="openItem(props.row.id, 'tab')" clickable v-close-popup>
+                  <q-item v-close-popup clickable @click.native="openItem(props.row.id, 'tab')">
                     <q-item-section>In neuem Tab öffnen</q-item-section>
                   </q-item>
                 </q-list>
@@ -418,17 +414,18 @@ export default {
     },
 
     openItem(id, target) {
-      let routeData = this.$router.resolve({ name: 'Brief', params: { id: id } })
+      let routeData = this.$router.resolve({ name: "Brief", params: { id: id } });
       switch (target) {
-        case 'tab':
-          window.open(routeData.href, '_blank');
+        case "tab":
+          window.open(routeData.href, "_blank");
           break;
-        case 'window':
-          const width = window.outerWidth
-          const height = window.outerHeight
-          const strWindowFeatures = `resizable,location=yes,height=${height},width=${width},scrollbars=yes,status=yes`
-          window.open(routeData.href, '_blank', strWindowFeatures);
+        case "window": {
+          const width = window.outerWidth;
+          const height = window.outerHeight;
+          const strWindowFeatures = `resizable,location=yes,height=${height},width=${width},scrollbars=yes,status=yes`;
+          window.open(routeData.href, "_blank", strWindowFeatures);
           break;
+        }
       }
     },
     loadQueryToStore() {}
