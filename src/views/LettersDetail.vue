@@ -19,7 +19,9 @@
                 <v-runtime-template :template="msDesc" />
               </q-tab-panel>
               <q-tab-panel name="reg">
-                {{ getGermanAbstract() }}
+                <div id="abstract-de">
+                  {{ getGermanAbstract() }}
+                </div>
               </q-tab-panel>
             </q-tab-panels>
           </q-card>
@@ -54,14 +56,37 @@
 <script>
 import VRuntimeTemplate from "v-runtime-template";
 import LettersText from "@/components/LettersText.vue";
+import axios from "axios";
 import { dataService } from "@/shared";
 import { API } from "@/shared/config";
+import {
+  QCard,
+  QPage,
+  QBtn,
+  QSpinnerOval,
+  QTabPanels,
+  QTabPanel,
+  QSeparator,
+  QTabs,
+  QTab,
+  QCardSection
+} from "quasar";
 
 export default {
   name: "Item",
   components: {
     LettersText,
-    VRuntimeTemplate
+    VRuntimeTemplate,
+    QCard,
+    QPage,
+    QBtn,
+    QSpinnerOval,
+    QTabPanels,
+    QTabPanel,
+    QSeparator,
+    QTabs,
+    QTab,
+    QCardSection
   },
   data() {
     return {
@@ -107,10 +132,10 @@ export default {
     },
     async getItems() {
       try {
-        const response = await fetch(`${API}${this.$route.path}`, {
+        const response = await axios.get(`${API}${this.$route.path}`, {
           headers: { Accept: "application/json" }
         });
-        this.data = await response.json();
+        this.data = response.data;
         if (response.status === 404) {
           this.$router.push({ path: "/404" });
         }
