@@ -6,21 +6,29 @@
           <q-card class="q-pa-xl" flat>
             <q-card-section>
               <div class="text-h6">{{ titleMain }}</div>
-              <div class="text-subtitle3 text-secondary">{{ titleSecondary }}</div>
+              <div class="text-subtitle3 text-secondary">
+                {{ titleSecondary }}
+              </div>
             </q-card-section>
             <q-separator dark />
             <q-tabs v-model="tab" class="text-primary">
-              <q-tab label="Textgrundlage" name="tgl" />
-              <q-tab v-if="getGermanAbstract() !== ''" label="Regest" name="reg" />
+              <q-tab id="label-tgl" label="Textgrundlage" name="tgl" />
+              <q-tab v-if="hasAbstracts()" id="label-reg" label="Regest" name="reg" />
             </q-tabs>
             <q-separator />
             <q-tab-panels v-model="tab" animated>
-              <q-tab-panel name="tgl">
+              <q-tab-panel id="panel-tgl" name="tgl">
                 <v-runtime-template :template="msDesc" />
               </q-tab-panel>
-              <q-tab-panel name="reg">
-                <div id="abstract-de">
-                  {{ getGermanAbstract() }}
+              <q-tab-panel v-if="hasAbstracts()" id="panel-reg" name="reg">
+                <div v-if="getAbstractForLanguage('de')" id="abstract-de">
+                  <q-chip outline size="sm" color="primary" dense>DE</q-chip>
+                  {{ getAbstractForLanguage("de") }}
+                </div>
+                <q-separator v-if="getAbstractCount() > 1" spaced />
+                <div v-if="getAbstractForLanguage('en')" id="abstract-en">
+                  <q-chip outline size="sm" color="primary" dense>EN</q-chip>
+                  {{ getAbstractForLanguage("en") }}
                 </div>
               </q-tab-panel>
             </q-tab-panels>
@@ -69,8 +77,11 @@ import {
   QSeparator,
   QTabs,
   QTab,
-  QCardSection
+  QCardSection,
+  QChip
 } from "quasar";
+
+const TAB_TEXTGRUNDLAGE = "tgl";
 
 export default {
   name: "Item",
@@ -86,7 +97,8 @@ export default {
     QSeparator,
     QTabs,
     QTab,
-    QCardSection
+    QCardSection,
+    QChip
   },
   data() {
     return {
@@ -119,14 +131,30 @@ export default {
     await this.getItems();
     await this.getXSLT("LettersMsDesc", "msDesc");
     this.loading = false;
+
+    if (!this.hasAbstracts()) {
+      this.tab = TAB_TEXTGRUNDLAGE;
+    }
   },
 
   methods: {
-    getGermanAbstract() {
+    getAbstractCount() {
+      const abstractsWithText = this.data.teiHeader.profileDesc.abstract.p.filter(abstract => {
+        return abstract.hasOwnProperty("#text");
+      });
+
+      return abstractsWithText.length;
+    },
+    hasAbstracts() {
+      return this.getAbstractCount() > 0;
+    },
+    getAbstractForLanguage(language) {
       try {
-        return this.data.teiHeader.profileDesc.abstract.p[0]["#text"];
-      } catch (TypeError) {
-        this.tab = "tgl";
+        const abstractObject = this.data.teiHeader.profileDesc.abstract.p.filter(abstract => {
+          return abstract["@xml:lang"] === language;
+        })[0];
+        return abstractObject["#text"];
+      } catch {
         return "";
       }
     },
